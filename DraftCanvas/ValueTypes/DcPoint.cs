@@ -26,7 +26,11 @@ namespace DraftCanvas
 
         public double X { get; set; }
         public double Y { get; set; }
+        // If this point has influence to other point
+        // this value is non zero
         public int IssuerHash { get; set; }
+        // If this point is affected by other point
+        // this value is non zero
         public int SubHash { get; set; }
 
         public override bool Equals(object obj)
