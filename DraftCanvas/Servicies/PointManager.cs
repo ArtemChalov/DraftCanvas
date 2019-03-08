@@ -23,10 +23,10 @@ namespace DraftCanvas.Servicies
                 if (pointCollection.Values.Contains(newPoint))
                 {
                     DcPoint pointIssuer = pointCollection.Values.Where(v => v.X == newPoint.X && v.Y == newPoint.Y).First();
-                    pointIssuer.SubHash = newPoint.PointHash;
-                    pointCollection[pointIssuer.PointHash] = pointIssuer;
+                    pointIssuer.SubHash = newPoint.GetHashCode();
+                    pointCollection[pointIssuer.GetHashCode()] = pointIssuer;
 
-                    newPoint.IssuerHash = pointIssuer.PointHash;
+                    newPoint.IssuerHash = pointIssuer.GetHashCode();
                 }
                 pointCollection.Add(item.Key, newPoint);
             }
@@ -37,11 +37,11 @@ namespace DraftCanvas.Servicies
             DcPoint issuerPoint = canvas.PointCollection[issuerHash];
             DcPoint subPoint = canvas.PointCollection[issuerPoint.SubHash];
 
-            IVisualObject visualObject = canvas.GetDrawingVisualById(subPoint.OwnerID).VisualObject;
+            IVisualObject visualObject = canvas.GetDrawingVisualById(PointHash.GetOwnerID(subPoint.GetHashCode())).VisualObject;
 
             if (visualObject is IPrimitive primitive)
             {
-                primitive.SetPoint(newX, newY, subPoint.PointHash);
+                primitive.SetPoint(newX, newY, subPoint.GetHashCode());
             }
 
             return false;

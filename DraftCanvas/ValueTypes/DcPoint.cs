@@ -4,35 +4,28 @@ namespace DraftCanvas
 {
     public struct DcPoint
     {
-        private static int _idCounter = -1;
+        private readonly int _pointHash;
 
         public DcPoint(double x, double y, int pointHash, int ownerId)
         {
-            ID = ++_idCounter;
+            _pointHash = pointHash;
             X = x;
             Y = y;
-            PointHash = pointHash;
-            OwnerID = ownerId;
             IssuerHash = 0;
             SubHash = 0;
         }
 
         public DcPoint(Point point, int pointHash, int ownerId)
         {
-            ID = ++_idCounter;
+            _pointHash = pointHash;
             X = point.X;
             Y = point.Y;
-            PointHash = pointHash;
-            OwnerID = ownerId;
             IssuerHash = 0;
             SubHash = 0;
         }
 
-        public int ID { get; set; }
         public double X { get; set; }
         public double Y { get; set; }
-        public int PointHash { get; set; }
-        public int OwnerID { get; set; }
         public int IssuerHash { get; set; }
         public int SubHash { get; set; }
 
@@ -46,7 +39,7 @@ namespace DraftCanvas
 
         public override int GetHashCode()
         {
-            return this.PointHash;
+            return this._pointHash;
         }
     }
 }
