@@ -29,8 +29,8 @@ namespace DraftCanvas.Primitives
 
             _points = new Dictionary<int, Point>()
             {
-                {PointHash.GetHashCode(1, ID), new Point(_x1, _y1)},
-                {PointHash.GetHashCode(2, ID), new Point(_x2, _y2)}
+                {PointHash.CreateHash(1, ID), new Point(_x1, _y1)},
+                {PointHash.CreateHash(2, ID), new Point(_x2, _y2)}
             };
 
             _length = DcMath.GetDistance(_x1, _y1, _x2, _y2);
@@ -155,8 +155,8 @@ namespace DraftCanvas.Primitives
         private bool OnP1Changed(double newX, double newY)
         {
             bool res = false;
-            if (PointManager.HasSub(Owner, PointHash.GetHashCode(1, ID)))
-                res = PointManager.ResolveConstraint(Owner, newX, newY, PointHash.GetHashCode(1, ID));
+            if (PointManager.HasSub(Owner, PointHash.CreateHash(1, ID)))
+                res = PointManager.ResolveConstraint(Owner, newX, newY, PointHash.CreateHash(1, ID));
 
             _x1 = newX;
             _y1 = newY;
@@ -169,8 +169,8 @@ namespace DraftCanvas.Primitives
         private bool OnP2Changed(double newX, double newY)
         {
             bool res = false;
-            if (PointManager.HasSub(Owner, PointHash.GetHashCode(2, ID)))
-                res = PointManager.ResolveConstraint(Owner, newX, newY, PointHash.GetHashCode(2, ID));
+            if (PointManager.HasSub(Owner, PointHash.CreateHash(2, ID)))
+                res = PointManager.ResolveConstraint(Owner, newX, newY, PointHash.CreateHash(2, ID));
 
             _x2 = newX;
             _y2 = newY;
@@ -184,8 +184,8 @@ namespace DraftCanvas.Primitives
         {
             double delta = newValue -_length;
             
-            var p1HasConstraint = PointManager.HasIssuer(Owner, PointHash.GetHashCode(1, ID));
-            var p2HasConstraint = PointManager.HasIssuer(Owner, PointHash.GetHashCode(2, ID));
+            var p1HasConstraint = PointManager.HasIssuer(Owner, PointHash.CreateHash(1, ID));
+            var p2HasConstraint = PointManager.HasIssuer(Owner, PointHash.CreateHash(2, ID));
 
             if (p1HasConstraint)
             {

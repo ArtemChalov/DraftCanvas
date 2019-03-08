@@ -6,7 +6,7 @@ namespace DraftCanvas.Servicies
         private static readonly int _offset = 20;
         private static readonly int _highZeroOffset = 32 - _offset;
 
-        internal static int GetHashCode(int index, int id)
+        internal static int CreateHash(int index, int id)
         {
             return (index << _offset) + id;
         }

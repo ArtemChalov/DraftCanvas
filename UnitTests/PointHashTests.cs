@@ -8,34 +8,34 @@ namespace UnitTests
     public class PointHashTests
     {
         [TestMethod]
-        public void GetHashCode_Test_0_0()
+        public void CreateHash_Test_0_0()
         {
             int expected = 0;
-            var actual = PointHash.GetHashCode(0, 0);
+            var actual = PointHash.CreateHash(0, 0);
             Assert.AreEqual(expected, actual);
         }
 
         [TestMethod]
-        public void GetHashCode_Test_0_1()
+        public void CreateHash_Test_0_1()
         {
             int expected = 1;
-            var actual = PointHash.GetHashCode(0, 1);
+            var actual = PointHash.CreateHash(0, 1);
             Assert.AreEqual(expected, actual);
         }
 
         [TestMethod]
-        public void GetHashCode_Test_1_0()
+        public void CreateHash_Test_1_0()
         {
             int expected = 1048576;
-            var actual = PointHash.GetHashCode(1, 0);
+            var actual = PointHash.CreateHash(1, 0);
             Assert.AreEqual(expected, actual);
         }
 
         [TestMethod]
-        public void GetHashCode_Test_2_348()
+        public void CreateHash_Test_2_348()
         {
             int expected = 2097500;
-            var actual = PointHash.GetHashCode(2, 348);
+            var actual = PointHash.CreateHash(2, 348);
             Assert.AreEqual(expected, actual);
         }
 
