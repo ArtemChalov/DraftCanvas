@@ -22,7 +22,7 @@ namespace DraftCanvas.Servicies
                 DcPoint newPoint = new DcPoint(item.Value, item.Key, primitive.ID);
                 if (pointCollection.Values.Contains(newPoint))
                 {
-                    DcPoint pointIssuer = pointCollection.Values.Where(v => v.X == newPoint.X && v.Y == newPoint.Y).First();
+                    DcPoint pointIssuer = pointCollection.Values.Where(v => v.Equals(newPoint)).First();
                     pointIssuer.SubHash = newPoint.GetHashCode();
                     pointCollection[pointIssuer.GetHashCode()] = pointIssuer;
 
