@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28307.438
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DraftCanvas", "DraftCanvas\DraftCanvas.csproj", "{2F48AB5E-D49E-4E6D-A01E-78C7DB35B0FD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{F8ED08A0-6B62-4C7F-9A0D-8A37FD4F40BD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,14 @@ Global
 		{2F48AB5E-D49E-4E6D-A01E-78C7DB35B0FD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2F48AB5E-D49E-4E6D-A01E-78C7DB35B0FD}.Release|x64.ActiveCfg = Release|x64
 		{2F48AB5E-D49E-4E6D-A01E-78C7DB35B0FD}.Release|x64.Build.0 = Release|x64
+		{F8ED08A0-6B62-4C7F-9A0D-8A37FD4F40BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8ED08A0-6B62-4C7F-9A0D-8A37FD4F40BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8ED08A0-6B62-4C7F-9A0D-8A37FD4F40BD}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{F8ED08A0-6B62-4C7F-9A0D-8A37FD4F40BD}.Debug|x64.Build.0 = Debug|Any CPU
+		{F8ED08A0-6B62-4C7F-9A0D-8A37FD4F40BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8ED08A0-6B62-4C7F-9A0D-8A37FD4F40BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F8ED08A0-6B62-4C7F-9A0D-8A37FD4F40BD}.Release|x64.ActiveCfg = Release|Any CPU
+		{F8ED08A0-6B62-4C7F-9A0D-8A37FD4F40BD}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -7,16 +7,16 @@ namespace DraftCanvas.Primitives
 {
     public class DcLineSegment : IPrimitive
     {
-        private double _length;
-        private double _angle;
-        private double _x1;
-        private double _y1;
-
-        private double _x2;
-        private double _y2;
         private readonly string _tag = "LineSegment";
         private readonly int _id = CanvasCounter.PrimitiveID;
-        readonly IDictionary<int, Point> _points;
+        private readonly IDictionary<int, Point> _points;
+
+        private double _x1;
+        private double _y1;
+        private double _x2;
+        private double _y2;
+        private double _length;
+        private double _angle;
 
         #region Constructors
 
@@ -77,25 +77,13 @@ namespace DraftCanvas.Primitives
 
         public string Tag => _tag;
 
-        public double X1
-        {
-            get { return _x1; }
-        }
+        public double X1 => _x1;
 
-        public double Y1
-        {
-            get { return _y1; }
-        }
+        public double Y1 => _y1;
 
-        public double X2
-        {
-            get { return _x2; }
-        }
+        public double X2 => _x2;
 
-        public double Y2
-        {
-            get { return _y2; }
-        }
+        public double Y2 => _y2;
 
         public IDictionary<int, Point> Points => _points;
 
@@ -118,14 +106,14 @@ namespace DraftCanvas.Primitives
 
         #endregion
 
-        #region Private Methods
+        #region Public Methods
 
         public bool SetPoint(double newX, double newY, int pointHash)
         {
             double DelataX = 0;
             double DelataY = 0;
             bool res = false;
-            switch (PointHash.GetIndexFromHash(pointHash))
+            switch (PointHash.GetPointIndex(pointHash))
             {
                 case 1:
                     DelataX = newX - X1;
@@ -144,6 +132,25 @@ namespace DraftCanvas.Primitives
             }
             return res;
         }
+
+        public DrawingVisualEx GetVisual()
+        {
+            DrawingVisualEx visual = new DrawingVisualEx(this);
+
+            using (DrawingContext drawingContext = visual.RenderOpen())
+            {
+                drawingContext.DrawLine(new Pen(CanvasParam.PenColor, CanvasParam.Thikness / CanvasParam.Scale),
+                    new Point(X1, CanvasParam.CanvasHeight - Y1), new Point(X2, CanvasParam.CanvasHeight - Y2));
+            }
+
+            visual.Transform = new ScaleTransform(CanvasParam.Scale, CanvasParam.Scale, 0, CanvasParam.CanvasHeight);
+
+            return visual;
+        }
+
+        #endregion
+
+        #region Private Methods
 
         private bool OnP1Changed(double newX, double newY)
         {
@@ -206,25 +213,6 @@ namespace DraftCanvas.Primitives
         private void OnAngelChanged(double newValue)
         {
 
-        }
-
-        #endregion
-
-        #region Interfaces Implementation
-
-        public DrawingVisualEx GetVisual()
-        {
-            DrawingVisualEx visual = new DrawingVisualEx(this);
-
-            using (DrawingContext drawingContext = visual.RenderOpen())
-            {
-                drawingContext.DrawLine(new Pen(CanvasParam.PenColor, CanvasParam.Thikness / CanvasParam.Scale),
-                    new Point(X1, CanvasParam.CanvasHeight - Y1), new Point(X2, CanvasParam.CanvasHeight - Y2));
-            }
-
-            visual.Transform = new ScaleTransform(CanvasParam.Scale, CanvasParam.Scale, 0, CanvasParam.CanvasHeight);
-
-            return visual;
         }
 
         #endregion
