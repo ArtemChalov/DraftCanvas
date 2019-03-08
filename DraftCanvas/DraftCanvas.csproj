@@ -64,7 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Canvas.cs" />
-    <Compile Include="CanvasCollections.cs" />
+    <Compile Include="CanvasCounter.cs" />
     <Compile Include="CanvasParam.cs" />
     <Compile Include="Enums\DraftCanvasEnums.cs" />
     <Compile Include="Interfacies\IPrimitive.cs" />

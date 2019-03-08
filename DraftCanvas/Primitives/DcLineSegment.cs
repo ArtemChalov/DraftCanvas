@@ -15,7 +15,7 @@ namespace DraftCanvas.Primitives
         private double _x2;
         private double _y2;
         private readonly string _tag = "LineSegment";
-        private readonly int _id = CanvasCollections.PrimitiveID;
+        private readonly int _id = CanvasCounter.PrimitiveID;
         readonly IDictionary<int, Point> _points;
 
         #region Constructors
