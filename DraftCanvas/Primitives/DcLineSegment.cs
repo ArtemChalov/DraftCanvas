@@ -20,7 +20,7 @@ namespace DraftCanvas.Primitives
 
         #region Constructors
 
-        public DcLineSegment(Canvas owner, double x1, double y1, double x2, double y2)
+        public DcLineSegment(double x1, double y1, double x2, double y2)
         {
             _x1 = x1;
             _y1 = y1;
