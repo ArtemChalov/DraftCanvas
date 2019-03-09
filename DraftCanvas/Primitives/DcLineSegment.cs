@@ -1,4 +1,5 @@
 ﻿using DraftCanvas.Servicies;
+using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Media;
@@ -18,6 +19,9 @@ namespace DraftCanvas.Primitives
         private double _length;
         private double _angle;
 
+        private int _p1Hash;
+        private int _p2Hash;
+
         #region Constructors
 
         public DcLineSegment(double x1, double y1, double x2, double y2)
@@ -27,10 +31,13 @@ namespace DraftCanvas.Primitives
             _x2 = x2;
             _y2 = y2;
 
+            _p1Hash = PointHash.CreateHash(1, _id);
+            _p2Hash = PointHash.CreateHash(2, _id);
+
             _points = new Dictionary<int, Point>()
             {
-                {PointHash.CreateHash(1, ID), new Point(_x1, _y1)},
-                {PointHash.CreateHash(2, ID), new Point(_x2, _y2)}
+                {_p1Hash, new Point(_x1, _y1)},
+                {_p2Hash, new Point(_x2, _y2)}
             };
 
             _length = DcMath.GetDistance(_x1, _y1, _x2, _y2);
@@ -90,13 +97,13 @@ namespace DraftCanvas.Primitives
         public double Length
         {
             get { return _length; }
-            set {OnLengthChanged(value); }
+            set {OnChangeLength(value); }
         }
 
         public double Angle
         {
             get { return _angle; }
-            set { OnAngelChanged(value);
+            set { OnChangeAngle(value);
             }
         }
 
@@ -118,16 +125,16 @@ namespace DraftCanvas.Primitives
                 case 1:
                     DelataX = newX - X1;
                     DelataY = newY - Y1;
-                    res = OnP1Changed(newX, newY);
+                    res = OnChangeP1(newX, newY);
                     if (LocalConstraint != LineConstraint.Free)
-                        res = OnP2Changed(X2 + DelataX, Y2 + DelataY);
+                        res = OnChangeP2(X2 + DelataX, Y2 + DelataY);
                     break;
                 case 2:
                     DelataX = newX - X2;
                     DelataY = newY - Y2;
-                    res = OnP2Changed(newX, newY);
+                    res = OnChangeP2(newX, newY);
                     if (LocalConstraint != LineConstraint.Free)
-                        res = OnP1Changed(X1 + DelataX, Y1 + DelataY);
+                        res = OnChangeP1(X1 + DelataX, Y1 + DelataY);
                     break;
             }
             return res;
@@ -152,11 +159,11 @@ namespace DraftCanvas.Primitives
 
         #region Private Methods
 
-        private bool OnP1Changed(double newX, double newY)
+        private bool OnChangeP1(double newX, double newY)
         {
             bool res = false;
-            if (PointManager.HasSub(Owner, PointHash.CreateHash(1, ID)))
-                res = PointManager.ResolveConstraint(Owner, newX, newY, PointHash.CreateHash(1, ID));
+            if (Owner.PointCollection[_p1Hash].SubHash != 0)
+                res = PointManager.ResolveConstraint(Owner, newX, newY, _p1Hash);
 
             _x1 = newX;
             _y1 = newY;
@@ -166,11 +173,11 @@ namespace DraftCanvas.Primitives
             return res;
         }
 
-        private bool OnP2Changed(double newX, double newY)
+        private bool OnChangeP2(double newX, double newY)
         {
             bool res = false;
-            if (PointManager.HasSub(Owner, PointHash.CreateHash(2, ID)))
-                res = PointManager.ResolveConstraint(Owner, newX, newY, PointHash.CreateHash(2, ID));
+            if (Owner.PointCollection[_p2Hash].SubHash != 0)
+                res = PointManager.ResolveConstraint(Owner, newX, newY, _p2Hash);
 
             _x2 = newX;
             _y2 = newY;
@@ -180,12 +187,12 @@ namespace DraftCanvas.Primitives
             return res;
         }
 
-        private void OnLengthChanged(double newValue)
+        private void OnChangeLength(double newValue)
         {
             double delta = newValue -_length;
             
-            var p1HasConstraint = PointManager.HasIssuer(Owner, PointHash.CreateHash(1, ID));
-            var p2HasConstraint = PointManager.HasIssuer(Owner, PointHash.CreateHash(2, ID));
+            var p1HasConstraint = Owner.PointCollection[_p1Hash].IssuerHash != 0;
+            var p2HasConstraint = Owner.PointCollection[_p2Hash].IssuerHash != 0;
 
             if (p1HasConstraint)
             {
@@ -194,23 +201,23 @@ namespace DraftCanvas.Primitives
                     return;
                 }
                 else
-                    OnP2Changed(X2 + DcMath.Xoffset(delta, Angle), Y2 + DcMath.Yoffset(delta, Angle));
+                    OnChangeP2(X2 + DcMath.Xoffset(delta, Angle), Y2 + DcMath.Yoffset(delta, Angle));
             }
             else
             {
                 if (p2HasConstraint)
-                    OnP1Changed(X1 - DcMath.Xoffset(delta, Angle), Y1 - DcMath.Yoffset(delta, Angle));
+                    OnChangeP1(X1 - DcMath.Xoffset(delta, Angle), Y1 - DcMath.Yoffset(delta, Angle));
                 else
                 {
-                    OnP1Changed(X1 - DcMath.Xoffset(delta / 2, Angle), Y1 - DcMath.Yoffset(delta / 2, Angle));
-                    OnP2Changed(X2 + DcMath.Xoffset(delta / 2, Angle), Y2 + DcMath.Yoffset(delta / 2, Angle));
+                    OnChangeP1(X1 - DcMath.Xoffset(delta / 2, Angle), Y1 - DcMath.Yoffset(delta / 2, Angle));
+                    OnChangeP2(X2 + DcMath.Xoffset(delta / 2, Angle), Y2 + DcMath.Yoffset(delta / 2, Angle));
                 }
             }
 
             _length = newValue;
         }
 
-        private void OnAngelChanged(double newValue)
+        private void OnChangeAngle(double newValue)
         {
 
         }
