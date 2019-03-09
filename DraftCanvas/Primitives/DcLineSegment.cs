@@ -24,8 +24,10 @@ namespace DraftCanvas.Primitives
 
         #region Constructors
 
-        public DcLineSegment(double x1, double y1, double x2, double y2)
+        public DcLineSegment(double x1, double y1, double x2, double y2, LineConstraint constraint = LineConstraint.Free)
         {
+            LocalConstraint = constraint;
+
             _x1 = x1;
             _y1 = y1;
             _x2 = x2;
@@ -44,35 +46,28 @@ namespace DraftCanvas.Primitives
             _angle = DcMath.GetLineSegmentAngle(this);
         }
 
-        /**
-        //public DcLineSegment(double x1, double y1, double length, double angle, Orientation orientation)
-        //{
-        //    LineOrientation = orientation;
+        
+        public DcLineSegment(Point originPoint,  double length, double angle, LineConstraint constraint = LineConstraint.Angle)
+        {
+            LocalConstraint = constraint;
 
-        //    foreach (DcPoint point in PM.Points)
-        //    {
-        //        if (point.X == x1 && point.Y == y1)
-        //        {
-        //            _point_1_ID = point.ID;
-        //            point.ParentsID.Add(ID);
-        //            break;
-        //        }
-        //    }
+            _x1 = originPoint.X;
+            _y1 = originPoint.Y;
+            _angle = angle;
+            _length = length;
 
-        //    if (_point_1_ID == -1)
-        //    {
-        //        DcPoint point = new DcPoint(x1, y1, ID);
-        //        _point_1_ID = point.ID;
-        //    }
+            _x2 = _x1 + DcMath.Xoffset(length, angle);
+            _y2 = _y1 + DcMath.Yoffset(length, angle);
 
-        //    _point_2_ID = PM.Create_P2_WithLengthAndAngle(_point_1_ID, ID, length, angle);
+            _p1Hash = PointHash.CreateHash(1, _id);
+            _p2Hash = PointHash.CreateHash(2, _id);
 
-        //    _angle = angle;
-        //    _length = length;
-
-        //    PrimitiveManager.Primitives.Add(this);
-        //}
-        **/
+            _points = new Dictionary<int, Point>()
+            {
+                {_p1Hash, new Point(_x1, _y1)},
+                {_p2Hash, new Point(_x2, _y2)}
+            };
+        }
 
         #endregion
 
