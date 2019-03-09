@@ -1,5 +1,4 @@
 ﻿using DraftCanvas.Servicies;
-using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Media;
@@ -97,8 +96,7 @@ namespace DraftCanvas.Primitives
         public double Angle
         {
             get { return _angle; }
-            set { OnChangeAngle(value);
-            }
+            set { OnChangeAngle(value); }
         }
 
         public LineConstraint LocalConstraint { get; set; } = LineConstraint.Free;
@@ -213,7 +211,15 @@ namespace DraftCanvas.Primitives
 
         private void OnChangeAngle(double newValue)
         {
+            var p2HasConstraint = Owner.PointCollection[_p2Hash].ActiveHash != 0;
 
+            if (!p2HasConstraint)
+            {
+                _angle = newValue;
+                _x2 = _x1 + DcMath.Xoffset(Length, newValue);
+                _y2 = _y1 + DcMath.Yoffset(Length, newValue);
+                IsDirty = true;
+            }
         }
 
         #endregion
