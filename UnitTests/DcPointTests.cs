@@ -12,8 +12,8 @@ namespace UnitTests
         [TestMethod]
         public void PoinsAreEquals()
         {
-            DcPoint point1 = new DcPoint(new Point(100, 300), PointHash.CreateHash(1, 2), 1);
-            DcPoint point2 = new DcPoint(new Point(100, 300), PointHash.CreateHash(2, 3), 1);
+            DcPoint point1 = new DcPoint(new Point(100, 300), PointHash.CreateHash(1, 2));
+            DcPoint point2 = new DcPoint(new Point(100, 300), PointHash.CreateHash(2, 3));
 
             Assert.IsTrue(point1.Equals(point2));
         }
@@ -21,8 +21,8 @@ namespace UnitTests
         [TestMethod]
         public void PoinsAreNotEquals()
         {
-            DcPoint point1 = new DcPoint(new Point(100, 250), PointHash.CreateHash(1, 2), 1);
-            DcPoint point2 = new DcPoint(new Point(100, 300), PointHash.CreateHash(2, 2), 1);
+            DcPoint point1 = new DcPoint(new Point(100, 250), PointHash.CreateHash(1, 2));
+            DcPoint point2 = new DcPoint(new Point(100, 300), PointHash.CreateHash(2, 2));
 
             Assert.IsFalse(point1.Equals(point2));
         }

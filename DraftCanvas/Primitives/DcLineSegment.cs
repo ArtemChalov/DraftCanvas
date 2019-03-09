@@ -45,7 +45,6 @@ namespace DraftCanvas.Primitives
             _length = DcMath.GetDistance(_x1, _y1, _x2, _y2);
             _angle = DcMath.GetLineSegmentAngle(this);
         }
-
         
         public DcLineSegment(Point originPoint,  double length, double angle, LineConstraint constraint = LineConstraint.Angle)
         {
@@ -157,7 +156,7 @@ namespace DraftCanvas.Primitives
         private bool OnChangeP1(double newX, double newY)
         {
             bool res = false;
-            if (Owner.PointCollection[_p1Hash].SubHash != 0)
+            if (Owner.PointCollection[_p1Hash].DependedHash != 0)
                 res = PointManager.ResolveConstraint(Owner, newX, newY, _p1Hash);
 
             _x1 = newX;
@@ -171,7 +170,7 @@ namespace DraftCanvas.Primitives
         private bool OnChangeP2(double newX, double newY)
         {
             bool res = false;
-            if (Owner.PointCollection[_p2Hash].SubHash != 0)
+            if (Owner.PointCollection[_p2Hash].DependedHash != 0)
                 res = PointManager.ResolveConstraint(Owner, newX, newY, _p2Hash);
 
             _x2 = newX;
@@ -186,8 +185,8 @@ namespace DraftCanvas.Primitives
         {
             double delta = newValue -_length;
             
-            var p1HasConstraint = Owner.PointCollection[_p1Hash].IssuerHash != 0;
-            var p2HasConstraint = Owner.PointCollection[_p2Hash].IssuerHash != 0;
+            var p1HasConstraint = Owner.PointCollection[_p1Hash].ActiveHash != 0;
+            var p2HasConstraint = Owner.PointCollection[_p2Hash].ActiveHash != 0;
 
             if (p1HasConstraint)
             {

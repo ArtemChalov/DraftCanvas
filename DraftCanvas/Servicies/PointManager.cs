@@ -5,27 +5,37 @@ namespace DraftCanvas.Servicies
 {
     internal class PointManager
     {
-        internal static void AddPrimitive(IPrimitive primitive, IDictionary<int, DcPoint> pointCollection)
+        internal static void AddPrimitivePoints(IDictionary<int, DcPoint> pointCollection, IPrimitive primitive)
         {
             foreach (var item in primitive.Points)
             {
-                DcPoint newPoint = new DcPoint(item.Value, item.Key, primitive.ID);
-                if (pointCollection.Values.Contains(newPoint))
-                {
-                    DcPoint pointIssuer = pointCollection.Values.Where(v => v.Equals(newPoint)).First();
-                    pointIssuer.SubHash = newPoint.GetHashCode();
-                    pointCollection[pointIssuer.GetHashCode()] = pointIssuer;
+                DcPoint newPoint = new DcPoint(item.Value, item.Key);
 
-                    newPoint.IssuerHash = pointIssuer.GetHashCode();
-                }
+                newPoint = SetConstraint(newPoint, pointCollection);
+
                 pointCollection.Add(item.Key, newPoint);
             }
+        }
+
+        internal static DcPoint SetConstraint(DcPoint newPoint, IDictionary<int, DcPoint> pointCollection)
+        {
+            if (!pointCollection.Values.Contains(newPoint)) return newPoint;
+
+            DcPoint pointIssuer = pointCollection.Values.Where(v => v.Equals(newPoint)).First();
+
+            // Setting reference to the dependent point
+            pointIssuer.DependedHash = newPoint.GetHashCode();
+            pointCollection[pointIssuer.GetHashCode()] = pointIssuer;
+
+            // Setting reference to the active point
+            newPoint.ActiveHash = pointIssuer.GetHashCode();
+            return newPoint;
         }
 
         internal static bool ResolveConstraint(Canvas canvas, double newX, double newY, int issuerHash)
         {
             DcPoint issuerPoint = canvas.PointCollection[issuerHash];
-            DcPoint subPoint = canvas.PointCollection[issuerPoint.SubHash];
+            DcPoint subPoint = canvas.PointCollection[issuerPoint.DependedHash];
 
             IVisualObject visualObject = canvas.GetDrawingVisualById(PointHash.GetOwnerID(subPoint.GetHashCode())).VisualObject;
 

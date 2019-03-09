@@ -53,7 +53,7 @@ namespace DraftCanvas
 
             if (visualElement is IPrimitive primitive)
             {
-                PointManager.AddPrimitive(primitive, PointCollection);
+                PointManager.AddPrimitivePoints(PointCollection, primitive);
             }
             Visual visual = visualElement.GetVisual();
             _visualsCollection.Add(visual);
