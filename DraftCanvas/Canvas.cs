@@ -1,4 +1,6 @@
-﻿using DraftCanvas.Servicies;
+﻿using DraftCanvas.ExtendedClasses;
+using DraftCanvas.Primitives;
+using DraftCanvas.Servicies;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
@@ -9,6 +11,7 @@ namespace DraftCanvas
     public class Canvas : FrameworkElement
     {
         private List<Visual> _visualsCollection;
+        private DcLineSegmentList _lineSegments;
         private readonly Dictionary<int, DcPoint> _pointCollection = new Dictionary<int, DcPoint>();
 
         #region DependencyProperties Registration
@@ -27,6 +30,8 @@ namespace DraftCanvas
             ClipToBounds = true;
 
             CanvasParam.CanvasHeight = this.Height;
+
+            _lineSegments = new DcLineSegmentList(this);
         }
 
         #region Properties
@@ -41,6 +46,8 @@ namespace DraftCanvas
         }
 
         public Dictionary<int, DcPoint> PointCollection => _pointCollection;
+
+        public DcLineSegmentList DcLineSegments => _lineSegments;
 
         #endregion
 

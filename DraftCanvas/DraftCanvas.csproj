@@ -67,6 +67,7 @@
     <Compile Include="CanvasCounter.cs" />
     <Compile Include="CanvasParam.cs" />
     <Compile Include="Enums\DraftCanvasEnums.cs" />
+    <Compile Include="ExtendedClasses\DcLineSegmentList.cs" />
     <Compile Include="Interfacies\IPrimitive.cs" />
     <Compile Include="ValueTypes\DcPoint.cs" />
     <Compile Include="ExtendedClasses\DrawingVisualEx.cs" />
