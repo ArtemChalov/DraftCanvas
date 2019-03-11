@@ -37,7 +37,7 @@ namespace DraftCanvas.Servicies
             DcPoint issuerPoint = canvas.PointCollection[issuerHash];
             DcPoint subPoint = canvas.PointCollection[issuerPoint.DependedHash];
 
-            IVisualObject visualObject = canvas.GetDrawingVisualById(255)?.VisualObject;
+            IVisualObject visualObject = canvas.GetDrawingVisualById(PointHash.GetIdFromHash(subPoint.GetHashCode()))?.VisualObject;
 
             if (visualObject is IPrimitive primitive)
                 primitive.SetPoint(newX, newY, subPoint.GetHashCode());
