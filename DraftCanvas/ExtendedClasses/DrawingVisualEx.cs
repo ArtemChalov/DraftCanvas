@@ -1,13 +1,12 @@
-﻿using DraftCanvas.Primitives;
-using System.Windows.Media;
+﻿using System.Windows.Media;
 
 namespace DraftCanvas
 {
     /// <summary>
-    /// This one class extends DrawingVisual class with the ID, Tag, IsDirty and IVisualObject reference properties.
-    /// The extention helps find out the visual object with tag or id in the visual collection.
+    /// Class that extends the DrawingVisual class by the additional properties
+    /// like as ID, Tag, IsDirty and IVisualObject refarence.
     /// </summary>
-    public sealed class DrawingVisualEx : DrawingVisual, IDirty
+    public sealed class DrawingVisualEx : DrawingVisual
     {
         IVisualObject _visualObj;
 

@@ -4,7 +4,7 @@ namespace DraftCanvas
     /// <summary>
     /// 
     /// </summary>
-    public interface IVisualizable : IDirty
+    public interface IVisualizable
     {
         /// <summary>
         /// 
