@@ -16,7 +16,7 @@ namespace DraftCanvas.Servicies
             return (hash >> _offset);
         }
 
-        internal static int GetOwnerID(int hash)
+        internal static int GetIdFromHash(int hash)
         {
             return ((hash << _highZeroOffset) >> _highZeroOffset);
         }

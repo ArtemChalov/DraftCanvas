@@ -5,6 +5,9 @@ using System.Windows.Media;
 
 namespace DraftCanvas.Primitives
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class DcLineSegment : IPrimitive
     {
         private readonly string _tag = "LineSegment";
@@ -23,6 +26,14 @@ namespace DraftCanvas.Primitives
 
         #region Constructors
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="x1"></param>
+        /// <param name="y1"></param>
+        /// <param name="x2"></param>
+        /// <param name="y2"></param>
+        /// <param name="constraint"></param>
         public DcLineSegment(double x1, double y1, double x2, double y2, LineConstraint constraint = LineConstraint.Free)
         {
             LocalConstraint = constraint;
@@ -45,6 +56,13 @@ namespace DraftCanvas.Primitives
             _angle = DcMath.GetLineSegmentAngle(this);
         }
         
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="originPoint"></param>
+        /// <param name="length"></param>
+        /// <param name="angle"></param>
+        /// <param name="constraint"></param>
         public DcLineSegment(Point originPoint,  double length, double angle, LineConstraint constraint = LineConstraint.Angle)
         {
             LocalConstraint = constraint;
@@ -71,42 +89,85 @@ namespace DraftCanvas.Primitives
 
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         public Canvas Owner { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public int ID => _id;
 
+        /// <summary>
+        /// 
+        /// </summary>
         public string Tag => _tag;
 
+        /// <summary>
+        /// 
+        /// </summary>
         public double X1 => _x1;
 
+        /// <summary>
+        /// 
+        /// </summary>
         public double Y1 => _y1;
 
+        /// <summary>
+        /// 
+        /// </summary>
         public double X2 => _x2;
 
+        /// <summary>
+        /// 
+        /// </summary>
         public double Y2 => _y2;
 
+        /// <summary>
+        /// 
+        /// </summary>
         public IDictionary<int, Point> Points => _points;
 
+        /// <summary>
+        /// 
+        /// </summary>
         public double Length
         {
             get { return _length; }
             set {OnChangeLength(value); }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public double Angle
         {
             get { return _angle; }
             set { OnChangeAngle(value); }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public LineConstraint LocalConstraint { get; set; } = LineConstraint.Free;
 
+        /// <summary>
+        /// 
+        /// </summary>
         public bool IsDirty { get; set; } = false;
 
         #endregion
 
         #region Public Methods
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="newX"></param>
+        /// <param name="newY"></param>
+        /// <param name="pointHash"></param>
+        /// <returns></returns>
         public bool SetPoint(double newX, double newY, int pointHash)
         {
             double DelataX = 0;
@@ -132,6 +193,10 @@ namespace DraftCanvas.Primitives
             return res;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public DrawingVisualEx GetVisual()
         {
             DrawingVisualEx visual = new DrawingVisualEx(this);

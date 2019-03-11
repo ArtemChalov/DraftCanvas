@@ -59,7 +59,7 @@ namespace UnitTests
         public void GetOwnerID_1048576_Test()
         {
             int expected = 0;
-            var actual = PointHash.GetOwnerID(1048576);
+            var actual = PointHash.GetIdFromHash(1048576);
             Assert.AreEqual(expected, actual);
         }
 
@@ -67,7 +67,7 @@ namespace UnitTests
         public void GetOwnerID_2097500_Test()
         {
             int expected = 348;
-            var actual = PointHash.GetOwnerID(2097500);
+            var actual = PointHash.GetIdFromHash(2097500);
             Assert.AreEqual(expected, actual);
         }
     }
