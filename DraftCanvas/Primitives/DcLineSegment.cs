@@ -66,7 +66,7 @@ namespace DraftCanvas.Primitives
         {
             _x1 = originPoint.X;
             _y1 = originPoint.Y;
-            _angle = angle;
+            _angle = angle < 0 ? angle + 360 : angle;
             _length = length;
 
             _x2 = _x1 + DcMath.Xoffset(length, angle);
@@ -214,6 +214,9 @@ namespace DraftCanvas.Primitives
         /// <param name="constraint">A desired constraint to add.</param>
         public void AddLocalConstraint(LineConstraint constraint)
         {
+            if (constraint == LineConstraint.Heigth && (Angle == 0 || Angle == 180)) return;
+            if (constraint == LineConstraint.Width && (Angle == 90 || Angle == 270)) return;
+
             LocalConstraint = LocalConstraint | (int)constraint;
         }
 
@@ -281,10 +284,9 @@ namespace DraftCanvas.Primitives
                 if (p2HasConstraint) return;
                 else
                 {
-                    if (HasConstraint(LineConstraint.Heigth) && Angle != 0 && Angle != 180)
+                    if (HasConstraint(LineConstraint.Heigth))
                     {
                         double h = DcMath.GetHeight(_y1, Y2 + DcMath.Yoffset(delta, Angle));
-
                         if (h != Height)
                         {
                             _angle = DcMath.GetAngleByHeight(Height, Width, newLength);

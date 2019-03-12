@@ -23,7 +23,7 @@ namespace CanvasApp
 
         private void Add_lines(object sender, RoutedEventArgs e)
         {
-            DcLineSegment lineSegment = new DcLineSegment(new Point(200, 300), 100, 100);
+            DcLineSegment lineSegment = new DcLineSegment(new Point(200, 300), 100, 0);
             lineSegment.AddLocalConstraint(LineConstraint.Heigth);
 
             Canva.DcLineSegments.Add(new DcLineSegment(new Point(200, 200), 100, 90));
