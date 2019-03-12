@@ -49,7 +49,7 @@ namespace CanvasApp
 
             if (someLine == null) return;
 
-            someLine.Length += 10;
+            someLine.Length -= 10;
             Canva.Update();
 
             Mess1.Text = $"T Angle: ";
