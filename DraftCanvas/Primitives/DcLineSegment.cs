@@ -1,7 +1,10 @@
 ﻿using DraftCanvas.Servicies;
+using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Media;
+using PM = DraftCanvas.Servicies.PointManager;
 
 namespace DraftCanvas.Primitives
 {
@@ -33,11 +36,8 @@ namespace DraftCanvas.Primitives
         /// <param name="y1"></param>
         /// <param name="x2"></param>
         /// <param name="y2"></param>
-        /// <param name="constraint"></param>
-        public DcLineSegment(double x1, double y1, double x2, double y2, LineConstraint constraint = LineConstraint.Free)
+        public DcLineSegment(double x1, double y1, double x2, double y2)
         {
-            LocalConstraint = constraint;
-
             _x1 = x1;
             _y1 = y1;
             _x2 = x2;
@@ -62,11 +62,8 @@ namespace DraftCanvas.Primitives
         /// <param name="originPoint"></param>
         /// <param name="length"></param>
         /// <param name="angle"></param>
-        /// <param name="constraint"></param>
-        public DcLineSegment(Point originPoint,  double length, double angle, LineConstraint constraint = LineConstraint.Angle)
+        public DcLineSegment(Point originPoint,  double length, double angle)
         {
-            LocalConstraint = constraint;
-
             _x1 = originPoint.X;
             _y1 = originPoint.Y;
             _angle = angle;
@@ -141,6 +138,24 @@ namespace DraftCanvas.Primitives
         /// <summary>
         /// 
         /// </summary>
+        public double Height
+        {
+            get { return DcMath.GetHeight(_y1, _y2); }
+            set { OnChangeHeight(value); }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public double Width
+        {
+            get { return DcMath.GetWidth(_x1, _x2); }
+            set { OnChangeWidth(value); }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public double Angle
         {
             get { return _angle; }
@@ -150,7 +165,7 @@ namespace DraftCanvas.Primitives
         /// <summary>
         /// 
         /// </summary>
-        public LineConstraint LocalConstraint { get; set; } = LineConstraint.Free;
+        public int LocalConstraint { get; set; } = 0;
 
         /// <summary>
         /// 
@@ -179,14 +194,14 @@ namespace DraftCanvas.Primitives
                     DelataX = newX - X1;
                     DelataY = newY - Y1;
                     res = OnChangeP1(newX, newY);
-                    if (LocalConstraint != LineConstraint.Free)
+                    if (LocalConstraint != 0)
                         res = OnChangeP2(X2 + DelataX, Y2 + DelataY);
                     break;
                 case 2:
                     DelataX = newX - X2;
                     DelataY = newY - Y2;
                     res = OnChangeP2(newX, newY);
-                    if (LocalConstraint != LineConstraint.Free)
+                    if (LocalConstraint != 0)
                         res = OnChangeP1(X1 + DelataX, Y1 + DelataY);
                     break;
             }
@@ -220,7 +235,7 @@ namespace DraftCanvas.Primitives
         {
             bool res = false;
             if (Owner.PointCollection[_p1Hash].DependedHash != 0)
-                res = PointManager.ResolveConstraint(Owner, newX, newY, _p1Hash);
+                res = PM.ResolveConstraint(Owner, newX, newY, _p1Hash);
 
             _x1 = newX;
             _y1 = newY;
@@ -234,7 +249,7 @@ namespace DraftCanvas.Primitives
         {
             bool res = false;
             if (Owner.PointCollection[_p2Hash].DependedHash != 0)
-                res = PointManager.ResolveConstraint(Owner, newX, newY, _p2Hash);
+                res = PM.ResolveConstraint(Owner, newX, newY, _p2Hash);
 
             _x2 = newX;
             _y2 = newY;
@@ -247,18 +262,32 @@ namespace DraftCanvas.Primitives
         private void OnChangeLength(double newValue)
         {
             double delta = newValue -_length;
-            
+
+            // Tests if one of the point has a constraint.
             var p1HasConstraint = Owner.PointCollection[_p1Hash].ActiveHash != 0;
             var p2HasConstraint = Owner.PointCollection[_p2Hash].ActiveHash != 0;
 
             if (p1HasConstraint)
             {
-                if (p2HasConstraint)
-                {
-                    return;
-                }
+                if (p2HasConstraint) return;
                 else
+                {
+                    double x1 = X2 + DcMath.Xoffset(delta, Angle);
+                    double y1 = Y2 + DcMath.Yoffset(delta, Angle);
+
+                    double h = DcMath.GetHeight(y1, Y2);
+                    double w = DcMath.GetWidth(x1, X2);
+
+                    if (HasConstraint(LineConstraint.Heigth) && Angle != 0 && Angle != 180)
+                    {
+                        if (h != Height)
+                        {
+
+                        }
+                    }
+
                     OnChangeP2(X2 + DcMath.Xoffset(delta, Angle), Y2 + DcMath.Yoffset(delta, Angle));
+                }
             }
             else
             {
@@ -266,12 +295,35 @@ namespace DraftCanvas.Primitives
                     OnChangeP1(X1 - DcMath.Xoffset(delta, Angle), Y1 - DcMath.Yoffset(delta, Angle));
                 else
                 {
-                    OnChangeP1(X1 - DcMath.Xoffset(delta / 2, Angle), Y1 - DcMath.Yoffset(delta / 2, Angle));
-                    OnChangeP2(X2 + DcMath.Xoffset(delta / 2, Angle), Y2 + DcMath.Yoffset(delta / 2, Angle));
+                    if (LocalConstraint == 0)
+                    {
+                        OnChangeP1(X1 - DcMath.Xoffset(delta / 2, Angle), Y1 - DcMath.Yoffset(delta / 2, Angle));
+                        OnChangeP2(X2 + DcMath.Xoffset(delta / 2, Angle), Y2 + DcMath.Yoffset(delta / 2, Angle));
+                    }
+                    else
+                    {
+                       //if (LocalConstraint & LineConstraint.)
+                    }
                 }
             }
 
             _length = newValue;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private bool HasConstraint(LineConstraint constraint)
+        {
+            return (LocalConstraint & (int)constraint) != 0;
+        }
+
+        private void OnChangeHeight(double value)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void OnChangeWidth(double value)
+        {
+            throw new NotImplementedException();
         }
 
         private void OnChangeAngle(double newValue)

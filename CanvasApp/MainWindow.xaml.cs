@@ -1,5 +1,6 @@
 ﻿using DraftCanvas;
 using DraftCanvas.Primitives;
+using DraftCanvas.Servicies;
 using System.Windows;
 using System.Windows.Media;
 
@@ -22,15 +23,28 @@ namespace CanvasApp
 
         private void Add_lines(object sender, RoutedEventArgs e)
         {
-            Canva.DcLineSegments.Add(new DcLineSegment(100, 100, 100, 200));
-            Canva.DcLineSegments.Add(new DcLineSegment(new Point(100, 200), 100, 0, LineConstraint.Angle));
-            Canva.DcLineSegments.Add(new DcLineSegment(new Point(200, 200), 100, 270, LineConstraint.Angle));
-            Canva.DcLineSegments.Add(new DcLineSegment(200, 100, 100, 100, LineConstraint.Angle));
+            DcLineSegment lineSegment = new DcLineSegment(new Point(300, 300), 200, 225);
+
+            Canva.DcLineSegments.Add(lineSegment);
+
+            double acuteAngle = DcMath.GetAngleByHeight(lineSegment.Height, lineSegment.Width, lineSegment.Length);
+
+            Mess1.Text = $"T Angle: {acuteAngle}";
+            Mess2.Text = $"Angle: {lineSegment.Angle}";
+            Mess3.Text = $"Width: {lineSegment.Width}";
+            Mess4.Text = $"Height: {lineSegment.Height}";
+            Mess5.Text = $"Length: {lineSegment.Length}";
+
+            //Canva.DcLineSegments.Add(new DcLineSegment(new Point(100, 200), 100, 0));
+            //Canva.DcLineSegments.Add(new DcLineSegment(new Point(200, 200), 100, 270));
+            //Canva.DcLineSegments.Add(new DcLineSegment(200, 100, 100, 100));
         }
 
         private void Lines_Action(object sender, RoutedEventArgs e)
         {
             var someLine = Canva.DcLineSegments.Find(line => line.ID == 0);
+
+            if (someLine == null) return;
 
             someLine.Length += 10;
             Canva.Update();

@@ -20,10 +20,10 @@ namespace DraftCanvas
         /// <summary>
         /// Line has angle constraint.
         /// </summary>
-        Angle = 3,
+        Angle = 4,
         /// <summary>
         /// Line has length constraint.
         /// </summary>
-        Length = 4
+        Length = 8
     }
 }

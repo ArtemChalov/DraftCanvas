@@ -19,9 +19,19 @@
                         <Setter Property="Margin" Value="5"/>
                     </Style.Setters>
                 </Style>
+                <Style TargetType="TextBlock">
+                    <Style.Setters>
+                        <Setter Property="Margin" Value="5"/>
+                    </Style.Setters>
+                </Style>
             </StackPanel.Resources>
             <Button Click="Add_lines">Add Lines</Button>
             <Button Click="Lines_Action">Action</Button>
+            <TextBlock x:Name="Mess1"/>
+            <TextBlock x:Name="Mess2"/>
+            <TextBlock x:Name="Mess3"/>
+            <TextBlock x:Name="Mess4"/>
+            <TextBlock x:Name="Mess5"/>
         </StackPanel>
         
         <!--Column 1-->

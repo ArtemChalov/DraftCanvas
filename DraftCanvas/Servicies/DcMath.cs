@@ -1,5 +1,6 @@
 ﻿using DraftCanvas.Primitives;
 using System;
+using System.Runtime.CompilerServices;
 
 namespace DraftCanvas.Servicies
 {
@@ -65,10 +66,28 @@ namespace DraftCanvas.Servicies
         }
 
         /// <summary>
+        /// Calculates the acute angle of a triangle.
+        /// </summary>
+        /// <param name="height">Height of a triangle.</param>
+        /// <param name="width">Width of a triangle.</param>
+        /// <param name="hypotenuse">Hypotenuse of a triangle.</param>
+        /// <returns></returns>
+        static public double GetAngleByHeight(double height, double width, double hypotenuse)
+        {
+            double angle = Math.Round(RadianToDegree(Math.Asin(height / hypotenuse)), 6);
+
+            if (width < 0)
+                angle = 180 - angle;
+
+            return angle < 0 ? angle + 360 : angle;
+        }
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="degree"></param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static public double DegreeToRadian(double degree) => Math.PI * degree / 180;
 
         /// <summary>
@@ -76,6 +95,31 @@ namespace DraftCanvas.Servicies
         /// </summary>
         /// <param name="radian"></param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static public double RadianToDegree(double radian) => radian * 180 / Math.PI;
+
+        /// <summary>
+        /// Calculates a distance normalized to X axis between two points.
+        /// </summary>
+        /// <param name="y1">A Y coordinate of first point.</param>
+        /// <param name="y2">A Y coordinate of second point.</param>
+        /// <returns>Returns distance normalized to X axis.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static double GetHeight(double y1, double y2)
+        {
+            return y2 - y1;
+        }
+
+        /// <summary>
+        /// Calculates a distance normalized to Y axis between two points.
+        /// </summary>
+        /// <param name="x1">A X coordinate of first point.</param>
+        /// <param name="x2">A X coordinate of second point.</param>
+        /// <returns>Returns distance normalized to Y axis.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static double GetWidth(double x1, double x2)
+        {
+            return x2 - x1;
+        }
     }
 }

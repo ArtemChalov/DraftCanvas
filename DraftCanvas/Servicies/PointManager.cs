@@ -40,7 +40,7 @@ namespace DraftCanvas.Servicies
             IVisualObject visualObject = canvas.GetDrawingVisualById(PointHash.GetIdFromHash(subPoint.GetHashCode()))?.VisualObject;
 
             if (visualObject is IPrimitive primitive)
-                primitive.SetPoint(newX, newY, subPoint.GetHashCode());
+                return primitive.SetPoint(newX, newY, subPoint.GetHashCode());
 
             return false;
         }
