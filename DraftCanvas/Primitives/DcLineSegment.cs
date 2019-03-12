@@ -314,6 +314,7 @@ namespace DraftCanvas.Primitives
                     if (HasConstraint(Constraints.Heigth))
                     {
                         if (Angle == 90 || Angle == 270 || HasConstraint(Constraints.Width) || HasConstraint(Constraints.Angle) || newLength < Height) return;
+
                         _angle = DcMath.GetAngleByHeight(Height, Width, newLength);
                         OnChangeP1(X2 - DcMath.Xoffset(newLength, _angle), Y1);
                     }
@@ -327,19 +328,40 @@ namespace DraftCanvas.Primitives
                     else
                     {
                         if (newLength <= 0) return;
+
                         OnChangeP1(X1 - DcMath.Xoffset(delta, Angle), Y1 - DcMath.Yoffset(delta, Angle));
                     }
                 }
                 else
                 {
-                    if (LocalConstraint == 0)
+                    if (HasConstraint(Constraints.Heigth))
                     {
-                        OnChangeP1(X1 - DcMath.Xoffset(delta / 2, Angle), Y1 - DcMath.Yoffset(delta / 2, Angle));
-                        OnChangeP2(X2 + DcMath.Xoffset(delta / 2, Angle), Y2 + DcMath.Yoffset(delta / 2, Angle));
+                        if (Angle == 90 || Angle == 270 || HasConstraint(Constraints.Width) || HasConstraint(Constraints.Angle) || newLength < Height) return;
+
+                        double newWidth = DcMath.GetСathetus(Height, newLength);
+                        newWidth = Width > 0 ? newWidth : -newWidth;
+                        double xOffset = (newWidth - Width) / 2;
+
+                        OnChangeP1(X1 - xOffset, Y1);
+                        OnChangeP2(X2 + xOffset, Y2);
+                        _angle = DcMath.GetLineSegmentAngle(this);
+                    }
+                    else if (HasConstraint(Constraints.Width))
+                    {
+                        if (Angle == 0 || Angle == 180 || HasConstraint(Constraints.Heigth) || HasConstraint(Constraints.Angle) || newLength < Width) return;
+
+                        double newHeight = DcMath.GetСathetus(Width, newLength);
+                        newHeight = Height > 0 ? newHeight : -newHeight;
+                        double yOffset = (newHeight - Height) / 2;
+
+                        OnChangeP1(X1, Y1 - yOffset);
+                        OnChangeP2(X2, Y2 + yOffset);
+                        _angle = DcMath.GetLineSegmentAngle(this);
                     }
                     else
                     {
-                        //if (LocalConstraint & LineConstraint.)
+                        OnChangeP1(X1 - DcMath.Xoffset(delta / 2, Angle), Y1 - DcMath.Yoffset(delta / 2, Angle));
+                        OnChangeP2(X2 + DcMath.Xoffset(delta / 2, Angle), Y2 + DcMath.Yoffset(delta / 2, Angle));
                     }
                 }
             }

@@ -83,6 +83,15 @@ namespace DraftCanvas.Servicies
         }
 
         /// <summary>
+        /// Calculates a cathetus of a triangle.
+        /// </summary>
+        /// <param name="anotherсathetus"></param>
+        /// <param name="hypotenuse"></param>
+        /// <returns></returns>
+        static public double GetСathetus(double anotherсathetus, double hypotenuse) => 
+            Math.Sqrt(hypotenuse * hypotenuse - anotherсathetus * anotherсathetus);
+
+        /// <summary>
         /// Calculates the line angle.
         /// </summary>
         /// <param name="width">Width of a triangle.</param>
