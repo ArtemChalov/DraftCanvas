@@ -299,10 +299,10 @@ namespace DraftCanvas.Primitives
 
                         _angle = DcMath.GetAngleByWidth(Width, Height, newLength);
 
-                        //OnChangeP2(X1 + DcMath.Xoffset(newLength, _angle), Y2);
+                        OnChangeP2(X2, Y1 + DcMath.Yoffset(newLength, _angle));
                     }
-
-                    //OnChangeP2(X2 + DcMath.Xoffset(delta, Angle), Y2 + DcMath.Yoffset(delta, Angle));
+                    else
+                        OnChangeP2(X2 + DcMath.Xoffset(delta, Angle), Y2 + DcMath.Yoffset(delta, Angle));
                 }
             }
             else
