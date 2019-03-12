@@ -22,7 +22,7 @@ namespace DraftCanvas.Servicies
             double deltaX = Math.Abs(x2 - x1);
             double deltaY = Math.Abs(y2 - y1);
 
-            return Math.Round(Math.Sqrt((deltaX * deltaX + deltaY * deltaY)), 6);
+            return Math.Sqrt((deltaX * deltaX + deltaY * deltaY));
         }
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace DraftCanvas.Servicies
         /// <returns></returns>
         static public double Xoffset(double distance, double angle)
         {
-            return Math.Round((distance * Math.Cos(DcMath.DegreeToRadian(angle))), 6);
+            return distance * Math.Cos(DcMath.DegreeToRadian(angle));
         }
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace DraftCanvas.Servicies
         /// <returns></returns>
         static public double Yoffset(double distance, double angle)
         {
-            return Math.Round((distance * Math.Sin(DcMath.DegreeToRadian(angle))), 6);
+            return distance * Math.Sin(DcMath.DegreeToRadian(angle));
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace DraftCanvas.Servicies
             if (deltaX < 0)
                 angle += 180;
 
-            return angle < 0 ? Math.Round((angle + 360), 6) : Math.Round(angle, 6);
+            return angle < 0 ? angle + 360 : angle;
         }
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace DraftCanvas.Servicies
             if (width < 0)
                 angle = 180 - angle;
 
-            return angle < 0 ? Math.Round((angle + 360), 6) : Math.Round(angle, 6);
+            return angle < 0 ? angle + 360 : angle;
         }
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace DraftCanvas.Servicies
             if (height < 0)
                 angle = 360 - angle;
 
-            return angle < 0 ? Math.Round((angle + 360), 6) : Math.Round(angle, 6);
+            return angle < 0 ? angle + 360 : angle;
         }
 
         /// <summary>
