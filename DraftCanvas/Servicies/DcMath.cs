@@ -57,29 +57,46 @@ namespace DraftCanvas.Servicies
             double deltaX = lineSegment.X2 - lineSegment.X1;
             double deltaY = lineSegment.Y2 - lineSegment.Y1;
 
-            double angle = Math.Round(RadianToDegree(Math.Atan(deltaY / deltaX)), 6);
+            double angle = RadianToDegree(Math.Atan(deltaY / deltaX));
 
             if (deltaX < 0)
                 angle += 180;
 
-            return angle < 0 ? angle + 360 : angle;
+            return angle < 0 ? Math.Round((angle + 360), 6) : Math.Round(angle, 6);
         }
 
         /// <summary>
-        /// Calculates the acute angle of a triangle.
+        /// Calculates the line angle.
         /// </summary>
         /// <param name="height">Height of a triangle.</param>
         /// <param name="width">Width of a triangle.</param>
         /// <param name="hypotenuse">Hypotenuse of a triangle.</param>
-        /// <returns></returns>
+        /// <returns>Returns the angle in degrees.</returns>
         static public double GetAngleByHeight(double height, double width, double hypotenuse)
         {
-            double angle = Math.Round(RadianToDegree(Math.Asin(height / hypotenuse)), 6);
+            double angle = RadianToDegree(Math.Asin(height / hypotenuse));
 
             if (width < 0)
                 angle = 180 - angle;
 
-            return angle < 0 ? angle + 360 : angle;
+            return angle < 0 ? Math.Round((angle + 360), 6) : Math.Round(angle, 6);
+        }
+
+        /// <summary>
+        /// Calculates the line angle.
+        /// </summary>
+        /// <param name="width">Width of a triangle.</param>
+        /// <param name="height">Height of a triangle.</param>
+        /// <param name="hypotenuse">Hypotenuse of a triangle.</param>
+        /// <returns>Returns the angle in degrees.</returns>
+        static public double GetAngleByWidth(double width, double height, double hypotenuse)
+        {
+            double angle = RadianToDegree(Math.Acos(width / hypotenuse));
+
+            if (height < 0)
+                angle = 360 - angle;
+
+            return angle < 0 ? Math.Round((angle + 360), 6) : Math.Round(angle, 6);
         }
 
         /// <summary>

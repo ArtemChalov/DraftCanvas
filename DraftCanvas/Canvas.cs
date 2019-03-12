@@ -13,7 +13,7 @@ namespace DraftCanvas
     public class Canvas : FrameworkElement
     {
         private List<Visual> _visualsCollection;
-        private DcLineSegmentList _lineSegments;
+        private readonly DcLineSegmentList _lineSegments;
         private readonly Dictionary<int, DcPoint> _pointCollection = new Dictionary<int, DcPoint>();
 
         #region DependencyProperties Registration

@@ -4,7 +4,7 @@ namespace DraftCanvas
     /// <summary>
     /// The constraints enum for LineSegmen.
     /// </summary>
-    public enum LineConstraint {
+    public enum Constraints {
         /// <summary>
         /// Line hasn't constraint.
         /// </summary>

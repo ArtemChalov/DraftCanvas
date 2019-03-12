@@ -212,10 +212,10 @@ namespace DraftCanvas.Primitives
         /// Adds a new local constraint.
         /// </summary>
         /// <param name="constraint">A desired constraint to add.</param>
-        public void AddLocalConstraint(LineConstraint constraint)
+        public void AddLocalConstraint(Constraints constraint)
         {
-            if (constraint == LineConstraint.Heigth && (Angle == 0 || Angle == 180)) return;
-            if (constraint == LineConstraint.Width && (Angle == 90 || Angle == 270)) return;
+            if (constraint == Constraints.Heigth && (Angle == 0 || Angle == 180)) return;
+            if (constraint == Constraints.Width && (Angle == 90 || Angle == 270)) return;
 
             LocalConstraint = LocalConstraint | (int)constraint;
         }
@@ -273,6 +273,8 @@ namespace DraftCanvas.Primitives
 
         private void OnChangeLength(double newLength)
         {
+            if (HasConstraint(Constraints.Length)) return;
+
             double delta = newLength -_length;
 
             // Tests if one of the point has a constraint.
@@ -284,14 +286,20 @@ namespace DraftCanvas.Primitives
                 if (p2HasConstraint) return;
                 else
                 {
-                    if (HasConstraint(LineConstraint.Heigth))
+                    if (HasConstraint(Constraints.Heigth))
                     {
-                        double h = DcMath.GetHeight(_y1, Y2 + DcMath.Yoffset(delta, Angle));
-                        if (h != Height)
-                        {
-                            _angle = DcMath.GetAngleByHeight(Height, Width, newLength);
-                            OnChangeP2(X1 + DcMath.Xoffset(newLength, _angle), Y2);
-                        }
+                        if (Angle == 90 || Angle == 270 || HasConstraint(Constraints.Width) || HasConstraint(Constraints.Angle)) return;
+
+                        _angle = DcMath.GetAngleByHeight(Height, Width, newLength);
+                        OnChangeP2(X1 + DcMath.Xoffset(newLength, _angle), Y2);
+                    }
+                    else if (HasConstraint(Constraints.Width))
+                    {
+                        if (Angle == 0 || Angle == 180 || HasConstraint(Constraints.Heigth) || HasConstraint(Constraints.Angle)) return;
+
+                        _angle = DcMath.GetAngleByWidth(Width, Height, newLength);
+
+                        //OnChangeP2(X1 + DcMath.Xoffset(newLength, _angle), Y2);
                     }
 
                     //OnChangeP2(X2 + DcMath.Xoffset(delta, Angle), Y2 + DcMath.Yoffset(delta, Angle));
@@ -319,7 +327,7 @@ namespace DraftCanvas.Primitives
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private bool HasConstraint(LineConstraint constraint)
+        private bool HasConstraint(Constraints constraint)
         {
             return (LocalConstraint & (int)constraint) != 0;
         }

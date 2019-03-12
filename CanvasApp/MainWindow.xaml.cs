@@ -23,13 +23,13 @@ namespace CanvasApp
 
         private void Add_lines(object sender, RoutedEventArgs e)
         {
-            DcLineSegment lineSegment = new DcLineSegment(new Point(200, 300), 100, 0);
-            lineSegment.AddLocalConstraint(LineConstraint.Heigth);
+            DcLineSegment lineSegment = new DcLineSegment(new Point(200, 300), 100, 30);
+            lineSegment.AddLocalConstraint(Constraints.Heigth);
 
             Canva.DcLineSegments.Add(new DcLineSegment(new Point(200, 200), 100, 90));
             Canva.DcLineSegments.Add(lineSegment);
 
-            double acuteAngle = DcMath.GetAngleByHeight(lineSegment.Height, lineSegment.Width, lineSegment.Length);
+            double acuteAngle = DcMath.GetAngleByWidth(lineSegment.Width, lineSegment.Height, lineSegment.Length);
 
             Mess1.Text = $"T Angle: {acuteAngle}";
             Mess2.Text = $"Angle: {lineSegment.Angle}";
