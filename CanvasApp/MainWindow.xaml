@@ -12,7 +12,9 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <!--Column 0-->
-        <StackPanel Grid.Column="0" Orientation="Vertical">
+        <StackPanel Grid.Column="0"
+                    MinWidth="200"
+                    Orientation="Vertical">
             <StackPanel.Resources>
                 <Style TargetType="Button">
                     <Style.Setters>

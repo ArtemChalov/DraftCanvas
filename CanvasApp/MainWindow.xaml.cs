@@ -23,8 +23,10 @@ namespace CanvasApp
 
         private void Add_lines(object sender, RoutedEventArgs e)
         {
-            DcLineSegment lineSegment = new DcLineSegment(new Point(300, 300), 200, 225);
+            DcLineSegment lineSegment = new DcLineSegment(new Point(200, 300), 100, 100);
+            lineSegment.AddLocalConstraint(LineConstraint.Heigth);
 
+            Canva.DcLineSegments.Add(new DcLineSegment(new Point(200, 200), 100, 90));
             Canva.DcLineSegments.Add(lineSegment);
 
             double acuteAngle = DcMath.GetAngleByHeight(lineSegment.Height, lineSegment.Width, lineSegment.Length);
@@ -48,6 +50,12 @@ namespace CanvasApp
 
             someLine.Length += 10;
             Canva.Update();
+
+            Mess1.Text = $"T Angle: ";
+            Mess2.Text = $"Angle: {someLine.Angle}";
+            Mess3.Text = $"Width: {someLine.Width}";
+            Mess4.Text = $"Height: {someLine.Height}";
+            Mess5.Text = $"Length: {someLine.Length}";
         }
     }
 }

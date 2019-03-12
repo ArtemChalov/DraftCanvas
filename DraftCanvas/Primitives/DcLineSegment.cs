@@ -268,9 +268,9 @@ namespace DraftCanvas.Primitives
             return res;
         }
 
-        private void OnChangeLength(double newValue)
+        private void OnChangeLength(double newLength)
         {
-            double delta = newValue -_length;
+            double delta = newLength -_length;
 
             // Tests if one of the point has a constraint.
             var p1HasConstraint = Owner.PointCollection[_p1Hash].ActiveHash != 0;
@@ -281,20 +281,18 @@ namespace DraftCanvas.Primitives
                 if (p2HasConstraint) return;
                 else
                 {
-                    double x1 = X2 + DcMath.Xoffset(delta, Angle);
-                    double y1 = Y2 + DcMath.Yoffset(delta, Angle);
-
-                    double h = DcMath.GetHeight(y1, Y2);
-
                     if (HasConstraint(LineConstraint.Heigth) && Angle != 0 && Angle != 180)
                     {
+                        double h = DcMath.GetHeight(_y1, Y2 + DcMath.Yoffset(delta, Angle));
+
                         if (h != Height)
                         {
-                            _angle = DcMath.GetAngleByHeight(h, Width, Length);
+                            _angle = DcMath.GetAngleByHeight(Height, Width, newLength);
+                            OnChangeP2(X1 + DcMath.Xoffset(newLength, _angle), Y2);
                         }
                     }
 
-                    OnChangeP2(X2 + DcMath.Xoffset(delta, Angle), Y2 + DcMath.Yoffset(delta, Angle));
+                    //OnChangeP2(X2 + DcMath.Xoffset(delta, Angle), Y2 + DcMath.Yoffset(delta, Angle));
                 }
             }
             else
@@ -315,7 +313,7 @@ namespace DraftCanvas.Primitives
                 }
             }
 
-            _length = newValue;
+            _length = newLength;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
