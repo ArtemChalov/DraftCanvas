@@ -10,19 +10,19 @@ namespace DraftCanvas.Servicies
     public static class DcMath
     {
         /// <summary>
-        /// 
+        /// Calculates the distance between two points.
         /// </summary>
-        /// <param name="x1"></param>
-        /// <param name="y1"></param>
-        /// <param name="x2"></param>
-        /// <param name="y2"></param>
-        /// <returns></returns>
+        /// <param name="x1">X coordinate of the first point.</param>
+        /// <param name="y1">Y coordinate of the first point.</param>
+        /// <param name="x2">X coordinate of the second point.</param>
+        /// <param name="y2">Y coordinate of the second point.</param>
+        /// <returns>Returns the distance between two points.</returns>
         static public double GetDistance(double x1, double y1, double x2, double y2)
         {
-            double deltaX = Math.Abs(x2 - x1);
-            double deltaY = Math.Abs(y2 - y1);
+            double dX = Math.Abs(x2 - x1);
+            double dY = Math.Abs(y2 - y1);
 
-            return Math.Sqrt((deltaX * deltaX + deltaY * deltaY));
+            return Math.Sqrt((dX * dX + dY * dY));
         }
 
         /// <summary>
@@ -54,30 +54,13 @@ namespace DraftCanvas.Servicies
         /// <returns></returns>
         static public double GetLineSegmentAngle(DcLineSegment lineSegment)
         {
-            double deltaX = lineSegment.X2 - lineSegment.X1;
-            double deltaY = lineSegment.Y2 - lineSegment.Y1;
+            double dX = lineSegment.X2 - lineSegment.X1;
+            double dY = lineSegment.Y2 - lineSegment.Y1;
 
-            double angle = RadianToDegree(Math.Atan(deltaY / deltaX));
+            double angle = RadianToDegree(Math.Atan(dY / dX));
 
-            if (deltaX < 0)
+            if (dX < 0)
                 angle += 180;
-
-            return angle < 0 ? angle + 360 : angle;
-        }
-
-        /// <summary>
-        /// Calculates the line angle.
-        /// </summary>
-        /// <param name="height">Height of a triangle.</param>
-        /// <param name="width">Width of a triangle.</param>
-        /// <param name="hypotenuse">Hypotenuse of a triangle.</param>
-        /// <returns>Returns the angle in degrees.</returns>
-        static public double GetAngleByHeight(double height, double width, double hypotenuse)
-        {
-            double angle = RadianToDegree(Math.Asin(height / hypotenuse));
-
-            if (width < 0)
-                angle = 180 - angle;
 
             return angle < 0 ? angle + 360 : angle;
         }
@@ -95,15 +78,53 @@ namespace DraftCanvas.Servicies
         /// Calculates the line angle.
         /// </summary>
         /// <param name="width">Width of a triangle.</param>
-        /// <param name="height">Height of a triangle.</param>
+        /// <param name="y1">Y coordinate of the first point.</param>
+        /// <param name="y2">Y coordinate of the second point.</param>
         /// <param name="hypotenuse">Hypotenuse of a triangle.</param>
         /// <returns>Returns the angle in degrees.</returns>
-        static public double GetAngleByWidth(double width, double height, double hypotenuse)
+        static internal double GetAngleByWidth(double width, double y1, double y2, double hypotenuse)
         {
             double angle = RadianToDegree(Math.Acos(width / hypotenuse));
 
-            if (height < 0)
+            if ((y2 - y1) < 0)
                 angle = 360 - angle;
+
+            return angle < 0 ? angle + 360 : angle;
+        }
+
+        /// <summary>
+        /// Calculates the line angle.
+        /// </summary>
+        /// <param name="height">Height of a triangle.</param>
+        /// <param name="hypotenuse">Hypotenuse of a triangle.</param>
+        /// <param name="x1">X coordinate of the first point.</param>
+        /// <param name="y1">Y coordinate of the first point.</param>
+        /// <param name="x2">X coordinate of the second point.</param>
+        /// <param name="y2">Y coordinate of the second point.</param>
+        /// <returns>Returns the angle in degrees.</returns>
+        static internal double GetAngleByHeight(double height, double hypotenuse, double x1, double y1, double x2, double y2)
+        {
+            /* From -360 to 360 tested */
+            double angle = RadianToDegree(Math.Asin(height / hypotenuse));
+
+            double dX = x2 - x1;
+            double dY = y2 - y1;
+
+            if (dX < 0)
+            {
+                if (dY < 0)
+                    angle += 180;
+                else
+                    angle = 180 - angle;
+            }
+            else
+            {
+                if (dY < 0)
+                    angle = 360 - angle;
+            }
+
+            while (angle >= 360) angle -= 360;
+            while (angle <= -360) angle += 360;
 
             return angle < 0 ? angle + 360 : angle;
         }
@@ -133,7 +154,7 @@ namespace DraftCanvas.Servicies
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double GetHeight(double y1, double y2)
         {
-            return y2 - y1;
+            return Math.Abs(y2 - y1);
         }
 
         /// <summary>
@@ -145,7 +166,7 @@ namespace DraftCanvas.Servicies
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double GetWidth(double x1, double x2)
         {
-            return x2 - x1;
+            return Math.Abs(x2 - x1);
         }
     }
 }

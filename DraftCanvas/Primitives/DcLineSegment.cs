@@ -26,6 +26,8 @@ namespace DraftCanvas.Primitives
 
         private int _p1Hash;
         private int _p2Hash;
+        private double _height;
+        private double _width;
 
         #region Constructors
 
@@ -48,14 +50,16 @@ namespace DraftCanvas.Primitives
 
             _points = new Dictionary<int, Point>()
             {
-                {_p1Hash, new Point(_x1, _y1)},
-                {_p2Hash, new Point(_x2, _y2)}
+                {_p1Hash, new Point(X1, Y1)},
+                {_p2Hash, new Point(X2, Y2)}
             };
 
-            _length = DcMath.GetDistance(_x1, _y1, _x2, _y2);
+            _length = DcMath.GetDistance(X1, Y1, X2, Y2);
             _angle = DcMath.GetLineSegmentAngle(this);
+            _height = DcMath.GetHeight(Y1, Y2);
+            _width = DcMath.GetWidth(X1, X2);
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -66,11 +70,18 @@ namespace DraftCanvas.Primitives
         {
             _x1 = originPoint.X;
             _y1 = originPoint.Y;
+
+            while (angle >= 360) angle -= 360;
+            while (angle <= -360) angle += 360;
             _angle = angle < 0 ? angle + 360 : angle;
+
             _length = length;
 
             _x2 = _x1 + DcMath.Xoffset(length, angle);
             _y2 = _y1 + DcMath.Yoffset(length, angle);
+
+            _height = DcMath.GetHeight(Y1, Y2);
+            _width = DcMath.GetWidth(X1, X2);
 
             _p1Hash = PointHash.CreateHash(1, _id);
             _p2Hash = PointHash.CreateHash(2, _id);
@@ -140,7 +151,7 @@ namespace DraftCanvas.Primitives
         /// </summary>
         public double Height
         {
-            get { return DcMath.GetHeight(_y1, _y2); }
+            get { return _height; }
             set { OnChangeHeight(value); }
         }
 
@@ -149,7 +160,7 @@ namespace DraftCanvas.Primitives
         /// </summary>
         public double Width
         {
-            get { return DcMath.GetWidth(_x1, _x2); }
+            get { return _width; }
             set { OnChangeWidth(value); }
         }
 
@@ -290,14 +301,14 @@ namespace DraftCanvas.Primitives
                     {
                         if (Angle == 90 || Angle == 270 || HasConstraint(Constraints.Width) || HasConstraint(Constraints.Angle) || newLength < Height) return;
 
-                        _angle = DcMath.GetAngleByHeight(Height, Width, newLength);
+                        _angle = DcMath.GetAngleByHeight(Height, X1, Y1, X2, Y2, newLength);
                         OnChangeP2(X1 + DcMath.Xoffset(newLength, _angle), Y2);
                     }
                     else if (HasConstraint(Constraints.Width))
                     {
                         if (Angle == 0 || Angle == 180 || HasConstraint(Constraints.Heigth) || HasConstraint(Constraints.Angle) || newLength < Width) return;
 
-                        _angle = DcMath.GetAngleByWidth(Width, Height, newLength);
+                        _angle = DcMath.GetAngleByWidth(Width, Y1, Y2, newLength);
                         OnChangeP2(X2, Y1 + DcMath.Yoffset(newLength, _angle));
                     }
                     else
@@ -315,14 +326,14 @@ namespace DraftCanvas.Primitives
                     {
                         if (Angle == 90 || Angle == 270 || HasConstraint(Constraints.Width) || HasConstraint(Constraints.Angle) || newLength < Height) return;
 
-                        _angle = DcMath.GetAngleByHeight(Height, Width, newLength);
+                        _angle = DcMath.GetAngleByHeight(Height, newLength, X1, Y1, X2, Y2);
                         OnChangeP1(X2 - DcMath.Xoffset(newLength, _angle), Y1);
                     }
                     else if (HasConstraint(Constraints.Width))
                     {
                         if (Angle == 0 || Angle == 180 || HasConstraint(Constraints.Heigth) || HasConstraint(Constraints.Angle) || newLength < Width) return;
 
-                        _angle = DcMath.GetAngleByWidth(Width, Height, newLength);
+                        _angle = DcMath.GetAngleByWidth(Width, Y1, Y2, newLength);
                         OnChangeP1(X1, Y2 - DcMath.Yoffset(newLength, _angle));
                     }
                     else
@@ -367,6 +378,8 @@ namespace DraftCanvas.Primitives
             }
 
             _length = newLength;
+            _width = DcMath.GetWidth(X1, X2);
+            _height = DcMath.GetHeight(Y1, Y2);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -375,9 +388,56 @@ namespace DraftCanvas.Primitives
             return (LocalConstraint & (int)constraint) != 0;
         }
 
-        private void OnChangeHeight(double value)
+        private void OnChangeHeight(double newHeight)
         {
-            throw new NotImplementedException();
+            if ((HasConstraint(Constraints.Length) && HasConstraint(Constraints.Angle)) || Angle == 0 || Angle == 180) return;
+
+            newHeight = Y1 > Y2 ? -newHeight : newHeight;
+
+            // Tests if one of the point has a constraint.
+            var p1HasConstraint = Owner.PointCollection[_p1Hash].ActiveHash != 0;
+            var p2HasConstraint = Owner.PointCollection[_p2Hash].ActiveHash != 0;
+
+            if (p1HasConstraint)
+            {
+                if (p2HasConstraint) return;
+                else
+                {
+                    
+                }
+            }
+            else
+            {
+                if (p2HasConstraint)
+                {
+                    
+                }
+                else
+                {
+                    if (HasConstraint(Constraints.Length))
+                    {
+
+                    }
+                    else if (HasConstraint(Constraints.Angle))
+                    {
+
+                    }
+                    else if (HasConstraint(Constraints.Width))
+                    {
+
+                    }
+                    else
+                    {
+                        double deltaHeigth = (newHeight - Height) / 2;
+                        OnChangeP1(X1, Y1 - deltaHeigth);
+                        OnChangeP2(X2, Y2 + deltaHeigth);
+                        _angle = DcMath.GetLineSegmentAngle(this);
+                        _length = DcMath.GetDistance(X1, Y1, X2, Y2);
+                    }
+                }
+            }
+
+            _height = newHeight;
         }
 
         private void OnChangeWidth(double value)

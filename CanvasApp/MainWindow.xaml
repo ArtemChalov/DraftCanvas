@@ -34,6 +34,11 @@
             <TextBlock x:Name="Mess3"/>
             <TextBlock x:Name="Mess4"/>
             <TextBlock x:Name="Mess5"/>
+            <TextBlock x:Name="Mess6"/>
+            <TextBlock x:Name="Mess7"/>
+            <TextBlock x:Name="Mess8"/>
+            <TextBlock x:Name="Mess9"/>
+            <TextBlock x:Name="Mess10"/>
         </StackPanel>
         
         <!--Column 1-->

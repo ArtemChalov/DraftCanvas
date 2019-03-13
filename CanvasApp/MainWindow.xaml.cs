@@ -23,20 +23,24 @@ namespace CanvasApp
 
         private void Add_lines(object sender, RoutedEventArgs e)
         {
-            DcLineSegment lineSegment = new DcLineSegment(new Point(200, 200), 100, 135);
-            lineSegment.AddLocalConstraint(Constraints.Width);
+            DcLineSegment lineSegment = new DcLineSegment(new Point(200, 300), 100, 360);
+            lineSegment.AddLocalConstraint(Constraints.Heigth);
 
-            //Canva.DcLineSegments.Add(new DcLineSegment(new Point(200, 200), 100, 90));
+            Canva.DcLineSegments.Add(new DcLineSegment(200, 200, 200, 300));
             //Canva.DcLineSegments.Add(new DcLineSegment(new Point(300, 100), 400, 90));
             Canva.DcLineSegments.Add(lineSegment);
 
-            double acuteAngle = DcMath.GetAngleByWidth(lineSegment.Width, lineSegment.Height, lineSegment.Length);
-
-            Mess1.Text = $"T Angle: {acuteAngle}";
+            Mess1.Text = $"Length: {lineSegment.Length}";
             Mess2.Text = $"Angle: {lineSegment.Angle}";
-            Mess3.Text = $"Width: {lineSegment.Width}";
-            Mess4.Text = $"Height: {lineSegment.Height}";
-            Mess5.Text = $"Length: {lineSegment.Length}";
+            Mess3.Text = $"dX: {lineSegment.Width}";
+            Mess4.Text = $"dY: {lineSegment.Height}";
+            Mess5.Text = $"X1: {lineSegment.X1}";
+            Mess6.Text = $"Y1: {lineSegment.Y1}";
+            Mess7.Text = $"X1: {lineSegment.X2}";
+            Mess8.Text = $"Y2: {lineSegment.Y2}";
+
+            //Mess9.Text = $"T Angle: {asdf}";
+            Mess10.Text = $"Angle: {lineSegment.Angle}";
 
             //Canva.DcLineSegments.Add(new DcLineSegment(new Point(100, 200), 100, 0));
             //Canva.DcLineSegments.Add(new DcLineSegment(new Point(200, 200), 100, 270));
@@ -45,18 +49,21 @@ namespace CanvasApp
 
         private void Lines_Action(object sender, RoutedEventArgs e)
         {
-            var someLine = Canva.DcLineSegments.Find(line => line.ID == 0);
+            var lineSegment = Canva.DcLineSegments.Find(line => line.ID == 0);
 
-            if (someLine == null) return;
+            if (lineSegment == null) return;
 
-            someLine.Length += 10;
+            lineSegment.Length += 10;
             Canva.Update();
 
-            Mess1.Text = $"T Angle: ";
-            Mess2.Text = $"Angle: {someLine.Angle}";
-            Mess3.Text = $"Width: {someLine.Width}";
-            Mess4.Text = $"Height: {someLine.Height}";
-            Mess5.Text = $"Length: {someLine.Length}";
+            Mess1.Text = $"Length: {lineSegment.Length}";
+            Mess2.Text = $"Angle: {lineSegment.Angle}";
+            Mess3.Text = $"Width: {lineSegment.Width}";
+            Mess4.Text = $"Height: {lineSegment.Height}";
+            Mess5.Text = $"X1: {lineSegment.X1}";
+            Mess6.Text = $"Y1: {lineSegment.Y1}";
+            Mess7.Text = $"X2: {lineSegment.X2}";
+            Mess8.Text = $"Y2: {lineSegment.Y2}";
         }
     }
 }
