@@ -284,7 +284,7 @@ namespace DraftCanvas.Primitives
 
         private void OnChangeLength(double newLength)
         {
-            if (HasConstraint(Constraints.Length) || Length < 0) return;
+            if (Length < 0) return;
 
             double delta = newLength -_length;
 
@@ -380,12 +380,7 @@ namespace DraftCanvas.Primitives
             _length = newLength;
             _width = DcMath.GetWidth(X1, X2);
             _height = DcMath.GetHeight(Y1, Y2);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private bool HasConstraint(Constraints constraint)
-        {
-            return (LocalConstraint & (int)constraint) != 0;
+            AddLocalConstraint(Constraints.Length);
         }
 
         private void OnChangeHeight(double newHeight)
@@ -456,6 +451,12 @@ namespace DraftCanvas.Primitives
                 _y2 = _y1 + DcMath.Yoffset(Length, newValue);
                 IsDirty = true;
             }
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private bool HasConstraint(Constraints constraint)
+        {
+            return (LocalConstraint & (int)constraint) != 0;
         }
 
         #endregion
