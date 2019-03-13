@@ -301,14 +301,14 @@ namespace DraftCanvas.Primitives
                     {
                         if (Angle == 90 || Angle == 270 || HasConstraint(Constraints.Width) || HasConstraint(Constraints.Angle) || newLength < Height) return;
 
-                        _angle = DcMath.GetAngleByHeight(Height, X1, Y1, X2, Y2, newLength);
+                        _angle = DcMath.GetAngleByHeight(Height, newLength, X1, Y1, X2, Y2);
                         OnChangeP2(X1 + DcMath.Xoffset(newLength, _angle), Y2);
                     }
                     else if (HasConstraint(Constraints.Width))
                     {
                         if (Angle == 0 || Angle == 180 || HasConstraint(Constraints.Heigth) || HasConstraint(Constraints.Angle) || newLength < Width) return;
 
-                        _angle = DcMath.GetAngleByWidth(Width, Y1, Y2, newLength);
+                        _angle = DcMath.GetAngleByWidth(Width, newLength, X1, Y1, X2, Y2);
                         OnChangeP2(X2, Y1 + DcMath.Yoffset(newLength, _angle));
                     }
                     else
@@ -333,7 +333,7 @@ namespace DraftCanvas.Primitives
                     {
                         if (Angle == 0 || Angle == 180 || HasConstraint(Constraints.Heigth) || HasConstraint(Constraints.Angle) || newLength < Width) return;
 
-                        _angle = DcMath.GetAngleByWidth(Width, Y1, Y2, newLength);
+                        _angle = DcMath.GetAngleByWidth(Width, newLength, X1, Y1, X2, Y2);
                         OnChangeP1(X1, Y2 - DcMath.Yoffset(newLength, _angle));
                     }
                     else

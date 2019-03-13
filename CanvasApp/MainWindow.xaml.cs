@@ -1,6 +1,5 @@
 ﻿using DraftCanvas;
 using DraftCanvas.Primitives;
-using DraftCanvas.Servicies;
 using System.Windows;
 using System.Windows.Media;
 
@@ -23,10 +22,10 @@ namespace CanvasApp
 
         private void Add_lines(object sender, RoutedEventArgs e)
         {
-            DcLineSegment lineSegment = new DcLineSegment(new Point(200, 300), 100, 360);
-            lineSegment.AddLocalConstraint(Constraints.Heigth);
+            DcLineSegment lineSegment = new DcLineSegment(new Point(200, 300), 100, 300);
+            //lineSegment.AddLocalConstraint(Constraints.Heigth);
 
-            Canva.DcLineSegments.Add(new DcLineSegment(200, 200, 200, 300));
+            //Canva.DcLineSegments.Add(new DcLineSegment(200, 200, 200, 300));
             //Canva.DcLineSegments.Add(new DcLineSegment(new Point(300, 100), 400, 90));
             Canva.DcLineSegments.Add(lineSegment);
 
@@ -39,7 +38,7 @@ namespace CanvasApp
             Mess7.Text = $"X1: {lineSegment.X2}";
             Mess8.Text = $"Y2: {lineSegment.Y2}";
 
-            //Mess9.Text = $"T Angle: {asdf}";
+            //Mess9.Text = $"T Angle: {tAngle}";
             Mess10.Text = $"Angle: {lineSegment.Angle}";
 
             //Canva.DcLineSegments.Add(new DcLineSegment(new Point(100, 200), 100, 0));

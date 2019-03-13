@@ -75,25 +75,43 @@ namespace DraftCanvas.Servicies
             Math.Sqrt(hypotenuse * hypotenuse - anotherсathetus * anotherсathetus);
 
         /// <summary>
-        /// Calculates the line angle.
+        /// Calculates the rotation angle of a line.
         /// </summary>
         /// <param name="width">Width of a triangle.</param>
-        /// <param name="y1">Y coordinate of the first point.</param>
-        /// <param name="y2">Y coordinate of the second point.</param>
         /// <param name="hypotenuse">Hypotenuse of a triangle.</param>
+        /// <param name="x1">X coordinate of the first point.</param>
+        /// <param name="y1">Y coordinate of the first point.</param>
+        /// <param name="x2">X coordinate of the second point.</param>
+        /// <param name="y2">Y coordinate of the second point.</param>
         /// <returns>Returns the angle in degrees.</returns>
-        static internal double GetAngleByWidth(double width, double y1, double y2, double hypotenuse)
+        static internal double GetAngleByWidth(double width, double hypotenuse, double x1, double y1, double x2, double y2)
         {
             double angle = RadianToDegree(Math.Acos(width / hypotenuse));
 
-            if ((y2 - y1) < 0)
-                angle = 360 - angle;
+            double dX = x2 - x1;
+            double dY = y2 - y1;
 
-            return angle < 0 ? angle + 360 : angle;
+            if (dY < 0)
+            {
+                if (dX < 0)
+                    angle = 180 + angle;
+                else
+                    angle = 360 - angle;
+            }
+            else
+            {
+                if (dX < 0)
+                    angle = 180 - angle;
+            }
+
+            while (angle >= 360) angle -= 360;
+            while (angle <= -360) angle += 360;
+
+           return angle < 0 ? angle + 360 : angle;
         }
 
         /// <summary>
-        /// Calculates the line angle.
+        /// Calculates the rotation angle of a line.
         /// </summary>
         /// <param name="height">Height of a triangle.</param>
         /// <param name="hypotenuse">Hypotenuse of a triangle.</param>
