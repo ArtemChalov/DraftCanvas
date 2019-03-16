@@ -100,7 +100,7 @@ namespace DraftCanvas.Primitives
         /// <summary>
         /// 
         /// </summary>
-        public Canvas Owner { get; set; }
+        public DrCanvas Owner { get; set; }
 
         /// <summary>
         /// 

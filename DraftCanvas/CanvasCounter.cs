@@ -12,5 +12,10 @@ namespace DraftCanvas
         /// The Primitive counter.
         /// </summary>
         public static int PrimitiveID => ++_primitiveID;
+
+        /// <summary>
+        /// Returns the counter to its original state.
+        /// </summary>
+        public static void ResetCounter() => _primitiveID = -1;
     }
 }

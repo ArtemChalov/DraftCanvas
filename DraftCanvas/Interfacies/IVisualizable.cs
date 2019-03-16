@@ -9,7 +9,7 @@ namespace DraftCanvas
         /// <summary>
         /// 
         /// </summary>
-        Canvas Owner { get; set; }
+        DrCanvas Owner { get; set; }
 
         /// <summary>
         /// 

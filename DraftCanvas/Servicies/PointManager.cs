@@ -32,7 +32,7 @@ namespace DraftCanvas.Servicies
             return newPoint;
         }
 
-        internal static bool ResolveConstraint(Canvas canvas, double newX, double newY, int issuerHash)
+        internal static bool ResolveConstraint(DrCanvas canvas, double newX, double newY, int issuerHash)
         {
             DcPoint issuerPoint = canvas.PointCollection[issuerHash];
             DcPoint subPoint = canvas.PointCollection[issuerPoint.DependedHash];

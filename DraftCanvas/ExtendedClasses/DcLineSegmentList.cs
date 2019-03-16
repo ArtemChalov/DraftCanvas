@@ -8,12 +8,12 @@ namespace DraftCanvas.ExtendedClasses
     /// </summary>
     public class DcLineSegmentList : List<DcLineSegment>
     {
-        Canvas _canvas;
+        DrCanvas _canvas;
         /// <summary>
         /// 
         /// </summary>
         /// <param name="owner"></param>
-        public DcLineSegmentList(Canvas owner)
+        public DcLineSegmentList(DrCanvas owner)
         {
             _canvas = owner;
         }

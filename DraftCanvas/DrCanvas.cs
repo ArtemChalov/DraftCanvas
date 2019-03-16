@@ -10,7 +10,7 @@ namespace DraftCanvas
     /// Defines an area within you can explicitly position child elements by using
     /// coordinates that are relative to the Canvas area.
     /// </summary>
-    public class Canvas : FrameworkElement
+    public class DrCanvas : FrameworkElement
     {
         private List<Visual> _visualsCollection;
         private readonly DcLineSegmentList _lineSegments;
@@ -22,7 +22,7 @@ namespace DraftCanvas
         /// Gets or sets a Brush that is used to fill the Canvas area
         /// </summary>
         public static readonly DependencyProperty BackgroundProperty =
-            DependencyProperty.Register(nameof(Background), typeof(Brush), typeof(Canvas), (PropertyMetadata)new FrameworkPropertyMetadata((object)null, FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.SubPropertiesDoNotAffectRender));
+            DependencyProperty.Register(nameof(Background), typeof(Brush), typeof(DrCanvas), (PropertyMetadata)new FrameworkPropertyMetadata((object)null, FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.SubPropertiesDoNotAffectRender));
 
         #endregion
 
@@ -31,7 +31,7 @@ namespace DraftCanvas
         /// </summary>
         /// <param name="width">A Canvas width.</param>
         /// <param name="height">A Canvas height.</param>
-        public Canvas(double width, double height)
+        public DrCanvas(double width, double height)
         {
             this.Width = width;
             this.Height = height;
@@ -51,7 +51,7 @@ namespace DraftCanvas
          ///</summary>
         public Brush Background
         {
-            get { return (Brush)this.GetValue(Canvas.BackgroundProperty); }
+            get { return (Brush)this.GetValue(DrCanvas.BackgroundProperty); }
             set { SetValue(BackgroundProperty, (object)value); }
         }
 
@@ -104,6 +104,21 @@ namespace DraftCanvas
                     AddVisualChild(_visualsCollection[i]);
                 }
             }
+        }
+
+        /// <summary>
+        /// Removes all visual objects from the Canvas.
+        /// </summary>
+        public void Clear()
+        {
+            foreach (var item in _visualsCollection)
+            {
+                RemoveVisualChild(item);
+            }
+            DcLineSegments.Clear();
+            PointCollection.Clear();
+            CanvasCounter.ResetCounter();
+            _visualsCollection.Clear();
         }
 
         /// <summary>
