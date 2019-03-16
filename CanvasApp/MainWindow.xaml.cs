@@ -22,10 +22,10 @@ namespace CanvasApp
 
         private void Add_lines(object sender, RoutedEventArgs e)
         {
-            DcLineSegment lineSegment = new DcLineSegment(100, 100, 200, 300);
+            DcLineSegment lineSegment = new DcLineSegment(200, 100, 100, 200);
             lineSegment.AddLocalConstraint(Constraints.Heigth);
 
-            Canva.DcLineSegments.Add(new DcLineSegment(200, 200, 200, 300));
+            //Canva.DcLineSegments.Add(new DcLineSegment(200, 200, 200, 300));
             //Canva.DcLineSegments.Add(new DcLineSegment(new Point(300, 100), 400, 90));
             Canva.DcLineSegments.Add(lineSegment);
 
@@ -57,11 +57,11 @@ namespace CanvasApp
 
             Mess1.Text = $"Length: {lineSegment.Length}";
             Mess2.Text = $"Angle: {lineSegment.Angle}";
-            Mess3.Text = $"Width: {lineSegment.Width}";
-            Mess4.Text = $"Height: {lineSegment.Height}";
+            Mess3.Text = $"dX: {lineSegment.Width}";
+            Mess4.Text = $"dY: {lineSegment.Height}";
             Mess5.Text = $"X1: {lineSegment.X1}";
             Mess6.Text = $"Y1: {lineSegment.Y1}";
-            Mess7.Text = $"X2: {lineSegment.X2}";
+            Mess7.Text = $"X1: {lineSegment.X2}";
             Mess8.Text = $"Y2: {lineSegment.Y2}";
         }
     }

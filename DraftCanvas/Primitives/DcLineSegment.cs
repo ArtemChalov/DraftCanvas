@@ -350,8 +350,10 @@ namespace DraftCanvas.Primitives
                         if (Angle == 90 || Angle == 270 || HasConstraint(Constraints.Width) || HasConstraint(Constraints.Angle) || newLength < Height) return;
 
                         double newWidth = DcMath.GetСathetus(Height, newLength);
-                        newWidth = Width > 0 ? newWidth : -newWidth;
+                        double dx = X2 - X1;
+
                         double xOffset = (newWidth - Width) / 2;
+                        xOffset = dx > 0 ? xOffset : -xOffset;
 
                         OnChangeP1(X1 - xOffset, Y1);
                         OnChangeP2(X2 + xOffset, Y2);
