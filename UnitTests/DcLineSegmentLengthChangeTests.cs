@@ -87,5 +87,30 @@ namespace UnitTests
             Assert.AreEqual(y2, lineSegment.Y2);
             Assert.AreEqual(newAngle, lineSegment.Angle, 0.000001);
         }
+
+        [TestMethod]
+        [DataRow(100, 100, 200, 200, 86.296759, 41.33106)]
+        [DataRow(300, 100, 200, 200, 313.703241, 138.66894)]
+        [DataRow(100, 300, 200, 200, 86.296759, 318.66894)]
+        [DataRow(300, 300, 200, 200, 313.703241, 221.33106)]
+        public void Extend_Line_Has_Height_Constraint_Has_Second_Point_Constraint(double x1, double y1, double x2, double y2, double newX1, double newAngle)
+        {
+            // Init
+            _canvas.Clear();
+            DcLineSegment lineSegment = new DcLineSegment(x1, y1, x2, y2);
+            lineSegment.AddLocalConstraint(Constraints.Heigth);
+            _canvas.AddToVisualCollection(new DcLineSegment(100, 150, 200, 200));
+            _canvas.AddToVisualCollection(lineSegment);
+
+            // Act
+            lineSegment.Length += 10;
+
+            Assert.AreEqual(151.421356, lineSegment.Length, 0.000001);
+            Assert.AreEqual(newX1, lineSegment.X1, 0.000001);
+            Assert.AreEqual(y1, lineSegment.Y1);
+            Assert.AreEqual(x2, lineSegment.X2);
+            Assert.AreEqual(y2, lineSegment.Y2);
+            Assert.AreEqual(newAngle, lineSegment.Angle, 0.000001);
+        }
     }
 }
