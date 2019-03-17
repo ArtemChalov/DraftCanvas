@@ -360,12 +360,14 @@ namespace DraftCanvas.Primitives
                         _angle = DcMath.GetLineSegmentAngle(this);
                     }
                     else if (HasConstraint(Constraints.Width))
-                    {
+                    { // Tested
                         if (Angle == 0 || Angle == 180 || HasConstraint(Constraints.Heigth) || HasConstraint(Constraints.Angle) || newLength < Width) return;
 
                         double newHeight = DcMath.GetСathetus(Width, newLength);
-                        newHeight = Height > 0 ? newHeight : -newHeight;
+                        double dy = Y2 - Y1;
+
                         double yOffset = (newHeight - Height) / 2;
+                        yOffset = dy > 0 ? yOffset : -yOffset;
 
                         OnChangeP1(X1, Y1 - yOffset);
                         OnChangeP2(X2, Y2 + yOffset);
