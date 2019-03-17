@@ -374,7 +374,7 @@ namespace DraftCanvas.Primitives
                         _angle = DcMath.GetLineSegmentAngle(this);
                     }
                     else
-                    {
+                    { // Tested
                         OnChangeP1(X1 - DcMath.Xoffset(delta / 2, Angle), Y1 - DcMath.Yoffset(delta / 2, Angle));
                         OnChangeP2(X2 + DcMath.Xoffset(delta / 2, Angle), Y2 + DcMath.Yoffset(delta / 2, Angle));
                     }

@@ -16,6 +16,30 @@ namespace UnitTests
         }
 
         [TestMethod]
+        [DataRow(100, 100, 200, 200, 96.464466, 96.464466, 203.535534, 203.535534)]
+        [DataRow(200, 100, 100, 200, 203.535534, 96.464466, 96.464466, 203.535534)]
+        [DataRow(100, 200, 200, 100, 96.464466, 203.535534, 203.535534, 96.464466)]
+        [DataRow(200, 200, 100, 100, 203.535534, 203.535534, 96.464466, 96.464466)]
+        public void Add_Line_Length_No_Local_Constraint_No_Points_Constraint(double x1, double y1, double x2, double y2, double newX1, double newY1, double newX2, double newY2)
+        {
+            // Init
+            _canvas.Clear();
+            DcLineSegment lineSegment = new DcLineSegment(x1, y1, x2, y2);
+            double expectedAngle = lineSegment.Angle;
+            _canvas.AddToVisualCollection(lineSegment);
+
+            // Act
+            lineSegment.Length += 10;
+
+            Assert.AreEqual(151.421356, lineSegment.Length, 0.000001);
+            Assert.AreEqual(newX1, lineSegment.X1, 0.000001);
+            Assert.AreEqual(newY1, lineSegment.Y1, 0.000001);
+            Assert.AreEqual(newX2, lineSegment.X2, 0.000001);
+            Assert.AreEqual(newY2, lineSegment.Y2, 0.000001);
+            Assert.AreEqual(expectedAngle, lineSegment.Angle);
+        }
+
+        [TestMethod]
         [DataRow(100, 100, 200, 200, 93.148379, 206.851621, 41.33106)]
         [DataRow(200, 100, 100, 200, 206.851621, 93.148379, 138.66894)]
         [DataRow(100, 200, 200, 100, 93.148379, 206.851621, 318.66894)]
