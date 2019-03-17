@@ -298,7 +298,7 @@ namespace DraftCanvas.Primitives
                 else
                 {
                     if (HasConstraint(Constraints.Heigth))
-                    {
+                    { // Tested
                         if (Angle == 90 || Angle == 270 || HasConstraint(Constraints.Width) || HasConstraint(Constraints.Angle) || newLength < Height) return;
 
                         _angle = DcMath.GetAngleByHeight(Height, newLength, X1, Y1, X2, Y2);
@@ -323,7 +323,7 @@ namespace DraftCanvas.Primitives
                 if (p2HasConstraint)
                 {
                     if (HasConstraint(Constraints.Heigth))
-                    {
+                    { // Tested
                         if (Angle == 90 || Angle == 270 || HasConstraint(Constraints.Width) || HasConstraint(Constraints.Angle) || newLength < Height) return;
 
                         _angle = DcMath.GetAngleByHeight(Height, newLength, X1, Y1, X2, Y2);
@@ -346,7 +346,7 @@ namespace DraftCanvas.Primitives
                 else
                 {
                     if (HasConstraint(Constraints.Heigth))
-                    {
+                    { // Tested
                         if (Angle == 90 || Angle == 270 || HasConstraint(Constraints.Width) || HasConstraint(Constraints.Angle) || newLength < Height) return;
 
                         double newWidth = DcMath.GetСathetus(Height, newLength);

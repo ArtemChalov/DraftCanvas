@@ -12,7 +12,7 @@ namespace UnitTests
         [ClassInitialize]
         public static void ClassInitialize(TestContext context)
         {
-            _canvas = new DraftCanvas.DrCanvas(800, 800);
+            _canvas = new DrCanvas(800, 800);
         }
 
         [TestMethod]
@@ -20,7 +20,7 @@ namespace UnitTests
         [DataRow(200, 100, 100, 200, 206.851621, 93.148379, 138.66894)]
         [DataRow(100, 200, 200, 100, 93.148379, 206.851621, 318.66894)]
         [DataRow(200, 200, 100, 100, 206.851621, 93.148379, 221.33106)]
-        public void Extend_Line_Has_Height_Constraint_No_Point_Constraint(double x1, double y1, double x2, double y2, double newX1, double newX2, double newAngle)
+        public void Add_Line_Length_When_Has_Height_Constraint_No_Points_Constraint(double x1, double y1, double x2, double y2, double newX1, double newX2, double newAngle)
         {
             // Init
             _canvas.Clear();
@@ -44,7 +44,7 @@ namespace UnitTests
         [DataRow(200, 100, 100, 200, 192.636759, 107.363241, 130.455394)]
         [DataRow(100, 200, 200, 100, 107.363241, 192.636759, 310.455394)]
         [DataRow(200, 200, 100, 100, 192.636759, 107.363241, 229.544606)]
-        public void Shorten_Line_Has_Height_Constraint_No_Point_Constraint(double x1, double y1, double x2, double y2, double newX1, double newX2, double newAngle)
+        public void Subtract_Line_Length_When_Has_Height_Constraint_No_Points_Constraint(double x1, double y1, double x2, double y2, double newX1, double newX2, double newAngle)
         {
             // Init
             _canvas.Clear();
@@ -68,7 +68,7 @@ namespace UnitTests
         [DataRow(100, 100, 0, 200, -13.703241, 138.66894)]
         [DataRow(100, 100, 200, 0, 213.703241, 318.66894)]
         [DataRow(100, 100, 0, 0, -13.703241, 221.33106)]
-        public void Extend_Line_Has_Height_Constraint_Has_First_Point_Constraint(double x1, double y1, double x2, double y2, double newX2, double newAngle)
+        public void Add_Line_Length_When_Has_Height_Constraint_And_Has_First_Point_Constraint(double x1, double y1, double x2, double y2, double newX2, double newAngle)
         {
             // Init
             _canvas.Clear();
@@ -93,7 +93,7 @@ namespace UnitTests
         [DataRow(100, 100, 0, 200, 14.726482, 130.455394)] 
         [DataRow(100, 100, 200, 0, 185.273518, 310.455394)]
         [DataRow(100, 100, 0, 0, 14.726482, 229.544606)]
-        public void Shorten_Line_Has_Height_Constraint_Has_First_Point_Constraint(double x1, double y1, double x2, double y2, double newX2, double newAngle)
+        public void Subtract_Line_Length_When_Has_Height_Constraint_And_Has_First_Point_Constraint(double x1, double y1, double x2, double y2, double newX2, double newAngle)
         {
             // Init
             _canvas.Clear();
@@ -118,7 +118,7 @@ namespace UnitTests
         [DataRow(300, 100, 200, 200, 313.703241, 138.66894)]
         [DataRow(100, 300, 200, 200, 86.296759, 318.66894)]
         [DataRow(300, 300, 200, 200, 313.703241, 221.33106)]
-        public void Extend_Line_Has_Height_Constraint_Has_Second_Point_Constraint(double x1, double y1, double x2, double y2, double newX1, double newAngle)
+        public void Add_Line_Length_When_Has_Height_Constraint_And_Has_Second_Point_Constraint(double x1, double y1, double x2, double y2, double newX1, double newAngle)
         {
             // Init
             _canvas.Clear();
@@ -143,7 +143,7 @@ namespace UnitTests
         [DataRow(300, 100, 200, 200, 285.273518, 130.455394)] 
         [DataRow(100, 300, 200, 200, 114.726482, 310.455394)]
         [DataRow(300, 300, 200, 200, 285.273518, 229.544606)]
-        public void Shorten_Line_Has_Height_Constraint_Has_Second_Point_Constraint(double x1, double y1, double x2, double y2, double newX1, double newAngle)
+        public void Subtract_Line_Length_When_Has_Height_Constraint_And_Has_Second_Point_Constraint(double x1, double y1, double x2, double y2, double newX1, double newAngle)
         {
             // Init
             _canvas.Clear();
