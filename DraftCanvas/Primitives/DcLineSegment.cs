@@ -286,8 +286,6 @@ namespace DraftCanvas.Primitives
         {
             if (Length < 0) return;
 
-            double delta = newLength -_length;
-
             // Tests if one of the point has a constraint.
             var p1HasConstraint = Owner.PointCollection[_p1Hash].ActiveHash != 0;
             var p2HasConstraint = Owner.PointCollection[_p2Hash].ActiveHash != 0;
@@ -312,8 +310,9 @@ namespace DraftCanvas.Primitives
                         OnChangeP2(X2, Y1 + DcMath.Yoffset(newLength, _angle));
                     }
                     else
-                    {
+                    { // Tested
                         if (newLength <= 0) return;
+                        double delta = newLength - _length;
                         OnChangeP2(X2 + DcMath.Xoffset(delta, Angle), Y2 + DcMath.Yoffset(delta, Angle));
                     }
                 }
@@ -337,9 +336,9 @@ namespace DraftCanvas.Primitives
                         OnChangeP1(X1, Y2 - DcMath.Yoffset(newLength, _angle));
                     }
                     else
-                    {
+                    {  // Tested
                         if (newLength <= 0) return;
-
+                        double delta = newLength - _length;
                         OnChangeP1(X1 - DcMath.Xoffset(delta, Angle), Y1 - DcMath.Yoffset(delta, Angle));
                     }
                 }
@@ -375,6 +374,7 @@ namespace DraftCanvas.Primitives
                     }
                     else
                     { // Tested
+                        double delta = newLength - _length;
                         OnChangeP1(X1 - DcMath.Xoffset(delta / 2, Angle), Y1 - DcMath.Yoffset(delta / 2, Angle));
                         OnChangeP2(X2 + DcMath.Xoffset(delta / 2, Angle), Y2 + DcMath.Yoffset(delta / 2, Angle));
                     }
