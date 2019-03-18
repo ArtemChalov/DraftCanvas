@@ -419,7 +419,7 @@ namespace DraftCanvas.Primitives
                     delta = dy > 0 ? delta : -delta;
                     if (HasConstraint(Constraints.Length))
                     {  // Tested
-                        if (HasConstraint(Constraints.Width)) return;
+                        if (HasConstraint(Constraints.Width) || HasConstraint(Constraints.Angle)) return;
                         else
                         {
                             double newWidth = DcMath.GetСathetus(newHeight, Length);
@@ -436,7 +436,11 @@ namespace DraftCanvas.Primitives
                     }
                     else if (HasConstraint(Constraints.Angle))
                     {
+                        if (HasConstraint(Constraints.Width) || HasConstraint(Constraints.Length)) return;
+                        else
+                        {
 
+                        }
                     }
                     else
                     { // Tested
