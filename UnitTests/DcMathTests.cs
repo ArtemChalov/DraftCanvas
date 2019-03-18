@@ -71,11 +71,25 @@ namespace UnitTests
         public void GetAngleByWidth_Tests(double x1, double x2, double length, double angle)
         {
             DcLineSegment lineSegment = new DcLineSegment(new Point(x1, x2), length, angle);
+
             var actual = DcMath.GetAngleByWidth(lineSegment.Width, lineSegment.Length, lineSegment.X1, lineSegment.Y1, lineSegment.X2, lineSegment.Y2);
 
-            Debug.WriteLine("expected: " + lineSegment.Angle);
-            Debug.WriteLine("actual: " + actual);
             Assert.AreEqual(lineSegment.Angle, actual, 0.0001);
+        }
+
+        [TestMethod]
+        //[DataRow(100, 200, 100, 30, 86.602540)]
+        //[DataRow(100, 200, 100, 45, 70.710678)]
+        //[DataRow(100, 200, 100, 60, 50.000000)]
+        //[DataRow(100, 200, 100, 90, 0)]
+        [DataRow(100, 200, 100, 120, -50.000000)]
+        public void XoffsetByTan_Tests(double x1, double x2, double length, double angle, double dx)
+        {
+            DcLineSegment lineSegment = new DcLineSegment(new Point(x1, x2), length, angle);
+
+            var actual = DcMath.XoffsetByTan(lineSegment.Height, lineSegment.Angle);
+
+            Assert.AreEqual(dx, actual, 0.000001);
         }
     }
 }

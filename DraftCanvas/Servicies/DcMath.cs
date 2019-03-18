@@ -31,9 +31,22 @@ namespace DraftCanvas.Servicies
         /// <param name="distance"></param>
         /// <param name="angle"></param>
         /// <returns></returns>
-        static public double Xoffset(double distance, double angle)
+        static internal double Xoffset(double distance, double angle)
         {
-            return distance * Math.Cos(DcMath.DegreeToRadian(angle));
+            return distance * Math.Cos(DegreeToRadian(angle));
+        }
+
+        /// <summary>
+        /// Calculate the adjacent cathetus by the angle and opposite cathetus.
+        /// </summary>
+        /// <param name="cathetus">Opposite cathetus.</param>
+        /// <param name="angle">Angle.</param>
+        /// <returns>Returns the adjacent cathetus.</returns>
+        static internal double XoffsetByTan(double cathetus, double angle)
+        {
+            if (angle == 90 || angle == 270) return 0;
+            
+            return cathetus / Math.Tan(DegreeToRadian(angle));
         }
 
         /// <summary>
@@ -42,9 +55,9 @@ namespace DraftCanvas.Servicies
         /// <param name="distance"></param>
         /// <param name="angle"></param>
         /// <returns></returns>
-        static public double Yoffset(double distance, double angle)
+        static internal double Yoffset(double distance, double angle)
         {
-            return distance * Math.Sin(DcMath.DegreeToRadian(angle));
+            return distance * Math.Sin(DegreeToRadian(angle));
         }
 
         /// <summary>
@@ -85,7 +98,7 @@ namespace DraftCanvas.Servicies
         /// <param name="y2">Y coordinate of the second point.</param>
         /// <returns>Returns the angle in degrees.</returns>
         static internal double GetAngleByWidth(double width, double hypotenuse, double x1, double y1, double x2, double y2)
-        {
+        { // Tested
             double angle = RadianToDegree(Math.Acos(width / hypotenuse));
 
             double dX = x2 - x1;
@@ -121,7 +134,7 @@ namespace DraftCanvas.Servicies
         /// <param name="y2">Y coordinate of the second point.</param>
         /// <returns>Returns the angle in degrees.</returns>
         static internal double GetAngleByHeight(double height, double hypotenuse, double x1, double y1, double x2, double y2)
-        {
+        { // Tested
             /* From -360 to 360 tested */
             double angle = RadianToDegree(Math.Asin(height / hypotenuse));
 
