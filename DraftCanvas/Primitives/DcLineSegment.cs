@@ -418,7 +418,7 @@ namespace DraftCanvas.Primitives
                     double dy = Y2 - Y1;
                     delta = dy > 0 ? delta : -delta;
                     if (HasConstraint(Constraints.Length))
-                    {
+                    {  // Tested
                         if (HasConstraint(Constraints.Width)) return;
                         else
                         {
