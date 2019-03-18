@@ -282,9 +282,10 @@ namespace DraftCanvas.Primitives
             return res;
         }
 
+        // Changes the length of the DcLineSegment.
         private void OnChangeLength(double newLength)
         {
-            if (Length < 0) return;
+            if (Length <= 0 || newLength == Length) return;
 
             // Tests if one of the point has a constraint.
             var p1HasConstraint = Owner.PointCollection[_p1Hash].ActiveHash != 0;
@@ -387,11 +388,11 @@ namespace DraftCanvas.Primitives
             AddLocalConstraint(Constraints.Length);
         }
 
+        // Changes the heigth of the DcLineSegment
         private void OnChangeHeight(double newHeight)
         {
+            if (newHeight <= 0 || newHeight == Height) return;
             if ((HasConstraint(Constraints.Length) && HasConstraint(Constraints.Angle)) || Angle == 0 || Angle == 180) return;
-
-            newHeight = Y1 > Y2 ? -newHeight : newHeight;
 
             // Tests if one of the point has a constraint.
             var p1HasConstraint = Owner.PointCollection[_p1Hash].ActiveHash != 0;
@@ -426,10 +427,13 @@ namespace DraftCanvas.Primitives
 
                     }
                     else
-                    {
-                        double deltaHeigth = (newHeight - Height) / 2;
-                        OnChangeP1(X1, Y1 - deltaHeigth);
-                        OnChangeP2(X2, Y2 + deltaHeigth);
+                    { // Tested
+                        double delta = (newHeight - Height) / 2;
+                        double dy = Y2 - Y1;
+                        delta = dy > 0 ? delta : -delta;
+
+                        OnChangeP1(X1, Y1 - delta);
+                        OnChangeP2(X2, Y2 + delta);
                         _angle = DcMath.GetLineSegmentAngle(this);
                         _length = DcMath.GetDistance(X1, Y1, X2, Y2);
                     }

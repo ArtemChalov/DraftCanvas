@@ -63,6 +63,7 @@
     <Compile Include="PointManagerTests.cs" />
     <Compile Include="DcMathTests.cs" />
     <Compile Include="DcLineSegmentLengthChangeTests.cs" />
+    <Compile Include="DcLineSegmentHeightChangeTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
