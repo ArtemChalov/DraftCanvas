@@ -78,11 +78,20 @@ namespace UnitTests
         }
 
         [TestMethod]
-        //[DataRow(100, 200, 100, 30, 86.602540)]
-        //[DataRow(100, 200, 100, 45, 70.710678)]
-        //[DataRow(100, 200, 100, 60, 50.000000)]
-        //[DataRow(100, 200, 100, 90, 0)]
+        [DataRow(100, 200, 100, 30, 86.602540)]
+        [DataRow(100, 200, 100, 45, 70.710678)]
+        [DataRow(100, 200, 100, 60, 50.000000)]
+        [DataRow(100, 200, 100, 90, 0)]
         [DataRow(100, 200, 100, 120, -50.000000)]
+        [DataRow(100, 200, 100, 135, -70.710678)]
+        [DataRow(100, 200, 100, 150, -86.602540)]
+        [DataRow(100, 200, 100, 210, -86.602540)]
+        [DataRow(100, 200, 100, 225, -70.710678)]
+        [DataRow(100, 200, 100, 240, -50.000000)]
+        [DataRow(100, 200, 100, 270, 0)]
+        [DataRow(100, 200, 100, 300, 50.000000)]
+        [DataRow(100, 200, 100, 315, 70.710678)]
+        [DataRow(100, 200, 100, 330, 86.602540)]
         public void XoffsetByTan_Tests(double x1, double x2, double length, double angle, double dx)
         {
             DcLineSegment lineSegment = new DcLineSegment(new Point(x1, x2), length, angle);

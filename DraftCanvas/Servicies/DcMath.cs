@@ -37,16 +37,19 @@ namespace DraftCanvas.Servicies
         }
 
         /// <summary>
-        /// Calculate the adjacent cathetus by the angle and opposite cathetus.
+        /// Calculates the adjacent cathetus by the angle and opposite cathetus.
         /// </summary>
         /// <param name="cathetus">Opposite cathetus.</param>
         /// <param name="angle">Angle.</param>
         /// <returns>Returns the adjacent cathetus.</returns>
         static internal double XoffsetByTan(double cathetus, double angle)
-        {
+        { // Tested
             if (angle == 90 || angle == 270) return 0;
-            
-            return cathetus / Math.Tan(DegreeToRadian(angle));
+
+            double res = cathetus / Math.Tan(DegreeToRadian(angle));
+
+            if (angle > 180) return -res;
+            else return res;
         }
 
         /// <summary>
@@ -98,7 +101,7 @@ namespace DraftCanvas.Servicies
         /// <param name="y2">Y coordinate of the second point.</param>
         /// <returns>Returns the angle in degrees.</returns>
         static internal double GetAngleByWidth(double width, double hypotenuse, double x1, double y1, double x2, double y2)
-        { // Tested
+        { // Tested from -370 to 370 tested
             double angle = RadianToDegree(Math.Acos(width / hypotenuse));
 
             double dX = x2 - x1;
@@ -134,8 +137,7 @@ namespace DraftCanvas.Servicies
         /// <param name="y2">Y coordinate of the second point.</param>
         /// <returns>Returns the angle in degrees.</returns>
         static internal double GetAngleByHeight(double height, double hypotenuse, double x1, double y1, double x2, double y2)
-        { // Tested
-            /* From -360 to 360 tested */
+        { // Tested from -370 to 370 tested
             double angle = RadianToDegree(Math.Asin(height / hypotenuse));
 
             double dX = x2 - x1;
