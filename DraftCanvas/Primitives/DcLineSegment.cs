@@ -403,14 +403,44 @@ namespace DraftCanvas.Primitives
                 if (p2HasConstraint) return;
                 else
                 {
-                    
+                    double delta = (newHeight - Height);
+                    double dy = Y2 - Y1;
+                    delta = dy > 0 ? delta : -delta;
+                    if (HasConstraint(Constraints.Length))
+                    {
+                    }
+                    else if (HasConstraint(Constraints.Angle))
+                    {
+
+                    }
+                    else
+                    { // Tested
+                        OnChangeP2(X2, Y2 + delta);
+                        _length = DcMath.GetDistance(X1, Y1, X2, Y2);
+                        _angle = DcMath.GetLineSegmentAngle(this);
+                    }
                 }
             }
             else
             {
                 if (p2HasConstraint)
                 {
-                    
+                    //double delta = (newHeight - Height);
+                    //double dy = Y2 - Y1;
+                    //delta = dy > 0 ? delta : -delta;
+                    //if (HasConstraint(Constraints.Length))
+                    //{
+                    //}
+                    //else if (HasConstraint(Constraints.Angle))
+                    //{
+
+                    //}
+                    //else
+                    //{
+                    //    OnChangeP2(X2, Y2 + delta);
+                    //    _length = DcMath.GetDistance(X1, Y1, X2, Y2);
+                    //    _angle = DcMath.GetLineSegmentAngle(this);
+                    //}
                 }
                 else
                 {
