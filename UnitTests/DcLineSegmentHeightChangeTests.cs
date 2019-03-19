@@ -142,10 +142,10 @@ namespace UnitTests
         }
 
         [TestMethod]
-        //[DataRow(100, 100, 200, 200, 95, 95, 205, 205, 155.563492)]
+        [DataRow(100, 100, 200, 200, 95, 95, 205, 205, 155.563492)]
         [DataRow(200, 100, 100, 200, 205, 95, 95, 205, 155.563492)]
-        //[DataRow(100, 200, 200, 100, 105.559028, 205, 194.440972, 95, 308.938824)]
-        //[DataRow(200, 200, 100, 100, 194.440972, 205, 105.559028, 95, 231.061176)]
+        [DataRow(100, 200, 200, 100, 95, 205, 205, 95, 155.563492)]
+        [DataRow(200, 200, 100, 100, 205, 205, 95, 95, 155.563492)]
         public void Add_Line_Height_When_Has_Angle_Constraint_No_Points_Constraint(double x1, double y1, double x2, double y2, double newX1, double newY1, double newX2, double newY2, double newLength)
         {
             // Init
@@ -158,10 +158,10 @@ namespace UnitTests
             // Act
             lineSegment.Height += 10;
 
-            //Assert.AreEqual(newLength, lineSegment.Length, 0.000001);
+            Assert.AreEqual(newLength, lineSegment.Length, 0.000001);
             Assert.AreEqual(newX1, lineSegment.X1, 0.000001);
             Assert.AreEqual(newY1, lineSegment.Y1, 0.000001);
-            //Assert.AreEqual(newX2, lineSegment.X2, 0.000001);
+            Assert.AreEqual(newX2, lineSegment.X2, 0.000001);
             Assert.AreEqual(newY2, lineSegment.Y2, 0.000001);
             Assert.AreEqual(expectedAngle, lineSegment.Angle);
         }
