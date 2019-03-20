@@ -410,8 +410,15 @@ namespace DraftCanvas.Primitives
                     {
                     }
                     else if (HasConstraint(Constraints.Angle))
-                    {
+                    { // Tested
+                        double newWidth = Math.Abs(DcMath.XoffsetByTan(newHeight, Angle));
+                        double xOffset = newWidth - Width;
+                        double dx = X2 - X1;
+                        xOffset = dx > 0 ? xOffset : -xOffset;
 
+                        OnChangeP2(X2 + xOffset, Y2 + delta);
+                        _length = DcMath.GetDistance(X1, Y1, X2, Y2);
+                        _width = newWidth;
                     }
                     else
                     { // Tested
