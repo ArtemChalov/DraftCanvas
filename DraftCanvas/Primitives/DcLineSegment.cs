@@ -453,7 +453,7 @@ namespace DraftCanvas.Primitives
                     double dy = Y2 - Y1;
                     delta = dy > 0 ? delta : -delta;
                     if (HasConstraint(Constraints.Length))
-                    { 
+                    { // Tested
                         if (HasConstraint(Constraints.Width) || HasConstraint(Constraints.Angle)) return;
                         else
                         {
@@ -463,7 +463,7 @@ namespace DraftCanvas.Primitives
                             double xOffset = newWidth - Width;
                             xOffset = dx > 0 ? xOffset : -xOffset;
 
-                            OnChangeP2(X2 + xOffset, Y2 + delta);
+                            OnChangeP1(X1 - xOffset, Y1 - delta);
                             _width = newWidth;
                             _angle = DcMath.GetLineSegmentAngle(this);
                         }
