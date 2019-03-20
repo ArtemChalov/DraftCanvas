@@ -407,18 +407,35 @@ namespace DraftCanvas.Primitives
                     double dy = Y2 - Y1;
                     delta = dy > 0 ? delta : -delta;
                     if (HasConstraint(Constraints.Length))
-                    {
+                    { // Tested
+                        if (HasConstraint(Constraints.Width) || HasConstraint(Constraints.Angle)) return;
+                        else
+                        {
+                            double newWidth = DcMath.GetСathetus(newHeight, Length);
+                            double dx = X2 - X1;
+
+                            double xOffset = newWidth - Width;
+                            xOffset = dx > 0 ? xOffset : -xOffset;
+
+                            OnChangeP2(X2 + xOffset, Y2 + delta);
+                            _width = newWidth;
+                            _angle = DcMath.GetLineSegmentAngle(this);
+                        }
                     }
                     else if (HasConstraint(Constraints.Angle))
                     { // Tested
-                        double newWidth = Math.Abs(DcMath.XoffsetByTan(newHeight, Angle));
-                        double xOffset = newWidth - Width;
-                        double dx = X2 - X1;
-                        xOffset = dx > 0 ? xOffset : -xOffset;
+                        if (HasConstraint(Constraints.Width) || HasConstraint(Constraints.Length)) return;
+                        else
+                        {
+                            double newWidth = Math.Abs(DcMath.XoffsetByTan(newHeight, Angle));
+                            double xOffset = newWidth - Width;
+                            double dx = X2 - X1;
+                            xOffset = dx > 0 ? xOffset : -xOffset;
 
-                        OnChangeP2(X2 + xOffset, Y2 + delta);
-                        _length = DcMath.GetDistance(X1, Y1, X2, Y2);
-                        _width = newWidth;
+                            OnChangeP2(X2 + xOffset, Y2 + delta);
+                            _length = DcMath.GetDistance(X1, Y1, X2, Y2);
+                            _width = newWidth;
+                        }
                     }
                     else
                     { // Tested
