@@ -575,19 +575,19 @@ namespace DraftCanvas.Primitives
                         //}
                     }
                     else if (HasConstraint(Constraints.Angle))
-                    { 
-                        //if (HasConstraint(Constraints.Width) || HasConstraint(Constraints.Length)) return;
-                        //else
-                        //{
-                        //    double newWidth = Math.Abs(DcMath.XoffsetByTan(newWid, Angle));
-                        //    double xOffset = newWidth - Width;
-                        //    double dx = X2 - X1;
-                        //    xOffset = dx > 0 ? xOffset : -xOffset;
+                    {
+                        if (HasConstraint(Constraints.Heigth) || HasConstraint(Constraints.Length)) return;
+                        else
+                        { // Tested
+                            double newHeigth = Math.Abs(DcMath.YoffsetByTan(newWid, Angle));
+                            double yOffset = newHeigth - Height;
+                            double dy = Y2 - Y1;
+                            yOffset = dy > 0 ? yOffset : -yOffset;
 
-                        //    OnChangeP2(X2 + xOffset, Y2 + delta);
-                        //    _length = DcMath.GetDistance(X1, Y1, X2, Y2);
-                        //    _width = newWidth;
-                        //}
+                            OnChangeP2(X2 + delta, Y2 + yOffset);
+                            _length = DcMath.GetDistance(X1, Y1, X2, Y2);
+                            _height = newHeigth;
+                        }
                     }
                     else
                     { // Tested
