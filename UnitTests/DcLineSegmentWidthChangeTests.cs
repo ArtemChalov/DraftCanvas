@@ -414,5 +414,59 @@ namespace UnitTests
             Assert.AreEqual(newAngle, lineSegment.Angle, 0.000001);
             Assert.AreEqual(newHeight, lineSegment.Height, 0.000001);
         }
+
+        [TestMethod]
+        [DataRow(100, 100, 200, 200, 90, 90, 155.563492, 110)]
+        [DataRow(300, 100, 200, 200, 310, 90, 155.563492, 110)]
+        [DataRow(100, 300, 200, 200, 90, 310, 155.563492, 110)]
+        [DataRow(300, 300, 200, 200, 310, 310, 155.563492, 110)]
+        public void Add_Line_Width_When_Has_Angle_LocalConstraint_And_Has_Second_Point_Constraint(double x1, double y1, double x2, double y2, double newX1, double newY1, double newLength, double newHeigth)
+        {
+            // Init
+            _canvas.Clear();
+            DcLineSegment lineSegment = new DcLineSegment(x1, y1, x2, y2);
+            double expectedAngle = lineSegment.Angle;
+            lineSegment.AddLocalConstraint(Constraints.Angle);
+            _canvas.AddToVisualCollection(new DcLineSegment(100, 150, 200, 200));
+            _canvas.AddToVisualCollection(lineSegment);
+
+            // Act
+            lineSegment.Width += 10;
+
+            Assert.AreEqual(newLength, lineSegment.Length, 0.000001);
+            Assert.AreEqual(newX1, lineSegment.X1, 0.000001);
+            Assert.AreEqual(newY1, lineSegment.Y1, 0.000001);
+            Assert.AreEqual(x2, lineSegment.X2);
+            Assert.AreEqual(y2, lineSegment.Y2);
+            Assert.AreEqual(expectedAngle, lineSegment.Angle);
+            Assert.AreEqual(newHeigth, lineSegment.Height, 0.000001);
+        }
+
+        [TestMethod]
+        [DataRow(100, 100, 200, 200, 110, 110, 127.279221, 90)]
+        [DataRow(300, 100, 200, 200, 290, 110, 127.279221, 90)]
+        [DataRow(100, 300, 200, 200, 110, 290, 127.279221, 90)]
+        [DataRow(300, 300, 200, 200, 290, 290, 127.279221, 90)]
+        public void Subtract_Line_Width_When_Has_Angle_LocalConstraint_And_Has_Second_Point_Constraint(double x1, double y1, double x2, double y2, double newX1, double newY1, double newLength, double newHeigth)
+        {
+            // Init
+            _canvas.Clear();
+            DcLineSegment lineSegment = new DcLineSegment(x1, y1, x2, y2);
+            double expectedAngle = lineSegment.Angle;
+            lineSegment.AddLocalConstraint(Constraints.Angle);
+            _canvas.AddToVisualCollection(new DcLineSegment(100, 150, 200, 200));
+            _canvas.AddToVisualCollection(lineSegment);
+
+            // Act
+            lineSegment.Width -= 10;
+
+            Assert.AreEqual(newLength, lineSegment.Length, 0.000001);
+            Assert.AreEqual(newX1, lineSegment.X1, 0.000001);
+            Assert.AreEqual(newY1, lineSegment.Y1, 0.000001);
+            Assert.AreEqual(x2, lineSegment.X2);
+            Assert.AreEqual(y2, lineSegment.Y2);
+            Assert.AreEqual(expectedAngle, lineSegment.Angle);
+            Assert.AreEqual(newHeigth, lineSegment.Height, 0.000001);
+        }
     }
 }
