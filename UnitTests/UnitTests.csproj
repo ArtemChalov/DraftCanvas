@@ -64,6 +64,7 @@
     <Compile Include="DcMathTests.cs" />
     <Compile Include="DcLineSegmentLengthChangeTests.cs" />
     <Compile Include="DcLineSegmentHeightChangeTests.cs" />
+    <Compile Include="DcLineSegmentWidthChangeTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
