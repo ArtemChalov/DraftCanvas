@@ -160,5 +160,53 @@ namespace UnitTests
             Assert.AreEqual(newY2, lineSegment.Y2, 0.000001);
             Assert.AreEqual(expectedAngle, lineSegment.Angle);
         }
+
+        [TestMethod]
+        [DataRow(100, 100, 200, 200, 210, 148.660687, 42.273689)]
+        [DataRow(100, 100, 0, 200, -10, 148.660687, 137.726311)]
+        [DataRow(100, 100, 200, 0, 210, 148.660687, 317.726311)]
+        [DataRow(100, 100, 0, 0, -10, 148.660687, 222.273689)]
+        public void Add_Line_Width_When_No_Local_Constraint_And_Has_First_Point_Constraint(double x1, double y1, double x2, double y2, double newX2, double newLength, double newAngle)
+        {
+            // Init
+            _canvas.Clear();
+            DcLineSegment lineSegment = new DcLineSegment(x1, y1, x2, y2);
+            _canvas.AddToVisualCollection(new DcLineSegment(50, 100, 100, 100));
+            _canvas.AddToVisualCollection(lineSegment);
+
+            // Act
+            lineSegment.Width += 10;
+
+            Assert.AreEqual(newLength, lineSegment.Length, 0.000001);
+            Assert.AreEqual(x1, lineSegment.X1);
+            Assert.AreEqual(y1, lineSegment.Y1);
+            Assert.AreEqual(newX2, lineSegment.X2, 0.000001);
+            Assert.AreEqual(y2, lineSegment.Y2);
+            Assert.AreEqual(newAngle, lineSegment.Angle, 0.000001);
+        }
+
+        [TestMethod]
+        [DataRow(100, 100, 200, 200, 190, 134.53624, 48.012788)]
+        [DataRow(100, 100, 0, 200, 10, 134.53624, 131.987212)]
+        [DataRow(100, 100, 200, 0, 190, 134.53624, 311.987212)]
+        [DataRow(100, 100, 0, 0, 10, 134.53624, 228.012788)]
+        public void Subtract_Line_Width_When_No_Local_Constraint_And_Has_First_Point_Constraint(double x1, double y1, double x2, double y2, double newX2, double newLength, double newAngle)
+        {
+            // Init
+            _canvas.Clear();
+            DcLineSegment lineSegment = new DcLineSegment(x1, y1, x2, y2);
+            _canvas.AddToVisualCollection(new DcLineSegment(50, 100, 100, 100));
+            _canvas.AddToVisualCollection(lineSegment);
+
+            // Act
+            lineSegment.Width -= 10;
+
+            Assert.AreEqual(newLength, lineSegment.Length, 0.000001);
+            Assert.AreEqual(x1, lineSegment.X1);
+            Assert.AreEqual(y1, lineSegment.Y1);
+            Assert.AreEqual(newX2, lineSegment.X2, 0.000001);
+            Assert.AreEqual(y2, lineSegment.Y2);
+            Assert.AreEqual(newAngle, lineSegment.Angle, 0.000001);
+        }
     }
 }
