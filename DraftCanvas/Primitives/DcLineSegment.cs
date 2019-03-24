@@ -649,18 +649,18 @@ namespace DraftCanvas.Primitives
                     delta = dx > 0 ? delta : -delta;
                     if (HasConstraint(Constraints.Length))
                     {
-                        if (HasConstraint(Constraints.Width) || HasConstraint(Constraints.Angle)) return;
+                        if (HasConstraint(Constraints.Heigth) || HasConstraint(Constraints.Angle)) return;
                         else
-                        {
-                            double newWidth = DcMath.GetСathetus(newWid, Length);
-                            double dy = X2 - X1; // ------
+                        { // Tested
+                            double newHeigth = DcMath.GetСathetus(newWid, Length);
+                            double dy = Y2 - Y1;
 
-                            double xOffset = (newWidth - Width) / 2;
-                            xOffset = dx > 0 ? xOffset : -xOffset;
+                            double yOffset = (newHeigth - Height) / 2;
+                            yOffset = dy > 0 ? yOffset : -yOffset;
 
-                            OnChangeP1(X1 - xOffset, Y1 - delta);
-                            OnChangeP2(X2 + xOffset, Y2 + delta);
-                            _width = newWidth;
+                            OnChangeP1(X1 - delta, Y1 - yOffset);
+                            OnChangeP2(X2 + delta, Y2 + yOffset);
+                            _height = newHeigth;
                             _angle = DcMath.GetLineSegmentAngle(this);
                         }
                     }
