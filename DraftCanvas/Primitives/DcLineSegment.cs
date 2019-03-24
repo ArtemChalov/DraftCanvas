@@ -284,7 +284,7 @@ namespace DraftCanvas.Primitives
 
         // Changes the length of the DcLineSegment.
         private void OnChangeLength(double newLength)
-        {
+        { // Full tested
             if (Length <= 0 || newLength == Length) return;
 
             // Tests if one of the point has a constraint.
@@ -390,7 +390,7 @@ namespace DraftCanvas.Primitives
 
         // Changes the heigth of the DcLineSegment
         private void OnChangeHeight(double newHeight)
-        {
+        { // Full tested
             if (newHeight <= 0 || newHeight == Height) return;
             if ((HasConstraint(Constraints.Length) && HasConstraint(Constraints.Angle)) || Angle == 0 || Angle == 180) return;
 
@@ -472,13 +472,13 @@ namespace DraftCanvas.Primitives
                     {
                         if (HasConstraint(Constraints.Width) || HasConstraint(Constraints.Length)) return;
                         else
-                        {
+                        { // Tested
                             double newWidth = Math.Abs(DcMath.XoffsetByTan(newHeight, Angle));
                             double xOffset = newWidth - Width;
                             double dx = X2 - X1;
                             xOffset = dx > 0 ? xOffset : -xOffset;
 
-                            OnChangeP2(X2 + xOffset, Y2 + delta);
+                            OnChangeP1(X1 - xOffset, Y1 - delta);
                             _length = DcMath.GetDistance(X1, Y1, X2, Y2);
                             _width = newWidth;
                         }
