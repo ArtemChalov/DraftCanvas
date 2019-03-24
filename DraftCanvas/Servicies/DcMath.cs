@@ -64,6 +64,22 @@ namespace DraftCanvas.Servicies
         }
 
         /// <summary>
+        /// Calculates the opposite cathetus by the angle and adjacent cathetus.
+        /// </summary>
+        /// <param name="cathetus">Adjacent cathetus.</param>
+        /// <param name="angle">Angle.</param>
+        /// <returns>Returns the opposite cathetus.</returns>
+        static internal double YoffsetByTan(double cathetus, double angle)
+        { // Tested
+            if (angle == 90 || angle == 270) return 0;
+
+            double res = cathetus * Math.Tan(DegreeToRadian(angle));
+
+            if (angle > 180) return -res;
+            else return res;
+        }
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="lineSegment"></param>

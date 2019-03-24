@@ -644,16 +644,16 @@ namespace DraftCanvas.Primitives
                 }
                 else
                 {
-                    double delta = (newWid - Height) / 2;
-                    double dy = Y2 - Y1;
-                    delta = dy > 0 ? delta : -delta;
+                    double delta = (newWid - Width) / 2;
+                    double dx = X2 - X1;
+                    delta = dx > 0 ? delta : -delta;
                     if (HasConstraint(Constraints.Length))
                     {
                         if (HasConstraint(Constraints.Width) || HasConstraint(Constraints.Angle)) return;
                         else
                         {
                             double newWidth = DcMath.GetСathetus(newWid, Length);
-                            double dx = X2 - X1;
+                            double dy = X2 - X1; // ------
 
                             double xOffset = (newWidth - Width) / 2;
                             xOffset = dx > 0 ? xOffset : -xOffset;
@@ -665,25 +665,25 @@ namespace DraftCanvas.Primitives
                         }
                     }
                     else if (HasConstraint(Constraints.Angle))
-                    { 
-                        if (HasConstraint(Constraints.Width) || HasConstraint(Constraints.Length)) return;
+                    { // Tested
+                        if (HasConstraint(Constraints.Heigth) || HasConstraint(Constraints.Length)) return;
                         else
                         {
-                            double newWidth = Math.Abs(DcMath.XoffsetByTan(newWid, Angle));
-                            double xOffset = (newWidth - Width) / 2;
-                            double dx = X2 - X1;
-                            xOffset = dx > 0 ? xOffset : -xOffset;
+                            double newHeigth = Math.Abs(DcMath.YoffsetByTan(newWid, Angle));
+                            double yOffset = (newHeigth - Height) / 2;
+                            double dY = Y2 - Y1;
+                            yOffset = dY > 0 ? yOffset : -yOffset;
 
-                            OnChangeP1(X1 - xOffset, Y1 - delta);
-                            OnChangeP2(X2 + xOffset, Y2 + delta);
-                            _width = newWidth;
+                            OnChangeP1(X1 - delta, Y1 - yOffset);
+                            OnChangeP2(X2 + delta, Y2 + yOffset);
+                            _height = newHeigth;
                             _length = DcMath.GetDistance(X1, Y1, X2, Y2);
                         }
                     }
                     else
-                    { 
-                        OnChangeP1(X1, Y1 - delta);
-                        OnChangeP2(X2, Y2 + delta);
+                    { // Tested
+                        OnChangeP1(X1 - delta, Y1);
+                        OnChangeP2(X2 + delta, Y2);
                         _angle = DcMath.GetLineSegmentAngle(this);
                         _length = DcMath.GetDistance(X1, Y1, X2, Y2);
                     }
