@@ -541,6 +541,7 @@ namespace DraftCanvas.Primitives
             _height = newHeight;
         }
 
+        // Changes the width of the DcLineSegment
         private void OnChangeWidth(double newWid)
         { // Full tested
             if (newWid <= 0 || newWid == Height) return;
@@ -693,6 +694,7 @@ namespace DraftCanvas.Primitives
             _width = newWid;
         }
 
+        // Changes the angle of the DcLineSegment
         private void OnChangeAngle(double newValue)
         {
             var p2HasConstraint = Owner.PointCollection[_p2Hash].ActiveHash != 0;
