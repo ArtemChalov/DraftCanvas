@@ -65,6 +65,7 @@
     <Compile Include="DcLineSegmentLengthChangeTests.cs" />
     <Compile Include="DcLineSegmentHeightChangeTests.cs" />
     <Compile Include="DcLineSegmentWidthChangeTests.cs" />
+    <Compile Include="DcLineSegmentAngleChangeTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

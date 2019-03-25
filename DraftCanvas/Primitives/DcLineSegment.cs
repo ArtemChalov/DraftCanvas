@@ -538,14 +538,15 @@ namespace DraftCanvas.Primitives
                 }
             }
 
+            AddLocalConstraint(Constraints.Heigth);
             _height = newHeight;
         }
 
         // Changes the width of the DcLineSegment
-        private void OnChangeWidth(double newWid)
+        private void OnChangeWidth(double newWidth)
         { // Full tested
-            if (newWid <= 0 || newWid == Height) return;
-            if ((HasConstraint(Constraints.Length) && HasConstraint(Constraints.Angle)) || Angle == 0 || Angle == 180) return;
+            if (newWidth <= 0 || newWidth == Width) return;
+            if ((HasConstraint(Constraints.Length) && HasConstraint(Constraints.Angle)) || Angle == 90 || Angle == 270) return;
 
             // Tests if one of the point has a constraint.
             var p1HasConstraint = Owner.PointCollection[_p1Hash].ActiveHash != 0;
@@ -556,7 +557,7 @@ namespace DraftCanvas.Primitives
                 if (p2HasConstraint) return;
                 else
                 {
-                    double delta = (newWid - Width);
+                    double delta = (newWidth - Width);
                     double dx = X2 - X1;
                     delta = dx > 0 ? delta : -delta;
                     if (HasConstraint(Constraints.Length))
@@ -564,7 +565,7 @@ namespace DraftCanvas.Primitives
                         if (HasConstraint(Constraints.Heigth) || HasConstraint(Constraints.Angle)) return;
                         else
                         {
-                            double newHeight = DcMath.GetСathetus(newWid, Length);
+                            double newHeight = DcMath.GetСathetus(newWidth, Length);
                             double dy = Y2 - Y1;
 
                             double yOffset = newHeight - Height;
@@ -580,7 +581,7 @@ namespace DraftCanvas.Primitives
                         if (HasConstraint(Constraints.Heigth) || HasConstraint(Constraints.Length)) return;
                         else
                         {
-                            double newHeigth = Math.Abs(DcMath.YoffsetByTan(newWid, Angle));
+                            double newHeigth = Math.Abs(DcMath.YoffsetByTan(newWidth, Angle));
                             double yOffset = newHeigth - Height;
                             double dy = Y2 - Y1;
                             yOffset = dy > 0 ? yOffset : -yOffset;
@@ -602,7 +603,7 @@ namespace DraftCanvas.Primitives
             {
                 if (p2HasConstraint)
                 {
-                    double delta = (newWid - Width);
+                    double delta = (newWidth - Width);
                     double dx = X2 - X1;
                     delta = dx > 0 ? delta : -delta;
                     if (HasConstraint(Constraints.Length))
@@ -610,7 +611,7 @@ namespace DraftCanvas.Primitives
                         if (HasConstraint(Constraints.Heigth) || HasConstraint(Constraints.Angle)) return;
                         else
                         {
-                            double newHeigth = DcMath.GetСathetus(newWid, Length);
+                            double newHeigth = DcMath.GetСathetus(newWidth, Length);
                             double dy = Y2 - Y1;
 
                             double yOffset = newHeigth - Height;
@@ -626,7 +627,7 @@ namespace DraftCanvas.Primitives
                         if (HasConstraint(Constraints.Heigth) || HasConstraint(Constraints.Length)) return;
                         else
                         {
-                            double newHeight = Math.Abs(DcMath.YoffsetByTan(newWid, Angle));
+                            double newHeight = Math.Abs(DcMath.YoffsetByTan(newWidth, Angle));
                             double yOffset = newHeight - Height;
                             double dy = Y2 - Y1;
                             yOffset = dy > 0 ? yOffset : -yOffset;
@@ -645,7 +646,7 @@ namespace DraftCanvas.Primitives
                 }
                 else
                 {
-                    double delta = (newWid - Width) / 2;
+                    double delta = (newWidth - Width) / 2;
                     double dx = X2 - X1;
                     delta = dx > 0 ? delta : -delta;
                     if (HasConstraint(Constraints.Length))
@@ -653,7 +654,7 @@ namespace DraftCanvas.Primitives
                         if (HasConstraint(Constraints.Heigth) || HasConstraint(Constraints.Angle)) return;
                         else
                         { // Tested
-                            double newHeigth = DcMath.GetСathetus(newWid, Length);
+                            double newHeigth = DcMath.GetСathetus(newWidth, Length);
                             double dy = Y2 - Y1;
 
                             double yOffset = (newHeigth - Height) / 2;
@@ -670,7 +671,7 @@ namespace DraftCanvas.Primitives
                         if (HasConstraint(Constraints.Heigth) || HasConstraint(Constraints.Length)) return;
                         else
                         {
-                            double newHeigth = Math.Abs(DcMath.YoffsetByTan(newWid, Angle));
+                            double newHeigth = Math.Abs(DcMath.YoffsetByTan(newWidth, Angle));
                             double yOffset = (newHeigth - Height) / 2;
                             double dY = Y2 - Y1;
                             yOffset = dY > 0 ? yOffset : -yOffset;
@@ -691,21 +692,52 @@ namespace DraftCanvas.Primitives
                 }
             }
 
-            _width = newWid;
+            AddLocalConstraint(Constraints.Width);
+            _width = newWidth;
         }
 
         // Changes the angle of the DcLineSegment
-        private void OnChangeAngle(double newValue)
+        private void OnChangeAngle(double newAngle)
         {
+            while (newAngle >= 360) newAngle -= 360;
+            while (newAngle <= -360) newAngle += 360;
+            newAngle = newAngle < 0 ? newAngle + 360 : newAngle;
+
+            // Tests if one of the point has a constraint.
+            var p1HasConstraint = Owner.PointCollection[_p1Hash].ActiveHash != 0;
             var p2HasConstraint = Owner.PointCollection[_p2Hash].ActiveHash != 0;
 
-            if (!p2HasConstraint)
+            if (p2HasConstraint) return;
+            else
             {
-                _angle = newValue;
-                _x2 = _x1 + DcMath.Xoffset(Length, newValue);
-                _y2 = _y1 + DcMath.Yoffset(Length, newValue);
-                IsDirty = true;
+
+                if (HasConstraint(Constraints.Heigth))
+                {
+                    if (HasConstraint(Constraints.Width)) return;
+                    else
+                    {
+
+                    }
+                }
+                else if (HasConstraint(Constraints.Width))
+                {
+                    if (HasConstraint(Constraints.Heigth)) return;
+                    else
+                    {
+
+                    }
+                }
+                else
+                {
+                    double dx = DcMath.XoffsetByTan(Height, newAngle);
+                    double dy = DcMath.YoffsetByTan(Width, newAngle);
+
+                    OnChangeP2(X1 + dx, 50);
+                }
             }
+
+            AddLocalConstraint(Constraints.Angle);
+            _angle = newAngle;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

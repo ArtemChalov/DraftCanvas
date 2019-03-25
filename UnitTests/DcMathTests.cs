@@ -100,5 +100,29 @@ namespace UnitTests
 
             Assert.AreEqual(dx, actual, 0.000001);
         }
+
+        [TestMethod]
+        [DataRow(100, 100, 100, 0, 0)]
+        [DataRow(100, 100, 100, 30, 50)]
+        [DataRow(100, 100, 100, 45, 70.710678)]
+        [DataRow(100, 100, 100, 60, 86.602540)]
+        [DataRow(100, 100, 100, 120, 86.602540)]
+        [DataRow(100, 100, 100, 135, 70.710678)]
+        [DataRow(100, 100, 100, 150, 50)]
+        [DataRow(100, 100, 100, 180, 0)]
+        [DataRow(100, 100, 100, 210, -50)]
+        [DataRow(100, 100, 100, 225, -70.710678)]
+        [DataRow(100, 100, 100, 240, -86.602540)]
+        [DataRow(100, 100, 100, 300, -86.602540)]
+        [DataRow(100, 100, 100, 315, -70.710678)]
+        [DataRow(100, 100, 100, 330, -50.000000)]
+        public void YoffsetByTan_Tests(double x1, double x2, double length, double angle, double dy)
+        {
+            DcLineSegment lineSegment = new DcLineSegment(new Point(x1, x2), length, angle);
+
+            var actual = DcMath.YoffsetByTan(lineSegment.Width, lineSegment.Angle);
+
+            Assert.AreEqual(dy, actual, 0.000001);
+        }
     }
 }

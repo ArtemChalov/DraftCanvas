@@ -71,11 +71,11 @@ namespace DraftCanvas.Servicies
         /// <returns>Returns the opposite cathetus.</returns>
         static internal double YoffsetByTan(double cathetus, double angle)
         { // Tested
-            if (angle == 90 || angle == 270) return 0;
+            if (angle == 0 || angle == 180) return 0;
 
             double res = cathetus * Math.Tan(DegreeToRadian(angle));
 
-            if (angle > 180) return -res;
+            if (angle > 90 && angle < 270) return -res;
             else return res;
         }
 
