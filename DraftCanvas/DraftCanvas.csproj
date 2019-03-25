@@ -73,7 +73,6 @@
     <Compile Include="ValueTypes\DcPoint.cs" />
     <Compile Include="ExtendedClasses\DrawingVisualEx.cs" />
     <Compile Include="Primitives\DcLineSegment.cs" />
-    <Compile Include="Interfacies\IDirty.cs" />
     <Compile Include="Interfacies\IVisualObject.cs" />
     <Compile Include="Interfacies\IVisualizable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

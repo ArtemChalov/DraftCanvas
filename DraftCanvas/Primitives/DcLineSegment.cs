@@ -28,6 +28,7 @@ namespace DraftCanvas.Primitives
         private int _p2Hash;
         private double _height;
         private double _width;
+        private bool _isSelected = false;
 
         #region Constructors
 
@@ -183,6 +184,11 @@ namespace DraftCanvas.Primitives
         /// </summary>
         public bool IsDirty { get; set; } = false;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool IsSelected { get { return _isSelected; } set { _isSelected = value; IsDirty = true; } }
+
         #endregion
 
         #region Public Methods
@@ -241,7 +247,7 @@ namespace DraftCanvas.Primitives
 
             using (DrawingContext drawingContext = visual.RenderOpen())
             {
-                drawingContext.DrawLine(new Pen(CanvasParam.PenColor, CanvasParam.Thikness / CanvasParam.Scale),
+                drawingContext.DrawLine(new Pen(IsSelected ? CanvasParam.PenSelectedColor : CanvasParam.PenColor, CanvasParam.Thikness / CanvasParam.Scale),
                     new Point(X1, CanvasParam.CanvasHeight - Y1), new Point(X2, CanvasParam.CanvasHeight - Y2));
             }
 

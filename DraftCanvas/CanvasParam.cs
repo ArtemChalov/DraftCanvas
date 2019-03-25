@@ -10,6 +10,8 @@ namespace DraftCanvas
 
         static public Brush PenColor { get; set; } = Brushes.White;
 
+        static public Brush PenSelectedColor { get; set; } = Brushes.Red;
+
         static public double CanvasWidth { get; set; }
         static public double CanvasHeight { get; set; }
     }

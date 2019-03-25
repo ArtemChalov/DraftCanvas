@@ -51,6 +51,7 @@ namespace CanvasApp
             if (lineSegment == null) return;
 
             lineSegment.Length += 10;
+            lineSegment.IsSelected = !lineSegment.IsSelected;
             Canva.Update();
 
             Mess1.Text = $"ID: {lineSegment.ID}";
