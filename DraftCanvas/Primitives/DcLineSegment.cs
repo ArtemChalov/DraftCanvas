@@ -728,11 +728,38 @@ namespace DraftCanvas.Primitives
                     }
                 }
                 else
-                {
-                    double dx = DcMath.XoffsetByTan(Height, newAngle);
-                    double dy = DcMath.YoffsetByTan(Width, newAngle);
+                { // Tested
+                    if (newAngle == 0)
+                    {
+                        OnChangeP2(X1 + Length, Y1);
+                        _height = 0;
+                        _width = Length;
+                    }
+                    else if (newAngle == 180)
+                    {
+                        OnChangeP2(X1 - Length, Y1);
+                        _height = 0;
+                        _width = Length;
+                    }
+                    else if (newAngle == 90)
+                    {
+                        OnChangeP2(X1, Y1 + Length);
+                        _height = Length;
+                        _width = 0;
+                    }
+                    else if (newAngle == 270)
+                    {
+                        OnChangeP2(X1, Y1 - Length);
+                        _height = Length;
+                        _width = 0;
+                    }
+                    else
+                    {
+                        double xOffset = DcMath.Xoffset(Length, newAngle);
+                        double yOffset = DcMath.Yoffset(Length, newAngle);
 
-                    OnChangeP2(X1 + dx, 50);
+                        OnChangeP2(X1 + xOffset, Y1 + yOffset);
+                    }
                 }
             }
 

@@ -37,16 +37,16 @@ namespace DraftCanvas.Servicies
         }
 
         /// <summary>
-        /// Calculates the adjacent cathetus by the angle and opposite cathetus.
+        /// Calculates the width of a triangle by angle and height.
         /// </summary>
-        /// <param name="cathetus">Opposite cathetus.</param>
+        /// <param name="heigth">Triangle height.</param>
         /// <param name="angle">Angle.</param>
-        /// <returns>Returns the adjacent cathetus.</returns>
-        static internal double XoffsetByTan(double cathetus, double angle)
+        /// <returns>Returns the width of a triangle.</returns>
+        static internal double XoffsetByTan(double heigth, double angle)
         { // Tested
             if (angle == 90 || angle == 270) return 0;
 
-            double res = cathetus / Math.Tan(DegreeToRadian(angle));
+            double res = heigth / Math.Tan(DegreeToRadian(angle));
 
             if (angle > 180) return -res;
             else return res;
@@ -64,16 +64,16 @@ namespace DraftCanvas.Servicies
         }
 
         /// <summary>
-        /// Calculates the opposite cathetus by the angle and adjacent cathetus.
+        /// Calculates the height of a triangle by angle and width.
         /// </summary>
-        /// <param name="cathetus">Adjacent cathetus.</param>
+        /// <param name="width">Triangle width.</param>
         /// <param name="angle">Angle.</param>
-        /// <returns>Returns the opposite cathetus.</returns>
-        static internal double YoffsetByTan(double cathetus, double angle)
+        /// <returns>Returns the height of a triangle.</returns>
+        static internal double YoffsetByTan(double width, double angle)
         { // Tested
             if (angle == 0 || angle == 180) return 0;
 
-            double res = cathetus * Math.Tan(DegreeToRadian(angle));
+            double res = width * Math.Tan(DegreeToRadian(angle));
 
             if (angle > 90 && angle < 270) return -res;
             else return res;
