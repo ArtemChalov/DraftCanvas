@@ -115,22 +115,22 @@ namespace DraftCanvas.Primitives
         /// <summary>
         /// 
         /// </summary>
-        public double X1 => _x1;
+        public double X1 { get { return _x1; } set { OnChangeP1(value, Y1); } }
 
         /// <summary>
         /// 
         /// </summary>
-        public double Y1 => _y1;
+        public double Y1 { get { return _y1; } set { OnChangeP1(X1, value); } }
 
         /// <summary>
         /// 
         /// </summary>
-        public double X2 => _x2;
+        public double X2 { get { return _x2; } set { OnChangeP1(value, Y2); } }
 
         /// <summary>
         /// 
         /// </summary>
-        public double Y2 => _y2;
+        public double Y2 { get { return _y2; } set { OnChangeP1(X2, value); } }
 
         /// <summary>
         /// 
@@ -747,7 +747,6 @@ namespace DraftCanvas.Primitives
                 }
             }
 
-            AddLocalConstraint(Constraints.Angle);
             _angle = newAngle;
         }
 
