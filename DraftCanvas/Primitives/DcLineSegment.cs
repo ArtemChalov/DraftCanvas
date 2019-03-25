@@ -698,7 +698,7 @@ namespace DraftCanvas.Primitives
 
         // Changes the angle of the DcLineSegment
         private void OnChangeAngle(double newAngle)
-        {
+        { // Full tested
             while (newAngle >= 360) newAngle -= 360;
             while (newAngle <= -360) newAngle += 360;
             newAngle = newAngle < 0 ? newAngle + 360 : newAngle;
@@ -710,23 +710,7 @@ namespace DraftCanvas.Primitives
             if (p2HasConstraint) return;
             else
             {
-
-                if (HasConstraint(Constraints.Heigth))
-                {
-                    if (HasConstraint(Constraints.Width)) return;
-                    else
-                    {
-
-                    }
-                }
-                else if (HasConstraint(Constraints.Width))
-                {
-                    if (HasConstraint(Constraints.Heigth)) return;
-                    else
-                    {
-
-                    }
-                }
+                if (HasConstraint(Constraints.Heigth) || HasConstraint(Constraints.Width)) return;
                 else
                 { // Tested
                     if (newAngle == 0)
