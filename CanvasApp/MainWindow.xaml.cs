@@ -22,12 +22,16 @@ namespace CanvasApp
 
         private void Add_lines(object sender, RoutedEventArgs e)
         {
-            DcLineSegment lineSegment = new DcLineSegment(200, 100, 100, 200);
-            lineSegment.AddLocalConstraint(Constraints.Heigth);
-
-            //Canva.DcLineSegments.Add(new DcLineSegment(200, 200, 200, 300));
-            //Canva.DcLineSegments.Add(new DcLineSegment(new Point(300, 100), 400, 90));
+            Canva.DcLineSegments.Add(new DcLineSegment(100, 100, 100, 200));
+            DcLineSegment lineSegment = new DcLineSegment(100, 200, 200, 200);
+            lineSegment.AddLocalConstraint(Constraints.Angle);
             Canva.DcLineSegments.Add(lineSegment);
+            DcLineSegment lineSegment1 = new DcLineSegment(new Point(200, 100), 100, 180);
+            lineSegment1.AddLocalConstraint(Constraints.Angle);
+            Canva.DcLineSegments.Add(lineSegment1);
+            DcLineSegment lineSegment2 = new DcLineSegment(200, 200, 200, 100);
+            //lineSegment2.AddLocalConstraint(Constraints.Angle);
+            Canva.DcLineSegments.Add(lineSegment2);
 
             Mess1.Text = $"ID: {lineSegment.ID}";
             Mess2.Text = $"Length: {lineSegment.Length}";
@@ -51,7 +55,7 @@ namespace CanvasApp
             if (lineSegment == null) return;
 
             lineSegment.Length += 10;
-            lineSegment.IsSelected = !lineSegment.IsSelected;
+            //lineSegment.IsSelected = !lineSegment.IsSelected;
             Canva.Update();
 
             Mess1.Text = $"ID: {lineSegment.ID}";
@@ -67,7 +71,15 @@ namespace CanvasApp
 
         private void Clear_All(object sender, RoutedEventArgs e)
         {
-            Canva.Clear();
+            var lineSegment = Canva.DcLineSegments.Find(line => line.ID == 1);
+
+            if (lineSegment == null) return;
+
+            lineSegment.Length += 10;
+            //lineSegment.IsSelected = !lineSegment.IsSelected;
+            Canva.Update();
+
+            //Canva.Clear();
         }
     }
 }

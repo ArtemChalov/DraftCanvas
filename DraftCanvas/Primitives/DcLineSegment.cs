@@ -78,8 +78,30 @@ namespace DraftCanvas.Primitives
 
             _length = length;
 
-            _x2 = _x1 + DcMath.Xoffset(length, angle);
-            _y2 = _y1 + DcMath.Yoffset(length, angle);
+            if (angle == 0)
+            {
+                _x2 = _x1 + length;
+                _y2 = _y1;
+            }
+            else if (angle == 180)
+            {
+                _x2 = _x1 - length;
+                _y2 = _y1;
+            }
+            else if (angle == 90)
+            {
+                _x2 = _x1;
+                _y2 = _y1 + length;
+            }
+            else if (angle == 270)
+            {
+                _x2 = _x1;
+                _y2 = _y1 - length;
+            }
+            else {
+                _x2 = _x1 + DcMath.Xoffset(length, angle);
+                _y2 = _y1 + DcMath.Yoffset(length, angle);
+            }
 
             _height = DcMath.GetHeight(Y1, Y2);
             _width = DcMath.GetWidth(X1, X2);
@@ -202,24 +224,24 @@ namespace DraftCanvas.Primitives
         /// <returns></returns>
         public bool SetPoint(double newX, double newY, int pointHash)
         {
-            double DelataX = 0;
-            double DelataY = 0;
+            double dX = 0;
+            double dY = 0;
             bool res = false;
             switch (PointHash.GetPointIndex(pointHash))
             {
                 case 1:
-                    DelataX = newX - X1;
-                    DelataY = newY - Y1;
+                    dX = newX - X1;
+                    dY = newY - Y1;
                     res = OnChangeP1(newX, newY);
                     if (LocalConstraint != 0)
-                        res = OnChangeP2(X2 + DelataX, Y2 + DelataY);
+                        res = OnChangeP2(X2 + dX, Y2 + dY);
                     break;
                 case 2:
-                    DelataX = newX - X2;
-                    DelataY = newY - Y2;
+                    dX = newX - X2;
+                    dY = newY - Y2;
                     res = OnChangeP2(newX, newY);
                     if (LocalConstraint != 0)
-                        res = OnChangeP1(X1 + DelataX, Y1 + DelataY);
+                        res = OnChangeP1(X1 + dX, Y1 + dY);
                     break;
             }
             return res;
