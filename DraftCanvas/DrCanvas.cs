@@ -6,6 +6,7 @@ using DraftCanvas.Servicies;
 using System;
 using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 
@@ -228,8 +229,41 @@ namespace DraftCanvas
         {
             base.OnMouseLeftButtonDown(e);
             Focus();
+           
             if (_primitiveCreator != null)
                 _primitiveCreator = _primitiveCreator?.Create(e.GetPosition(this), this);
+            else
+            {
+                // Perform the hit test against a given portion of the visual object tree.
+                HitTestResult result = VisualTreeHelper.HitTest(this, e.GetPosition(this));
+                if (result != null)
+                {
+                    if (result.VisualHit is DrawingVisualEx dv)
+                    {
+                        if (Keyboard.Modifiers != ModifierKeys.Control)
+                        {
+                            foreach (DrawingVisualEx item in _visualsCollection)
+                            {
+                                if (item.IsSelected) item.IsSelected = false;
+                            }
+                        }
+                        dv.IsSelected = true;
+                        Update();
+                    }
+                    else
+                    {
+                        if (Keyboard.Modifiers != ModifierKeys.Control)
+                        {
+                            foreach (DrawingVisualEx item in _visualsCollection)
+                            {
+                                if (item.IsSelected) item.IsSelected = false;
+                            }
+                            Update();
+                        }
+                    }
+
+                }
+            }
         }
 
         /// <summary>

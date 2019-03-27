@@ -42,5 +42,14 @@ namespace DraftCanvas
             get { return _visualObj.IsDirty; }
             set { _visualObj.IsDirty = value; }
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool IsSelected
+        {
+            get { return _visualObj.IsSelected; }
+            set { _visualObj.IsSelected = value; }
+        }
     }
 }
