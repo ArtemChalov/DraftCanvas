@@ -35,5 +35,16 @@ namespace DraftCanvas.Creators
             }
             return null;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="currentPoint"></param>
+        /// <param name="canvas"></param>
+        /// <returns></returns>
+        public IPrimitiveCreator DrawFantom(Point currentPoint, DrCanvas canvas)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
