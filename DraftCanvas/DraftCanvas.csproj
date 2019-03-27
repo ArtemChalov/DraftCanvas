@@ -65,12 +65,14 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Creators\DcLineSegmentCreator.cs" />
     <Compile Include="DrCanvas.cs" />
     <Compile Include="CanvasCounter.cs" />
     <Compile Include="CanvasParam.cs" />
     <Compile Include="Enums\DraftCanvasEnums.cs" />
     <Compile Include="ExtendedClasses\DcLineSegmentList.cs" />
     <Compile Include="Interfacies\IPrimitive.cs" />
+    <Compile Include="Interfacies\IPrimitiveCreator.cs" />
     <Compile Include="ValueTypes\DcPoint.cs" />
     <Compile Include="ExtendedClasses\DrawingVisualEx.cs" />
     <Compile Include="Primitives\DcLineSegment.cs" />

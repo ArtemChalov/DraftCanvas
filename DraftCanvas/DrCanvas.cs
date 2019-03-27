@@ -1,4 +1,6 @@
-﻿using DraftCanvas.ExtendedClasses;
+﻿using DraftCanvas.Creators;
+using DraftCanvas.ExtendedClasses;
+using DraftCanvas.Interfacies;
 using DraftCanvas.Servicies;
 using System;
 using System.Collections.Generic;
@@ -18,6 +20,7 @@ namespace DraftCanvas
         private readonly DcLineSegmentList _lineSegments;
         private readonly Dictionary<int, DcPoint> _pointCollection = new Dictionary<int, DcPoint>();
         private string _state = null;
+        private IPrimitiveCreator primitiveCreator = null;
 
         #region DependencyProperties Registration
 
@@ -116,6 +119,7 @@ namespace DraftCanvas
         public void AddPrimitive(string primitiveName)
         {
             _state = primitiveName;
+            primitiveCreator = new DcLineSegmentCreator();
         }
 
         /// <summary>
