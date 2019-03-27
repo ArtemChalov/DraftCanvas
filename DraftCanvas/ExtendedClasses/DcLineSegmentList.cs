@@ -9,6 +9,7 @@ namespace DraftCanvas.ExtendedClasses
     public class DcLineSegmentList : List<DcLineSegment>
     {
         DrCanvas _canvas;
+
         /// <summary>
         /// 
         /// </summary>
@@ -17,6 +18,7 @@ namespace DraftCanvas.ExtendedClasses
         {
             _canvas = owner;
         }
+        /// 
         /// <summary>
         /// 
         /// </summary>
@@ -26,6 +28,17 @@ namespace DraftCanvas.ExtendedClasses
             base.Add(dcLineSegment);
             _canvas.AddToVisualCollection(dcLineSegment);
         }
+
+        /// <summary>
+        /// /
+        /// </summary>
+        /// <param name="dcLineSegment"></param>
+        /// <returns></returns>
+        public new bool Remove(DcLineSegment dcLineSegment)
+        {
+            return true;
+        }
+        
         /// <summary>
         /// 
         /// </summary>

@@ -17,6 +17,12 @@ namespace DraftCanvas.Servicies
             }
         }
 
+        internal static void RemovePrimitivePoints(IDictionary<int, DcPoint> pointCollection, IPrimitive primitive)
+        {
+            foreach (var item in primitive.Points)
+                pointCollection.Remove(item.Key);
+        }
+
         internal static DcPoint SetConstraint(DcPoint newPoint, IDictionary<int, DcPoint> pointCollection)
         {
             if (!pointCollection.Values.Contains(newPoint)) return newPoint;

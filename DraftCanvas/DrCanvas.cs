@@ -1,6 +1,7 @@
 ﻿using DraftCanvas.Creators;
 using DraftCanvas.ExtendedClasses;
 using DraftCanvas.Interfacies;
+using DraftCanvas.Primitives;
 using DraftCanvas.Servicies;
 using System;
 using System.Collections.Generic;
@@ -19,8 +20,7 @@ namespace DraftCanvas
         private List<Visual> _visualsCollection;
         private readonly DcLineSegmentList _lineSegments;
         private readonly Dictionary<int, DcPoint> _pointCollection = new Dictionary<int, DcPoint>();
-        private string _state = null;
-        private IPrimitiveCreator primitiveCreator = null;
+        private IPrimitiveCreator _primitiveCreator = null;
 
         #region DependencyProperties Registration
 
@@ -118,8 +118,44 @@ namespace DraftCanvas
         /// <param name="primitiveName">Primitive's name.</param>
         public void AddPrimitive(string primitiveName)
         {
-            _state = primitiveName;
-            primitiveCreator = new DcLineSegmentCreator();
+            if (_primitiveCreator != null)
+            {
+                _primitiveCreator.CancelCreation(this);
+                _primitiveCreator = null;
+            }
+            _primitiveCreator = new DcLineSegmentCreator();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="primitiveName"></param>
+        public void StopAddPrimitive(string primitiveName)
+        {
+            if (_primitiveCreator != null)
+            {
+                _primitiveCreator.CancelCreation(this);
+                _primitiveCreator = null;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="visualObject"></param>
+        public void RemoveVisualObject(IVisualObject visualObject)
+        {
+            DrawingVisual visual = GetDrawingVisualById(visualObject.ID);
+            if (visual != null)
+            {
+                RemoveVisualChild(visual);
+                if (visualObject is DcLineSegment line)
+                {
+                    PointManager.RemovePrimitivePoints(PointCollection, line);
+                    DcLineSegments.Remove(line);
+                }
+                _visualsCollection.Remove(visual);
+            }
         }
 
         /// <summary>
@@ -192,12 +228,8 @@ namespace DraftCanvas
         {
             base.OnMouseLeftButtonDown(e);
             Focus();
-            if (_state != null)
-            {
-                primitiveCreator = primitiveCreator?.Create(e.GetPosition(this), this);
-
-                if (primitiveCreator == null) _state = null;
-            }
+            if (_primitiveCreator != null)
+                _primitiveCreator = _primitiveCreator?.Create(e.GetPosition(this), this);
         }
 
         /// <summary>
@@ -207,9 +239,9 @@ namespace DraftCanvas
         protected override void OnMouseMove(MouseEventArgs e)
         {
             base.OnMouseMove(e);
-            if (e.LeftButton == MouseButtonState.Released && _state != null)
+            if (e.LeftButton == MouseButtonState.Released)
             {
-
+                if (_primitiveCreator != null) _primitiveCreator.DrawFantom(e.GetPosition(this), this);
             }
         }
 

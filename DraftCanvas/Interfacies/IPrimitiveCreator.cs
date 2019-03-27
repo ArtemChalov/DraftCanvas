@@ -21,6 +21,12 @@ namespace DraftCanvas.Interfacies
         /// <param name="currentPoint"></param>
         /// <param name="canvas"></param>
         /// <returns></returns>
-        IPrimitiveCreator DrawFantom(Point currentPoint, DrCanvas canvas);
+        void DrawFantom(Point currentPoint, DrCanvas canvas);
+
+        /// <summary>
+        /// /
+        /// </summary>
+        /// <param name="canvas"></param>
+        void CancelCreation(DrCanvas canvas);
     }
 }

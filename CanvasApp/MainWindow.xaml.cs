@@ -71,20 +71,25 @@ namespace CanvasApp
 
         private void Clear_All(object sender, RoutedEventArgs e)
         {
-            var lineSegment = Canva.DcLineSegments.Find(line => line.ID == 1);
+            //var lineSegment = Canva.DcLineSegments.Find(line => line.ID == 1);
 
-            if (lineSegment == null) return;
+            //if (lineSegment == null) return;
 
-            lineSegment.Length += 10;
-            //lineSegment.IsSelected = !lineSegment.IsSelected;
-            Canva.Update();
+            //lineSegment.Length += 10;
+            ////lineSegment.IsSelected = !lineSegment.IsSelected;
+            //Canva.Update();
 
-            //Canva.Clear();
+            Canva.Clear();
         }
 
         private void Add_LineSegment(object sender, RoutedEventArgs e)
         {
             Canva.AddPrimitive(((FrameworkElement)sender).Tag.ToString());
+        }
+
+        private void Stop_LineSegment(object sender, RoutedEventArgs e)
+        {
+            Canva.StopAddPrimitive(((FrameworkElement)sender).Tag.ToString());
         }
     }
 }

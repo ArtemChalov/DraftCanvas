@@ -31,6 +31,7 @@
             <Button Click="Lines_Action">Action</Button>
             <Button Click="Clear_All">Clear</Button>
             <Button Click="Add_LineSegment" Tag="LineSegmentBtn">Line</Button>
+            <Button Click="Stop_LineSegment" Tag="LineSegmentBtn">Stop Line</Button>
             <TextBlock x:Name="Mess1"/>
             <TextBlock x:Name="Mess2"/>
             <TextBlock x:Name="Mess3"/>

@@ -148,12 +148,12 @@ namespace DraftCanvas.Primitives
         /// <summary>
         /// 
         /// </summary>
-        public double X2 { get { return _x2; } set { OnChangeP1(value, Y2); } }
+        public double X2 { get { return _x2; } set { OnChangeP2(value, Y2); } }
 
         /// <summary>
         /// 
         /// </summary>
-        public double Y2 { get { return _y2; } set { OnChangeP1(X2, value); } }
+        public double Y2 { get { return _y2; } set { OnChangeP2(X2, value); } }
 
         /// <summary>
         /// 
