@@ -30,6 +30,7 @@
             <Button Click="Add_lines">Add Lines</Button>
             <Button Click="Lines_Action">Action</Button>
             <Button Click="Clear_All">Clear</Button>
+            <Button Click="Add_LineSegment" Tag="LineSegmentBtn">Line</Button>
             <TextBlock x:Name="Mess1"/>
             <TextBlock x:Name="Mess2"/>
             <TextBlock x:Name="Mess3"/>

@@ -1,7 +1,9 @@
 ﻿using DraftCanvas.ExtendedClasses;
 using DraftCanvas.Servicies;
+using System;
 using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace DraftCanvas
@@ -15,6 +17,7 @@ namespace DraftCanvas
         private List<Visual> _visualsCollection;
         private readonly DcLineSegmentList _lineSegments;
         private readonly Dictionary<int, DcPoint> _pointCollection = new Dictionary<int, DcPoint>();
+        private string _state = null;
 
         #region DependencyProperties Registration
 
@@ -107,6 +110,15 @@ namespace DraftCanvas
         }
 
         /// <summary>
+        /// Sets the state of DraftCanvas  state as add primitive.
+        /// </summary>
+        /// <param name="primitiveName">Primitive's name.</param>
+        public void AddPrimitive(string primitiveName)
+        {
+            _state = primitiveName;
+        }
+
+        /// <summary>
         /// Removes all visual objects from the Canvas.
         /// </summary>
         public void Clear()
@@ -168,6 +180,20 @@ namespace DraftCanvas
             return _visualsCollection[index];
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="e"></param>
+        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+        {
+            base.OnMouseLeftButtonDown(e);
+            Focus();
+            if (_state != null)
+            {
+                MessageBox.Show($"X: {e.GetPosition(this).X}, Y: {this.Height - e.GetPosition(this).Y}");
+            }
+        }
+       
         #endregion
     }
 }

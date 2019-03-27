@@ -81,5 +81,10 @@ namespace CanvasApp
 
             //Canva.Clear();
         }
+
+        private void Add_LineSegment(object sender, RoutedEventArgs e)
+        {
+            Canva.AddPrimitive(((FrameworkElement)sender).Tag.ToString());
+        }
     }
 }
