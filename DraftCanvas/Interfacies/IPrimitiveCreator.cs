@@ -1,13 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Windows;
 
 namespace DraftCanvas.Interfacies
 {
-    interface IPrimitiveCreator
+    /// <summary>
+    /// 
+    /// </summary>
+    public interface IPrimitiveCreator
     {
-        void Create();
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="currentPoint"></param>
+        /// <param name="canvas"></param>
+        /// <returns></returns>
+        IPrimitiveCreator Create(Point currentPoint, DrCanvas canvas);
     }
 }

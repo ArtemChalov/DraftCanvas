@@ -194,10 +194,25 @@ namespace DraftCanvas
             Focus();
             if (_state != null)
             {
-                MessageBox.Show($"X: {e.GetPosition(this).X}, Y: {this.Height - e.GetPosition(this).Y}");
+                primitiveCreator = primitiveCreator?.Create(e.GetPosition(this), this);
+
+                if (primitiveCreator == null) _state = null;
             }
         }
-       
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="e"></param>
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            base.OnMouseMove(e);
+            if (e.LeftButton == MouseButtonState.Released && _state != null)
+            {
+
+            }
+        }
+
         #endregion
     }
 }
