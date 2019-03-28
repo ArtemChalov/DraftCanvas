@@ -22,6 +22,7 @@ namespace DraftCanvas
         private readonly DcLineSegmentList _lineSegments;
         private readonly Dictionary<int, DcPoint> _pointCollection = new Dictionary<int, DcPoint>();
         private IPrimitiveCreator _primitiveCreator = null;
+        private List<DependencyObject> _hitTestList = new List<DependencyObject>();
 
         #region DependencyProperties Registration
 
@@ -191,16 +192,95 @@ namespace DraftCanvas
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="dc"></param>
-        protected override void OnRender(DrawingContext dc)
+        /// <param name="e"></param>
+        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
-            Brush background = this.Background;
-            if (background == null)
-                return;
-            if (background.CanFreeze)
-                background.Freeze();
-            Size renderSize = this.RenderSize;
-            dc.DrawRectangle(background, null, new Rect(0.0, 0.0, renderSize.Width, renderSize.Height));
+            base.OnMouseLeftButtonDown(e);
+            Focus();
+           
+            if (_primitiveCreator != null)
+                _primitiveCreator = _primitiveCreator?.Create(e.GetPosition(this), this);
+            else
+            {
+                _hitTestList.Clear();
+                Point pt = e.GetPosition(this);
+
+                // Expand the hit test area by creating a geometry centered on the hit test point.
+                EllipseGeometry expandedHitTestArea = new EllipseGeometry(pt, 2.0, 2.0);
+
+                VisualTreeHelper.HitTest(this, 
+                    new HitTestFilterCallback(HitTestFilter), 
+                    new HitTestResultCallback(HitTestCallback),
+                      new GeometryHitTestParameters(expandedHitTestArea));
+
+
+                // Perform the hit test against a given portion of the visual object tree.
+                //HitTestResult result = VisualTreeHelper.HitTest(this, e.GetPosition(this));
+                if (_hitTestList.Count > 0)
+                {
+                    foreach (var result in _hitTestList)
+                    {
+                        if (result is DrawingVisualEx dv)
+                        {
+                            if (Keyboard.Modifiers != ModifierKeys.Control)
+                            {
+                                foreach (DrawingVisualEx item in _visualsCollection)
+                                {
+                                    if (item.IsSelected) item.IsSelected = false;
+                                }
+                            }
+                            dv.IsSelected = true;
+                            Update();
+                        }
+                    }
+                }
+                else
+                {
+                    if (Keyboard.Modifiers != ModifierKeys.Control)
+                    {
+                        foreach (DrawingVisualEx item in _visualsCollection)
+                        {
+                            if (item.IsSelected) item.IsSelected = false;
+                        }
+                        Update();
+                    }
+                }
+            }
+        }
+
+        private HitTestFilterBehavior HitTestFilter(DependencyObject potentialHitTestTarget)
+        {
+            // Test for the object value you want to filter.
+            if (potentialHitTestTarget.GetType() == typeof(DrawingVisualEx))
+            {
+                // Visual object is part of hit test results enumeration.
+                return HitTestFilterBehavior.Continue;
+            }
+            else
+            {
+                // Visual object and descendants are NOT part of hit test results enumeration.
+                return HitTestFilterBehavior.ContinueSkipSelf;
+            }
+        }
+
+        private HitTestResultBehavior HitTestCallback(HitTestResult result)
+        {
+            _hitTestList.Add(result.VisualHit);
+
+            return HitTestResultBehavior.Continue;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="e"></param>
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            base.OnMouseMove(e);
+            if (e.LeftButton == MouseButtonState.Released)
+            {
+                if (_primitiveCreator != null) _primitiveCreator.DrawFantom(e.GetPosition(this), this);
+            }
         }
 
         /// <summary>
@@ -224,61 +304,17 @@ namespace DraftCanvas
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="e"></param>
-        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+        /// <param name="dc"></param>
+        protected override void OnRender(DrawingContext dc)
         {
-            base.OnMouseLeftButtonDown(e);
-            Focus();
-           
-            if (_primitiveCreator != null)
-                _primitiveCreator = _primitiveCreator?.Create(e.GetPosition(this), this);
-            else
-            {
-                // Perform the hit test against a given portion of the visual object tree.
-                HitTestResult result = VisualTreeHelper.HitTest(this, e.GetPosition(this));
-                if (result != null)
-                {
-                    if (result.VisualHit is DrawingVisualEx dv)
-                    {
-                        if (Keyboard.Modifiers != ModifierKeys.Control)
-                        {
-                            foreach (DrawingVisualEx item in _visualsCollection)
-                            {
-                                if (item.IsSelected) item.IsSelected = false;
-                            }
-                        }
-                        dv.IsSelected = true;
-                        Update();
-                    }
-                    else
-                    {
-                        if (Keyboard.Modifiers != ModifierKeys.Control)
-                        {
-                            foreach (DrawingVisualEx item in _visualsCollection)
-                            {
-                                if (item.IsSelected) item.IsSelected = false;
-                            }
-                            Update();
-                        }
-                    }
-
-                }
-            }
+            Brush background = this.Background;
+            if (background == null)
+                return;
+            if (background.CanFreeze)
+                background.Freeze();
+            Size renderSize = this.RenderSize;
+            dc.DrawRectangle(background, null, new Rect(0.0, 0.0, renderSize.Width, renderSize.Height));
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="e"></param>
-        protected override void OnMouseMove(MouseEventArgs e)
-        {
-            base.OnMouseMove(e);
-            if (e.LeftButton == MouseButtonState.Released)
-            {
-                if (_primitiveCreator != null) _primitiveCreator.DrawFantom(e.GetPosition(this), this);
-            }
-        }
-
         #endregion
     }
 }
