@@ -55,6 +55,9 @@
   <ItemGroup>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="prmath">
+      <HintPath>..\prmath\bin\Release\netstandard2.0\prmath.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xaml" />
@@ -79,7 +82,6 @@
     <Compile Include="Interfacies\IVisualObject.cs" />
     <Compile Include="Interfacies\IVisualizable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Servicies\DcMath.cs" />
     <Compile Include="Servicies\PointHash.cs" />
     <Compile Include="Servicies\PointManager.cs" />
   </ItemGroup>

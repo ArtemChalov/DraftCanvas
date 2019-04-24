@@ -24,6 +24,25 @@ namespace prmath
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="lineSegment"></param>
+        /// <returns></returns>
+        static public double GetLineSegmentAngle(double x1, double y1, double x2, double y2)
+        {
+            double dX = x2 - x1;
+            double dY = y2 - y1;
+
+            double angle = RadianToDegree(Math.Atan(dY / dX));
+
+            if (dX < 0)
+                angle += 180;
+
+            return angle < 0 ? angle + 360 : angle;
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="distance"></param>
         /// <param name="angle"></param>
         /// <returns></returns>
