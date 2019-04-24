@@ -44,12 +44,16 @@ namespace DraftCanvas.Creators
             }
             else if (_pointCounter == 2)
             {
-                _fantom.X2 = currentPoint.X;
-                _fantom.Y2 = canvas.Height - currentPoint.Y;
-                canvas.Update();
+                if (_fantom != null)
+                {
+                    _fantom.X2 = currentPoint.X;
+                    _fantom.Y2 = canvas.Height - currentPoint.Y;
+                    canvas.Update();
 
-                _pointCounter = 1;
-                _fantom = null;
+                    _pointCounter = 1;
+                    _fantom = null;
+                }
+                
                 return this;
             }
             return null;
