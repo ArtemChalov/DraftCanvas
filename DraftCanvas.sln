@@ -1,13 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.438
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28809.33
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DraftCanvas", "DraftCanvas\DraftCanvas.csproj", "{2F48AB5E-D49E-4E6D-A01E-78C7DB35B0FD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{F8ED08A0-6B62-4C7F-9A0D-8A37FD4F40BD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CanvasApp", "CanvasApp\CanvasApp.csproj", "{A6BBB5F2-49AE-4724-A903-DC4841F1E157}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "prmath", "prmath\prmath.csproj", "{C84B93F6-54D3-4302-B2CE-90CAE89BDBC5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +43,14 @@ Global
 		{A6BBB5F2-49AE-4724-A903-DC4841F1E157}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A6BBB5F2-49AE-4724-A903-DC4841F1E157}.Release|x64.ActiveCfg = Release|Any CPU
 		{A6BBB5F2-49AE-4724-A903-DC4841F1E157}.Release|x64.Build.0 = Release|Any CPU
+		{C84B93F6-54D3-4302-B2CE-90CAE89BDBC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C84B93F6-54D3-4302-B2CE-90CAE89BDBC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C84B93F6-54D3-4302-B2CE-90CAE89BDBC5}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C84B93F6-54D3-4302-B2CE-90CAE89BDBC5}.Debug|x64.Build.0 = Debug|Any CPU
+		{C84B93F6-54D3-4302-B2CE-90CAE89BDBC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C84B93F6-54D3-4302-B2CE-90CAE89BDBC5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C84B93F6-54D3-4302-B2CE-90CAE89BDBC5}.Release|x64.ActiveCfg = Release|Any CPU
+		{C84B93F6-54D3-4302-B2CE-90CAE89BDBC5}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

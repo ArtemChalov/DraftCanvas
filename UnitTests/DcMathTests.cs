@@ -3,6 +3,7 @@ using System.Windows;
 using DraftCanvas.Primitives;
 using DraftCanvas.Servicies;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using prmath;
 
 namespace UnitTests
 {
@@ -38,7 +39,7 @@ namespace UnitTests
         public void GetAngleByHeight_Tests(double x1, double x2, double length, double angle)
         {
             DcLineSegment lineSegment = new DcLineSegment(new Point(x1, x2), length, angle);
-            var actual = DcMath.GetAngleByHeight(lineSegment.Height, lineSegment.Length, lineSegment.X1, lineSegment.Y1, lineSegment.X2, lineSegment.Y2);
+            var actual = PrimMath.GetAngleByHeight(lineSegment.Height, lineSegment.Length, lineSegment.X1, lineSegment.Y1, lineSegment.X2, lineSegment.Y2);
             Assert.AreEqual(lineSegment.Angle, actual, 0.0001);
         }
 
@@ -72,7 +73,7 @@ namespace UnitTests
         {
             DcLineSegment lineSegment = new DcLineSegment(new Point(x1, x2), length, angle);
 
-            var actual = DcMath.GetAngleByWidth(lineSegment.Width, lineSegment.Length, lineSegment.X1, lineSegment.Y1, lineSegment.X2, lineSegment.Y2);
+            var actual = PrimMath.GetAngleByWidth(lineSegment.Width, lineSegment.Length, lineSegment.X1, lineSegment.Y1, lineSegment.X2, lineSegment.Y2);
 
             Assert.AreEqual(lineSegment.Angle, actual, 0.0001);
         }
@@ -96,7 +97,7 @@ namespace UnitTests
         {
             DcLineSegment lineSegment = new DcLineSegment(new Point(x1, x2), length, angle);
 
-            var actual = DcMath.XoffsetByTan(lineSegment.Height, lineSegment.Angle);
+            var actual = PrimMath.XoffsetByTan(lineSegment.Height, lineSegment.Angle);
 
             Assert.AreEqual(dx, actual, 0.000001);
         }
@@ -120,7 +121,7 @@ namespace UnitTests
         {
             DcLineSegment lineSegment = new DcLineSegment(new Point(x1, x2), length, angle);
 
-            var actual = DcMath.YoffsetByTan(lineSegment.Width, lineSegment.Angle);
+            var actual = PrimMath.YoffsetByTan(lineSegment.Width, lineSegment.Angle);
 
             Assert.AreEqual(dy, actual, 0.000001);
         }
