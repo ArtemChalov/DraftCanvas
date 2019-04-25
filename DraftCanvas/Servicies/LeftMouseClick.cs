@@ -16,6 +16,7 @@ namespace DraftCanvas.Servicies
         private List<DependencyObject> _hitTestList = new List<DependencyObject>();
         private Point _oldPoint;
         private DcRectangle _fantom = null;
+        BrushConverter _converter = new BrushConverter();
 
         /// <summary>
         /// 
@@ -80,17 +81,21 @@ namespace DraftCanvas.Servicies
         {
             if (_pointCounter == 2)
             {
-                //if (_fantom != null)
-                //{
-                //    _fantom.Point1 = new Point(_oldPoint.X, _oldPoint.Y);
-                //    _fantom.Point2 = new Point(point.X, CanvasParam.CanvasHeight - point.Y);
-                //    canvas.Update();
-                //}
-                //else
-                //{
+                if (_fantom != null)
+                {
+                    _fantom.P1 = new Point(_oldPoint.X, _oldPoint.Y);
+                    _fantom.P2 = new Point(point.X, CanvasParam.CanvasHeight - point.Y);
+                    _fantom.FillBrush = (point.X - _oldPoint.X) < 0
+                        ? (Brush)_converter.ConvertFromString("#3200FF00") : (Brush)_converter.ConvertFromString("#320000FF");
+                    canvas.Update();
+                }
+                else
+                {
                     _fantom = new DcRectangle(_oldPoint, new Point(point.X, CanvasParam.CanvasHeight - point.Y));
+                    _fantom.Thickness = 0.5;
+                    _fantom.Stroke = Brushes.DarkBlue;
                     canvas.AddToVisualCollection(_fantom);
-                //}
+                }
             }
         }
 

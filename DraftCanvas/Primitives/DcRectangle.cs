@@ -16,6 +16,8 @@ namespace DraftCanvas.Primitives
         private readonly string _tag = "Rectangle";
         private readonly int _id = CanvasCounter.PrimitiveID;
         private bool _isSelected = false;
+        private Point _point1;
+        private Point _point2;
 
         /// <summary>
         /// 
@@ -24,8 +26,8 @@ namespace DraftCanvas.Primitives
         /// <param name="p2"></param>
         public DcRectangle(Point p1, Point p2)
         {
-            Point1 = p1;
-            Point2 = p2;
+            P1 = p1;
+            P2 = p2;
         }
 
         /// <summary>
@@ -56,12 +58,42 @@ namespace DraftCanvas.Primitives
         /// <summary>
         /// 
         /// </summary>
-        public Point Point1 { get; set; }
+        public Point P1
+        {
+            get { return _point1; }
+            set { _point1 = value; IsDirty = true; }
+        }
+
 
         /// <summary>
         /// 
         /// </summary>
-        public Point Point2 { get; set; }
+        public Point P2
+        {
+            get { return _point2; }
+            set { _point2 = value; IsDirty = true; }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public Brush FillBrush { get; set; } = Brushes.Transparent;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public Brush Stroke { get; set; } = null;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public DashStyle Dash {get; set;} = null;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public double Thickness { get; set; } = 0;
+
 
         /// <summary>
         /// 
@@ -71,11 +103,15 @@ namespace DraftCanvas.Primitives
         {
             DrawingVisualEx visual = new DrawingVisualEx(this);
 
+            Brush stroke = Stroke == null ? CanvasParam.PenColor : Stroke;
+            double thickness = Thickness == 0 ? CanvasParam.Thikness / CanvasParam.Scale : Thickness;
+            Pen pen = new Pen(IsSelected ? CanvasParam.PenSelectedColor : stroke, thickness);
+            pen.DashStyle = IsSelected ? null : Dash;
+
             using (DrawingContext drawingContext = visual.RenderOpen())
             {
-                drawingContext.DrawRectangle(Brushes.AliceBlue, 
-                    new Pen(IsSelected ? CanvasParam.PenSelectedColor : CanvasParam.PenColor, CanvasParam.Thikness / CanvasParam.Scale),
-                    new Rect(new Point(Point1.X, CanvasParam.CanvasHeight - Point1.Y), new Point(Point2.X, CanvasParam.CanvasHeight - Point2.Y)));
+                drawingContext.DrawRectangle(FillBrush, pen,
+                    new Rect(new Point(P1.X, CanvasParam.CanvasHeight - P1.Y), new Point(P2.X, CanvasParam.CanvasHeight - P2.Y)));
             }
 
             visual.Transform = new ScaleTransform(CanvasParam.Scale, CanvasParam.Scale, 0, CanvasParam.CanvasHeight);
