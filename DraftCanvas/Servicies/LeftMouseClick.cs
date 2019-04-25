@@ -24,8 +24,9 @@ namespace DraftCanvas.Servicies
         /// <param name="canvas"></param>
         public void OnMouseDown(Point point, DrCanvas canvas)
         {
-            //_oldPoint = point;
-            //_pointCounter++;
+            _oldPoint.X = point.X;
+            _oldPoint.Y = CanvasParam.CanvasHeight - point.Y;
+            _pointCounter++;
             _hitTestList.Clear();
 
             // Expand the hit test area by creating a geometry centered on the hit test point.
@@ -77,20 +78,20 @@ namespace DraftCanvas.Servicies
         /// <param name="canvas"></param>
         public void OnMouseMove(Point point, DrCanvas canvas)
         {
-            //if (_pointCounter == 2)
-            //{
-            //    if (_fantom != null)
-            //    {
-            //        _fantom.Point1 = _oldPoint;
-            //        _fantom.Point2 = point;
-            //        canvas.Update();
-            //    }
-            //    else
-            //    {
-            //        _fantom = new DcRectangle(_oldPoint, point);
-            //        canvas.AddToVisualCollection(_fantom);
-            //    }
-            //}
+            if (_pointCounter == 2)
+            {
+                //if (_fantom != null)
+                //{
+                //    _fantom.Point1 = new Point(_oldPoint.X, _oldPoint.Y);
+                //    _fantom.Point2 = new Point(point.X, CanvasParam.CanvasHeight - point.Y);
+                //    canvas.Update();
+                //}
+                //else
+                //{
+                    _fantom = new DcRectangle(_oldPoint, new Point(point.X, CanvasParam.CanvasHeight - point.Y));
+                    canvas.AddToVisualCollection(_fantom);
+                //}
+            }
         }
 
         private HitTestFilterBehavior HitTestFilter(DependencyObject potentialHitTestTarget)
@@ -121,12 +122,12 @@ namespace DraftCanvas.Servicies
         /// <param name="canvas"></param>
         public void OnMouseUp(DrCanvas canvas)
         {
-            //_pointCounter = 1;
-            //if (_fantom != null)
-            //{
-            //    canvas.RemoveVisualObject(_fantom);
-            //    _fantom = null;
-            //}
+            _pointCounter = 1;
+            if (_fantom != null)
+            {
+                canvas.RemoveVisualObject(_fantom);
+                _fantom = null;
+            }
         }
     }
 }
