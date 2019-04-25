@@ -1,4 +1,4 @@
-﻿using DraftCanvas.Creators;
+﻿using DraftCanvas.LeftMouseAction;
 using DraftCanvas.ExtendedClasses;
 using DraftCanvas.Interfacies;
 using DraftCanvas.Primitives;
@@ -216,14 +216,16 @@ namespace DraftCanvas
         protected override void OnMouseMove(MouseEventArgs e)
         {
             base.OnMouseMove(e);
-            if (e.LeftButton == MouseButtonState.Released)
-            {
-                if (_primitiveCreator != null) _primitiveCreator.DrawFantom(e.GetPosition(this), this);
-            }
-            else
-            {
-                //_leftmouse.DrawFantom(e.GetPosition(this), this);
-            }
+            //if (e.LeftButton == MouseButtonState.Released)
+            //{
+            //    if (_primitiveCreator != null) _primitiveCreator.DrawFantom(e.GetPosition(this), this);
+            //}
+            //else
+            //{
+            //    //_leftmouse.DrawFantom(e.GetPosition(this), this);
+            //}
+
+            if (_primitiveCreator != null) _primitiveCreator.DrawFantom(e.GetPosition(this), this);
         }
 
         /// <summary>

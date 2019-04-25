@@ -24,12 +24,12 @@ namespace DraftCanvas.Interfacies
         /// </summary>
         /// <param name="point"></param>
         /// <param name="canvas"></param>
-        void DrawFantom(Point point, DrCanvas canvas);
+        void OnDrawFantom(Point point, DrCanvas canvas);
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="canvas"></param>
-        void ResetStation(DrCanvas canvas);
+        void OnResetState(DrCanvas canvas);
     }
 }

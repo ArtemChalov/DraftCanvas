@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace DraftCanvas.Creators
+namespace DraftCanvas.LeftMouseAction
 {
     /// <summary>
     /// Creats a new DcLineSegment.

@@ -75,7 +75,7 @@ namespace DraftCanvas.Servicies
         /// </summary>
         /// <param name="point"></param>
         /// <param name="canvas"></param>
-        public void DrawFantom(Point point, DrCanvas canvas)
+        public void OnDrawFantom(Point point, DrCanvas canvas)
         {
             //if (_pointCounter == 2)
             //{
@@ -119,7 +119,7 @@ namespace DraftCanvas.Servicies
         /// 
         /// </summary>
         /// <param name="canvas"></param>
-        public void ResetStation(DrCanvas canvas)
+        public void OnResetState(DrCanvas canvas)
         {
             //_pointCounter = 1;
             //if (_fantom != null)
