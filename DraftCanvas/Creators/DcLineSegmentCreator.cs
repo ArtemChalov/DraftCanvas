@@ -25,7 +25,13 @@ namespace DraftCanvas.Creators
         public void CancelCreation(DrCanvas canvas)
         {
             if (_pointCounter == 2)
-                canvas.RemoveVisualObject(_fantom);
+            {
+                if (_fantom != null)
+                {
+                    canvas.RemoveVisualObject(_fantom);
+                    _fantom = null;
+                }
+            }
         }
 
         /// <summary>
