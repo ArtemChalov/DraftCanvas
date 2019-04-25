@@ -22,7 +22,7 @@ namespace DraftCanvas.Servicies
         /// </summary>
         /// <param name="point"></param>
         /// <param name="canvas"></param>
-        public void OnClick(Point point, DrCanvas canvas)
+        public void OnMouseDown(Point point, DrCanvas canvas)
         {
             //_oldPoint = point;
             //_pointCounter++;
@@ -75,7 +75,7 @@ namespace DraftCanvas.Servicies
         /// </summary>
         /// <param name="point"></param>
         /// <param name="canvas"></param>
-        public void OnDrawFantom(Point point, DrCanvas canvas)
+        public void OnMouseMove(Point point, DrCanvas canvas)
         {
             //if (_pointCounter == 2)
             //{
@@ -119,7 +119,7 @@ namespace DraftCanvas.Servicies
         /// 
         /// </summary>
         /// <param name="canvas"></param>
-        public void OnResetState(DrCanvas canvas)
+        public void OnMouseUp(DrCanvas canvas)
         {
             //_pointCounter = 1;
             //if (_fantom != null)

@@ -21,22 +21,6 @@ namespace DraftCanvas.LeftMouseAction
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="canvas"></param>
-        public void CancelCreation(DrCanvas canvas)
-        {
-            if (_pointCounter == 2)
-            {
-                if (_fantom != null)
-                {
-                    canvas.RemoveVisualObject(_fantom);
-                    _fantom = null;
-                }
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="currentPoint"></param>
         /// <param name="canvas"></param>
         /// <returns></returns>
@@ -87,6 +71,22 @@ namespace DraftCanvas.LeftMouseAction
                 {
                     _fantom = new DcLineSegment(_firstPoint.X, _firstPoint.Y, _secondPoint.X, _secondPoint.Y);
                     canvas.AddToVisualCollection(_fantom);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="canvas"></param>
+        public void CancelCreation(DrCanvas canvas)
+        {
+            if (_pointCounter == 2)
+            {
+                if (_fantom != null)
+                {
+                    canvas.RemoveVisualObject(_fantom);
+                    _fantom = null;
                 }
             }
         }

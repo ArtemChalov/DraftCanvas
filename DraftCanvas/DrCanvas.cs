@@ -150,16 +150,15 @@ namespace DraftCanvas
         public void RemoveVisualObject(IVisualObject visualObject)
         {
             DrawingVisual visual = GetDrawingVisualById(visualObject.ID);
-            if (visual != null)
+            if (visual == null) return;
+
+            RemoveVisualChild(visual);
+            if (visualObject is DcLineSegment line)
             {
-                RemoveVisualChild(visual);
-                if (visualObject is DcLineSegment line)
-                {
-                    PointManager.RemovePrimitivePoints(PointCollection, line);
-                    DcLineSegments.Remove(line);
-                }
-                _visualsCollection.Remove(visual);
+                PointManager.RemovePrimitivePoints(PointCollection, line);
+                DcLineSegments.Remove(line);
             }
+            _visualsCollection.Remove(visual);
         }
 
         /// <summary>
@@ -199,14 +198,8 @@ namespace DraftCanvas
         {
             base.OnMouseLeftButtonDown(e);
             Focus();
-
-            if (_primitiveCreator != null)
-            {
-                _primitiveCreator = _primitiveCreator?.Create(e.GetPosition(this), this);
-                return;
-            }
-
-            _leftmouse.OnClick(e.GetPosition(this), this);
+            if (_primitiveCreator == null) _leftmouse.OnMouseDown(e.GetPosition(this), this);
+            else _primitiveCreator = _primitiveCreator?.Create(e.GetPosition(this), this);
         }
 
         /// <summary>
@@ -216,16 +209,8 @@ namespace DraftCanvas
         protected override void OnMouseMove(MouseEventArgs e)
         {
             base.OnMouseMove(e);
-            //if (e.LeftButton == MouseButtonState.Released)
-            //{
-            //    if (_primitiveCreator != null) _primitiveCreator.DrawFantom(e.GetPosition(this), this);
-            //}
-            //else
-            //{
-            //    //_leftmouse.DrawFantom(e.GetPosition(this), this);
-            //}
-
-            if (_primitiveCreator != null) _primitiveCreator.DrawFantom(e.GetPosition(this), this);
+            if (_primitiveCreator == null) _leftmouse.OnMouseMove(e.GetPosition(this), this);
+            else _primitiveCreator?.DrawFantom(e.GetPosition(this), this);
         }
 
         /// <summary>
@@ -235,7 +220,7 @@ namespace DraftCanvas
         protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
         {
             base.OnMouseLeftButtonUp(e);
-            //_leftmouse.ResetStation(this);
+            if (_primitiveCreator == null) _leftmouse.OnMouseUp(this);
         }
 
         /// <summary>

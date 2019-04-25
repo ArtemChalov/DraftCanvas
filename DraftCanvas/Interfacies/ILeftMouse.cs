@@ -17,19 +17,19 @@ namespace DraftCanvas.Interfacies
         /// </summary>
         /// <param name="point"></param>
         /// <param name="canvas"></param>
-        void OnClick(Point point, DrCanvas canvas);
+        void OnMouseDown(Point point, DrCanvas canvas);
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="point"></param>
         /// <param name="canvas"></param>
-        void OnDrawFantom(Point point, DrCanvas canvas);
+        void OnMouseMove(Point point, DrCanvas canvas);
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="canvas"></param>
-        void OnResetState(DrCanvas canvas);
+        void OnMouseUp(DrCanvas canvas);
     }
 }
