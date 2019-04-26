@@ -28,48 +28,47 @@ namespace DraftCanvas.Servicies
             _oldPoint.X = point.X;
             _oldPoint.Y = CanvasParam.CanvasHeight - point.Y;
             _pointCounter++;
-            _hitTestList.Clear();
+            //_hitTestList.Clear();
 
-            // Expand the hit test area by creating a geometry centered on the hit test point.
-            EllipseGeometry expandedHitTestArea = new EllipseGeometry(point, 2.0, 2.0);
+            ////// Expand the hit test area by creating a geometry centered on the hit test point.
+            //EllipseGeometry expandedHitTestArea = new EllipseGeometry(point, 2.0, 2.0);
 
-            VisualTreeHelper.HitTest(canvas,
-                new HitTestFilterCallback(HitTestFilter),
-                new HitTestResultCallback(HitTestCallback),
-                  new GeometryHitTestParameters(expandedHitTestArea));
+            //VisualTreeHelper.HitTest(canvas,
+            //    new HitTestFilterCallback(HitTestFilter),
+            //    new HitTestResultCallback(HitTestCallback),
+            //      new GeometryHitTestParameters(expandedHitTestArea));
 
 
-            // Perform the hit test against a given portion of the visual object tree.
-            //HitTestResult result = VisualTreeHelper.HitTest(this, e.GetPosition(this));
-            if (_hitTestList.Count > 0)
-            {
-                foreach (var result in _hitTestList)
-                {
-                    if (result is DrawingVisualEx dv)
-                    {
-                        if (Keyboard.Modifiers != ModifierKeys.Control)
-                        {
-                            foreach (DrawingVisualEx item in canvas._visualsCollection)
-                            {
-                                if (item.IsSelected) item.IsSelected = false;
-                            }
-                        }
-                        dv.IsSelected = true;
-                        canvas.Update();
-                    }
-                }
-            }
-            else
-            {
-                if (Keyboard.Modifiers != ModifierKeys.Control)
-                {
-                    foreach (DrawingVisualEx item in canvas._visualsCollection)
-                    {
-                        if (item.IsSelected) item.IsSelected = false;
-                    }
-                    canvas.Update();
-                }
-            }
+            //// Perform the hit test against a given portion of the visual object tree.
+            //if (_hitTestList.Count > 0)
+            //{
+            //    foreach (var result in _hitTestList)
+            //    {
+            //        if (result is DrawingVisualEx dv)
+            //        {
+            //            if (Keyboard.Modifiers != ModifierKeys.Control)
+            //            {
+            //                foreach (DrawingVisualEx item in canvas._visualsCollection)
+            //                {
+            //                    if (item.IsSelected) item.IsSelected = false;
+            //                }
+            //            }
+            //            dv.IsSelected = true;
+            //            canvas.Update();
+            //        }
+            //    }
+            //}
+            //else
+            //{
+            //    if (Keyboard.Modifiers != ModifierKeys.Control)
+            //    {
+            //        foreach (DrawingVisualEx item in canvas._visualsCollection)
+            //        {
+            //            if (item.IsSelected) item.IsSelected = false;
+            //        }
+            //        canvas.Update();
+            //    }
+            //}
         }
 
         /// <summary>
@@ -99,7 +98,53 @@ namespace DraftCanvas.Servicies
             }
         }
 
-        private HitTestFilterBehavior HitTestFilter(DependencyObject potentialHitTestTarget)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="canvas"></param>
+        public void OnMouseUp(DrCanvas canvas)
+        {
+            _pointCounter = 1;
+            if (_fantom != null)
+            {
+                Rect rect = new Rect(new Point(_fantom.P1.X, CanvasParam.CanvasHeight - _fantom.P1.Y), 
+                    new Point(_fantom.P2.X, CanvasParam.CanvasHeight - _fantom.P2.Y));
+                // Expand the hit test area by creating a geometry centered on the hit test point.
+                var expandedHitTestArea = new RectangleGeometry(rect);
+                canvas.RemoveVisualObject(_fantom);
+                _fantom = null;
+
+                _hitTestList.Clear();
+
+                VisualTreeHelper.HitTest(canvas,
+                    new HitTestFilterCallback(HitTestFilter),
+                    new HitTestResultCallback(HitTestCallback2),
+                      new GeometryHitTestParameters(expandedHitTestArea));
+
+                // Perform the hit test against a given portion of the visual object tree.
+                if (_hitTestList.Count > 0)
+                {
+                    foreach (var result in _hitTestList)
+                    {
+                        if (result is DrawingVisualEx dv)
+                        {
+                            dv.IsSelected = true;
+                            canvas.Update();
+                        }
+                    }
+                }
+            }
+            else
+            {
+                foreach (DrawingVisualEx item in canvas._visualsCollection)
+                {
+                    if (item.IsSelected) item.IsSelected = false;
+                }
+                canvas.Update();
+            }
+        }
+
+            private HitTestFilterBehavior HitTestFilter(DependencyObject potentialHitTestTarget)
         {
             // Test for the object value you want to filter.
             if (potentialHitTestTarget.GetType() == typeof(DrawingVisualEx))
@@ -121,17 +166,30 @@ namespace DraftCanvas.Servicies
             return HitTestResultBehavior.Continue;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="canvas"></param>
-        public void OnMouseUp(DrCanvas canvas)
+        private HitTestResultBehavior HitTestCallback2(HitTestResult result)
         {
-            _pointCounter = 1;
-            if (_fantom != null)
+            // Retrieve the results of the hit test.
+            IntersectionDetail intersectionDetail = ((GeometryHitTestResult)result).IntersectionDetail;
+
+            switch (intersectionDetail)
             {
-                canvas.RemoveVisualObject(_fantom);
-                _fantom = null;
+                case IntersectionDetail.FullyContains:
+
+                    return HitTestResultBehavior.Continue;
+
+                case IntersectionDetail.Intersects:
+                    //_hitTestList.Add(result.VisualHit);
+                    // Set the behavior to return visuals at all z-order levels.
+                    return HitTestResultBehavior.Continue;
+
+                case IntersectionDetail.FullyInside:
+                    // Add the hit test result to the list that will be processed after the enumeration.
+                    _hitTestList.Add(result.VisualHit);
+                    // Set the behavior to return visuals at all z-order levels.
+                    return HitTestResultBehavior.Continue;
+
+                default:
+                    return HitTestResultBehavior.Stop;
             }
         }
     }
