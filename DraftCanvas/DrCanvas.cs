@@ -80,6 +80,18 @@ namespace DraftCanvas
         #region Public Methods
 
         /// <summary>
+        /// 
+        /// </summary>
+        public void DelSelectedPrimitive()
+        {
+            //// Sets all items to a non-selected state.
+            //foreach (DrawingVisualEx item in _visualsCollection)
+            //{
+            //    if (item.IsSelected) RemoveVisualObject(item);
+            //}
+        }
+
+        /// <summary>
         /// Adds a new visual child to the visual coolection.
         /// </summary>
         /// <param name="visualElement">A new visual element.</param>

@@ -6,7 +6,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 
-namespace DraftCanvas.Servicies
+namespace DraftCanvas.LeftMouseAction
 {
     /// <summary>
     /// 
@@ -47,12 +47,6 @@ namespace DraftCanvas.Servicies
             {
                 foreach (DrawingVisualEx result in _hitTestList)
                 {
-                    //if (Keyboard.Modifiers == ModifierKeys.Control)
-                    //    // Inverts selection state
-                    //    result.IsSelected = !result.IsSelected;
-                    //else
-                    //    result.IsSelected = true;
-
                     if (Keyboard.Modifiers != ModifierKeys.Control)
                     {
                         // Sets all items to a non-selected state.

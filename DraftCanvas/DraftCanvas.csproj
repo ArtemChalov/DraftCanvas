@@ -78,7 +78,7 @@
     <Compile Include="Interfacies\IPrimitive.cs" />
     <Compile Include="Interfacies\IPrimitiveCreator.cs" />
     <Compile Include="Primitives\DcRectangle.cs" />
-    <Compile Include="Servicies\LeftMouseClick.cs" />
+    <Compile Include="LeftMouseActions\LeftMouseClick.cs" />
     <Compile Include="ValueTypes\DcPoint.cs" />
     <Compile Include="ExtendedClasses\DrawingVisualEx.cs" />
     <Compile Include="Primitives\DcLineSegment.cs" />
