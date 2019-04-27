@@ -1,4 +1,5 @@
-﻿using DraftCanvas.Interfacies;
+﻿using DraftCanvas.EditPanels;
+using DraftCanvas.Interfacies;
 using DraftCanvas.Primitives;
 using System.Windows;
 using System.Windows.Controls;
@@ -21,13 +22,13 @@ namespace DraftCanvas.LeftMouseAction
         /// </summary>
         public DcLineSegmentCreator()
         {
-            EditPanel = new Grid() { Width = 100, Height = 100, Background = Brushes.Blue };
+            EditPanel = new DcLineSegmentPanel();
         }
 
         /// <summary>
         /// 
         /// </summary>
-        public Grid EditPanel { get; set; } = null;
+        public ContentControl EditPanel { get; set; } = null;
 
         /// <summary>
         /// 
@@ -55,6 +56,10 @@ namespace DraftCanvas.LeftMouseAction
 
                     _created = true;
                     _pointCounter = 1;
+                    ((DcLineSegmentPanel)EditPanel).X2 = 0;
+                    ((DcLineSegmentPanel)EditPanel).Y2 = 0;
+                    ((DcLineSegmentPanel)EditPanel).Length = 0;
+                    ((DcLineSegmentPanel)EditPanel).Angle = 0;
                 }
                 
                 return this;
@@ -78,14 +83,25 @@ namespace DraftCanvas.LeftMouseAction
                 {
                     _fantom.X2 = _secondPoint.X;
                     _fantom.Y2 = _secondPoint.Y;
+                    ((DcLineSegmentPanel)EditPanel).X2 = _secondPoint.X;
+                    ((DcLineSegmentPanel)EditPanel).Y2 = _secondPoint.Y;
+                    ((DcLineSegmentPanel)EditPanel).Length = _fantom.Length;
+                    ((DcLineSegmentPanel)EditPanel).Angle = _fantom.Angle;
                     canvas.Update();
                 }
                 else
                 {
                     _created = false;
                     _fantom = new DcLineSegment(_firstPoint.X, _firstPoint.Y, _secondPoint.X, _secondPoint.Y);
+                    ((DcLineSegmentPanel)EditPanel).X1 = _firstPoint.X;
+                    ((DcLineSegmentPanel)EditPanel).Y1 = _firstPoint.Y;
                     canvas.AddToVisualCollection(_fantom);
                 }
+            }
+            if (_pointCounter == 1)
+            {
+                ((DcLineSegmentPanel)EditPanel).X1 = currentPoint.X;
+                ((DcLineSegmentPanel)EditPanel).Y1 = canvas.Height - currentPoint.Y;
             }
         }
 

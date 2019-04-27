@@ -24,7 +24,7 @@ namespace CanvasApp
 
         public DrCanvas Canva => _canvas;
 
-        public Grid EditPanel { get; set; }
+        public ContentControl EditPanel { get; set; }
 
 
         private void Stop_AddPrimitive(object sender, RoutedEventArgs e)
@@ -32,6 +32,7 @@ namespace CanvasApp
             Canva.StopAddPrimitive();
             EditPanel = null;
             OnPropertyChanged(nameof(EditPanel));
+            StopBtn.Visibility = Visibility.Hidden;
         }
 
 
@@ -40,6 +41,7 @@ namespace CanvasApp
             EditPanel = null;
             EditPanel = Canva.AddPrimitive(((FrameworkElement)sender).Tag.ToString());
             OnPropertyChanged(nameof(EditPanel));
+            StopBtn.Visibility = Visibility.Visible;
         }
 
         private void Window_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)

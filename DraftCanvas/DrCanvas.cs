@@ -130,7 +130,7 @@ namespace DraftCanvas
         /// Sets the state of DraftCanvas  state as add primitive.
         /// </summary>
         /// <param name="primitiveName">Primitives name.</param>
-        public Grid AddPrimitive(string primitiveName)
+        public ContentControl AddPrimitive(string primitiveName)
         {
             if (_primitiveCreator != null)
             {

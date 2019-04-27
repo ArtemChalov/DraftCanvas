@@ -11,7 +11,7 @@ namespace DraftCanvas.Interfacies
         /// <summary>
         /// 
         /// </summary>
-        Grid EditPanel { get; set; }
+        ContentControl EditPanel { get; set; }
 
         /// <summary>
         /// 

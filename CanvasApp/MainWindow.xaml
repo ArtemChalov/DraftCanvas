@@ -28,7 +28,7 @@
                     </Style.Setters>
                 </Style>
             </StackPanel.Resources>
-            <Button Click="Stop_AddPrimitive" Foreground="Red" HorizontalAlignment="Right" Width="24" Height="24">X</Button>
+            <Button x:Name="StopBtn" Visibility="Hidden" Click="Stop_AddPrimitive" Foreground="Red" HorizontalAlignment="Right" Width="24" Height="24">X</Button>
             <StackPanel Orientation="Horizontal" Margin="0 5 0 15">
                 <Button Click="Add_Primitive" Tag="LineSegment" Width="24" Height="24">L</Button>
                 <Button Click="Add_Primitive" Tag="Rectangle" Width="24" Height="24">R</Button>
