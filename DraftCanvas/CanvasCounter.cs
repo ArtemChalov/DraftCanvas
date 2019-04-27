@@ -1,4 +1,6 @@
 ﻿
+using System;
+
 namespace DraftCanvas
 {
     /// <summary>
@@ -17,5 +19,10 @@ namespace DraftCanvas
         /// Returns the counter to its original state.
         /// </summary>
         public static void ResetCounter() => _primitiveID = -1;
+
+        internal static void DecreasPrimitiveID(int id)
+        {
+            if (id == _primitiveID) _primitiveID--;
+        }
     }
 }

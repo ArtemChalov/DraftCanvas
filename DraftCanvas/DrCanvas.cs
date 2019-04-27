@@ -13,15 +13,12 @@ using System.Windows.Media;
 namespace DraftCanvas
 {
     /// <summary>
-    /// Defines an area within you can explicitly position child elements by using
-    /// coordinates that are relative to the Canvas area.
+    /// Defines an area within which you can explicitly position the child elements using
+    /// coordinates that related to the DrCanvas area.
     /// </summary>
     public class DrCanvas : FrameworkElement
     {
         internal List<Visual> _visualsCollection;
-        /// <summary>
-        /// The list of the primitives
-        /// </summary>
         private readonly List<IPrimitive> _primitives;
         private readonly Dictionary<int, DcPoint> _pointCollection = new Dictionary<int, DcPoint>();
         private IPrimitiveCreator _primitiveCreator = null;
@@ -74,7 +71,7 @@ namespace DraftCanvas
         public Dictionary<int, DcPoint> PointCollection => _pointCollection;
 
         /// <summary>
-        /// The collection of the LineSegments.
+        /// Collection of primitives.
         /// </summary>
         public List<IPrimitive> Primitives => _primitives;
 
@@ -175,6 +172,7 @@ namespace DraftCanvas
             if (visualObject is IPrimitive primitive)
             {
                 PointManager.RemovePrimitivePoints(PointCollection, primitive);
+                CanvasCounter.DecreasPrimitiveID(primitive.ID);
                 Primitives.Remove(primitive);
             }
         }
