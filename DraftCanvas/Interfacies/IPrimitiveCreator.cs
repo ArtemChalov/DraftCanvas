@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
 
 namespace DraftCanvas.Interfacies
 {
@@ -7,6 +8,11 @@ namespace DraftCanvas.Interfacies
     /// </summary>
     public interface IPrimitiveCreator
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        Grid EditPanel { get; set; }
+
         /// <summary>
         /// 
         /// </summary>

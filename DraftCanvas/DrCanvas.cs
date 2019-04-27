@@ -49,7 +49,7 @@ namespace DraftCanvas
 
             CanvasParam.CanvasHeight = this.Height;
 
-            _primitives = new DcPrimitiveList(this);
+            _primitives = new List<IPrimitive>();
 
             _leftmouse = new LeftMouseClick();
         }
@@ -130,7 +130,7 @@ namespace DraftCanvas
         /// Sets the state of DraftCanvas  state as add primitive.
         /// </summary>
         /// <param name="primitiveName">Primitives name.</param>
-        public void AddPrimitive(string primitiveName)
+        public Grid AddPrimitive(string primitiveName)
         {
             if (_primitiveCreator != null)
             {
@@ -140,14 +140,15 @@ namespace DraftCanvas
             switch (primitiveName)
             {
                 case "LineSegment": _primitiveCreator = new DcLineSegmentCreator();
-                    break;
+                    return _primitiveCreator.EditPanel;
             }
+
+            return null;
         }
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="primitiveName"></param>
         public void StopAddPrimitive()
         {
             if (_primitiveCreator != null)

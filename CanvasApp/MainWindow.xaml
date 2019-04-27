@@ -28,11 +28,12 @@
                     </Style.Setters>
                 </Style>
             </StackPanel.Resources>
-            <Button Click="Add_lines">Add Lines</Button>
-            <Button Click="Lines_Action">Action</Button>
-            <Button Click="Clear_All">Clear</Button>
-            <Button Click="Add_LineSegment" Tag="LineSegment">Line</Button>
-            <Button Click="Stop_LineSegment">Stop Line</Button>
+            <Button Click="Stop_AddPrimitive" Foreground="Red" HorizontalAlignment="Right" Width="24" Height="24">X</Button>
+            <StackPanel Orientation="Horizontal" Margin="0 5 0 15">
+                <Button Click="Add_Primitive" Tag="LineSegment" Width="24" Height="24">L</Button>
+                <Button Click="Add_Primitive" Tag="Rectangle" Width="24" Height="24">R</Button>
+            </StackPanel>
+            <ContentControl Content="{Binding EditPanel}"/>
             <TextBlock x:Name="Mess1"/>
             <TextBlock x:Name="Mess2"/>
             <TextBlock x:Name="Mess3"/>

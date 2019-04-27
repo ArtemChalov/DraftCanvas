@@ -1,11 +1,8 @@
 ﻿using DraftCanvas.Interfacies;
 using DraftCanvas.Primitives;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace DraftCanvas.LeftMouseAction
 {
@@ -18,6 +15,19 @@ namespace DraftCanvas.LeftMouseAction
         private Point _firstPoint;
         private DcLineSegment _fantom;
         private bool _created = false;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public DcLineSegmentCreator()
+        {
+            EditPanel = new Grid() { Width = 100, Height = 100, Background = Brushes.Blue };
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public Grid EditPanel { get; set; } = null;
 
         /// <summary>
         /// 
