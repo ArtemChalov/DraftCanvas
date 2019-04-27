@@ -52,7 +52,7 @@ namespace CanvasApp
 
         private void Lines_Action(object sender, RoutedEventArgs e)
         {
-            var lineSegment = Canva.DcLineSegments.Find(line => line.ID == 0);
+            var lineSegment = (DcLineSegment)Canva.DcLineSegments.Find(line => line.ID == 0);
 
             if (lineSegment == null) return;
 
@@ -91,7 +91,15 @@ namespace CanvasApp
 
         private void Stop_LineSegment(object sender, RoutedEventArgs e)
         {
-            Canva.StopAddPrimitive(((FrameworkElement)sender).Tag.ToString());
+            Canva.StopAddPrimitive();
+        }
+
+        private void Window_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == System.Windows.Input.Key.Delete)
+            {
+                _canvas.DelSelectedPrimitive();
+            }
         }
     }
 }

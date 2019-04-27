@@ -6,7 +6,7 @@ namespace DraftCanvas.ExtendedClasses
     /// <summary>
     /// 
     /// </summary>
-    public class DcLineSegmentList : List<DcLineSegment>
+    public class DcPrimitiveList : List<IPrimitive>
     {
         DrCanvas _canvas;
 
@@ -14,7 +14,7 @@ namespace DraftCanvas.ExtendedClasses
         /// 
         /// </summary>
         /// <param name="owner"></param>
-        public DcLineSegmentList(DrCanvas owner)
+        public DcPrimitiveList(DrCanvas owner)
         {
             _canvas = owner;
         }
@@ -23,7 +23,7 @@ namespace DraftCanvas.ExtendedClasses
         /// 
         /// </summary>
         /// <param name="dcLineSegment"></param>
-        public new void Add(DcLineSegment dcLineSegment)
+        public new void Add(IPrimitive dcLineSegment)
         {
             base.Add(dcLineSegment);
             _canvas.AddToVisualCollection(dcLineSegment);
@@ -34,7 +34,7 @@ namespace DraftCanvas.ExtendedClasses
         /// </summary>
         /// <param name="dcLineSegment"></param>
         /// <returns></returns>
-        public new bool Remove(DcLineSegment dcLineSegment)
+        public new bool Remove(IPrimitive dcLineSegment)
         {
             return true;
         }

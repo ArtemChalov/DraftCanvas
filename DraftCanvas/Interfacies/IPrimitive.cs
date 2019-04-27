@@ -7,7 +7,7 @@ namespace DraftCanvas
     /// <summary>
     /// 
     /// </summary>
-    internal interface IPrimitive : IVisualObject
+    public interface IPrimitive : IVisualObject
     {
         /// <summary>
         /// 

@@ -26,4 +26,19 @@ namespace DraftCanvas
         /// </summary>
         Length = 8
     }
+
+    /// <summary>
+    /// Primitives enumerator
+    /// </summary>
+    public enum PrimitiveType
+    {
+        /// <summary>
+        /// LineSegment
+        /// </summary>
+        LineSegment = 0,
+        /// <summary>
+        /// Rectangle
+        /// </summary>
+        Rectangle = 1
+    }
 }

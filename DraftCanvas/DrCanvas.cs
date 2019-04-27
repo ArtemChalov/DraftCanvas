@@ -19,7 +19,7 @@ namespace DraftCanvas
     public class DrCanvas : FrameworkElement
     {
         internal List<Visual> _visualsCollection;
-        private readonly DcLineSegmentList _lineSegments;
+        private readonly DcPrimitiveList _primitives;
         private readonly Dictionary<int, DcPoint> _pointCollection = new Dictionary<int, DcPoint>();
         private IPrimitiveCreator _primitiveCreator = null;
         private ILeftMouse _leftmouse = null;
@@ -49,7 +49,7 @@ namespace DraftCanvas
 
             CanvasParam.CanvasHeight = this.Height;
 
-            _lineSegments = new DcLineSegmentList(this);
+            _primitives = new DcPrimitiveList(this);
 
             _leftmouse = new LeftMouseClick();
         }
@@ -73,7 +73,7 @@ namespace DraftCanvas
         /// <summary>
         /// The collection of the LineSegments.
         /// </summary>
-        public DcLineSegmentList DcLineSegments => _lineSegments;
+        public DcPrimitiveList DcLineSegments => _primitives;
 
         #endregion
 
@@ -84,11 +84,14 @@ namespace DraftCanvas
         /// </summary>
         public void DelSelectedPrimitive()
         {
-            //// Sets all items to a non-selected state.
-            //foreach (DrawingVisualEx item in _visualsCollection)
-            //{
-            //    if (item.IsSelected) RemoveVisualObject(item);
-            //}
+            // Sets all items to a non-selected state.
+            foreach (var item in _primitives)
+            {
+                if (item.IsSelected)
+                {
+                    RemoveVisualObject(item);
+                }
+            }
         }
 
         /// <summary>
@@ -131,7 +134,7 @@ namespace DraftCanvas
         /// <summary>
         /// Sets the state of DraftCanvas  state as add primitive.
         /// </summary>
-        /// <param name="primitiveName">Primitive's name.</param>
+        /// <param name="primitiveName">Primitives name.</param>
         public void AddPrimitive(string primitiveName)
         {
             if (_primitiveCreator != null)
@@ -139,14 +142,18 @@ namespace DraftCanvas
                 _primitiveCreator.CancelCreation(this);
                 _primitiveCreator = null;
             }
-            _primitiveCreator = new DcLineSegmentCreator();
+            switch (primitiveName)
+            {
+                case "LineSegment": _primitiveCreator = new DcLineSegmentCreator();
+                    break;
+            }
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="primitiveName"></param>
-        public void StopAddPrimitive(string primitiveName)
+        public void StopAddPrimitive()
         {
             if (_primitiveCreator != null)
             {
@@ -211,7 +218,7 @@ namespace DraftCanvas
             base.OnMouseLeftButtonDown(e);
             Focus();
             if (_primitiveCreator == null) _leftmouse.OnMouseDown(e.GetPosition(this), this);
-            else _primitiveCreator = _primitiveCreator?.Create(e.GetPosition(this), this);
+            else _primitiveCreator = _primitiveCreator.Create(e.GetPosition(this), this);
         }
 
         /// <summary>

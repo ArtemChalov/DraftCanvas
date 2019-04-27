@@ -38,6 +38,7 @@ namespace DraftCanvas.LeftMouseAction
                 {
                     _fantom.X2 = currentPoint.X;
                     _fantom.Y2 = canvas.Height - currentPoint.Y;
+
                     canvas.Update();
 
                     _pointCounter = 1;
