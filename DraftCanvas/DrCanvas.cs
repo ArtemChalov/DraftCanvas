@@ -19,7 +19,10 @@ namespace DraftCanvas
     public class DrCanvas : FrameworkElement
     {
         internal List<Visual> _visualsCollection;
-        private readonly DcPrimitiveList _primitives;
+        /// <summary>
+        /// The list of the primitives
+        /// </summary>
+        private readonly List<IPrimitive> _primitives;
         private readonly Dictionary<int, DcPoint> _pointCollection = new Dictionary<int, DcPoint>();
         private IPrimitiveCreator _primitiveCreator = null;
         private ILeftMouse _leftmouse = null;
@@ -73,25 +76,20 @@ namespace DraftCanvas
         /// <summary>
         /// The collection of the LineSegments.
         /// </summary>
-        public DcPrimitiveList DcLineSegments => _primitives;
+        public List<IPrimitive> Primitives => _primitives;
 
         #endregion
 
         #region Public Methods
 
         /// <summary>
-        /// 
+        /// Removes the selected primitives.
         /// </summary>
         public void DelSelectedPrimitive()
         {
-            // Sets all items to a non-selected state.
-            foreach (var item in _primitives)
-            {
-                if (item.IsSelected)
-                {
-                    RemoveVisualObject(item);
-                }
-            }
+            for (int i = Primitives.Count - 1; i >= 0; i--)
+                if (Primitives[i].IsSelected)
+                    RemoveVisualObject(Primitives[i]);
         }
 
         /// <summary>
@@ -172,12 +170,13 @@ namespace DraftCanvas
             if (visual == null) return;
 
             RemoveVisualChild(visual);
-            if (visualObject is DcLineSegment line)
-            {
-                PointManager.RemovePrimitivePoints(PointCollection, line);
-                DcLineSegments.Remove(line);
-            }
             _visualsCollection.Remove(visual);
+
+            if (visualObject is IPrimitive primitive)
+            {
+                PointManager.RemovePrimitivePoints(PointCollection, primitive);
+                Primitives.Remove(primitive);
+            }
         }
 
         /// <summary>
@@ -189,7 +188,7 @@ namespace DraftCanvas
             {
                 RemoveVisualChild(item);
             }
-            DcLineSegments.Clear();
+            Primitives.Clear();
             PointCollection.Clear();
             CanvasCounter.ResetCounter();
             _visualsCollection.Clear();

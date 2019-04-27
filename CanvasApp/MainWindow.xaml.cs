@@ -52,7 +52,7 @@ namespace CanvasApp
 
         private void Lines_Action(object sender, RoutedEventArgs e)
         {
-            var lineSegment = (DcLineSegment)Canva.DcLineSegments.Find(line => line.ID == 0);
+            var lineSegment = (DcLineSegment)Canva.Primitives.Find(line => line.ID == 0);
 
             if (lineSegment == null) return;
 

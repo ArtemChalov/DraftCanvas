@@ -17,6 +17,7 @@ namespace DraftCanvas.LeftMouseAction
         private int _pointCounter = 1;
         private Point _firstPoint;
         private DcLineSegment _fantom;
+        private bool _created = false;
 
         /// <summary>
         /// 
@@ -39,10 +40,11 @@ namespace DraftCanvas.LeftMouseAction
                     _fantom.X2 = currentPoint.X;
                     _fantom.Y2 = canvas.Height - currentPoint.Y;
 
+                    canvas.Primitives.Add(_fantom);
                     canvas.Update();
 
+                    _created = true;
                     _pointCounter = 1;
-                    _fantom = null;
                 }
                 
                 return this;
@@ -62,7 +64,7 @@ namespace DraftCanvas.LeftMouseAction
             {
                 Point _secondPoint = new Point(currentPoint.X, canvas.Height - currentPoint.Y);
 
-                if (_fantom != null)
+                if (_fantom != null && !_created)
                 {
                     _fantom.X2 = _secondPoint.X;
                     _fantom.Y2 = _secondPoint.Y;
@@ -70,6 +72,7 @@ namespace DraftCanvas.LeftMouseAction
                 }
                 else
                 {
+                    _created = false;
                     _fantom = new DcLineSegment(_firstPoint.X, _firstPoint.Y, _secondPoint.X, _secondPoint.Y);
                     canvas.AddToVisualCollection(_fantom);
                 }
