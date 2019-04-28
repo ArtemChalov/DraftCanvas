@@ -1,9 +1,6 @@
 ﻿using DraftCanvas.LeftMouseAction;
-using DraftCanvas.ExtendedClasses;
 using DraftCanvas.Interfacies;
-using DraftCanvas.Primitives;
 using DraftCanvas.Servicies;
-using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
@@ -46,6 +43,7 @@ namespace DraftCanvas
 
             _visualsCollection = new List<Visual>();
             ClipToBounds = true;
+            this.SnapsToDevicePixels = true;
 
             CanvasParam.CanvasHeight = this.Height;
 
@@ -87,6 +85,8 @@ namespace DraftCanvas
             for (int i = Primitives.Count - 1; i >= 0; i--)
                 if (Primitives[i].IsSelected)
                     RemoveVisualObject(Primitives[i]);
+
+            if (Primitives.Count == 0) CanvasCounter.ResetCounter();
         }
 
         /// <summary>

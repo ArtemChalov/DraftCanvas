@@ -16,7 +16,7 @@ namespace DraftCanvas.LeftMouseAction
         private int _pointCounter = 1;
         private List<DependencyObject> _hitTestList = new List<DependencyObject>();
         private Point _oldPoint;
-        private DcRectangle _fantom = null;
+        private RectangleSelector _fantom = null;
         BrushConverter _converter = new BrushConverter();
         private bool _intersects = false;
         private DrawingVisualEx _cuurent_selected_item = null;
@@ -101,8 +101,7 @@ namespace DraftCanvas.LeftMouseAction
                     // Avoids noise
                     if (Math.Abs(_oldPoint.X - point.X) > 5 && Math.Abs(_oldPoint.Y - point.Y) > 5)
                     {
-                        _fantom = new DcRectangle(_oldPoint, new Point(point.X, CanvasParam.CanvasHeight - point.Y));
-                        _fantom.Thickness = 0.5;
+                        _fantom = new RectangleSelector(_oldPoint, new Point(point.X, CanvasParam.CanvasHeight - point.Y));
                         _fantom.Stroke = Brushes.DarkBlue;
                         canvas.AddToVisualCollection(_fantom);
                     }

@@ -3,6 +3,7 @@ using DraftCanvas.Interfacies;
 using DraftCanvas.Primitives;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Media;
 
 namespace DraftCanvas.LeftMouseAction
@@ -41,6 +42,8 @@ namespace DraftCanvas.LeftMouseAction
             if (_pointCounter == 1)
             {
                 _firstPoint = new Point(currentPoint.X, canvas.Height - currentPoint.Y);
+                ((DcLineSegmentPanel)EditPanel).X1 = _firstPoint.X;
+                ((DcLineSegmentPanel)EditPanel).Y1 = _firstPoint.Y;
                 _pointCounter++;
                 return this;
             }
@@ -56,10 +59,11 @@ namespace DraftCanvas.LeftMouseAction
 
                     _created = true;
                     _pointCounter = 1;
-                    ((DcLineSegmentPanel)EditPanel).X2 = 0;
-                    ((DcLineSegmentPanel)EditPanel).Y2 = 0;
-                    ((DcLineSegmentPanel)EditPanel).Length = 0;
-                    ((DcLineSegmentPanel)EditPanel).Angle = 0;
+                    ((DcLineSegmentPanel)EditPanel).ID = null;
+                    ((DcLineSegmentPanel)EditPanel).X2 = null;
+                    ((DcLineSegmentPanel)EditPanel).Y2 = null;
+                    ((DcLineSegmentPanel)EditPanel).Length = null;
+                    ((DcLineSegmentPanel)EditPanel).Angle = null;
                 }
                 
                 return this;
@@ -93,6 +97,7 @@ namespace DraftCanvas.LeftMouseAction
                 {
                     _created = false;
                     _fantom = new DcLineSegment(_firstPoint.X, _firstPoint.Y, _secondPoint.X, _secondPoint.Y);
+                    ((DcLineSegmentPanel)EditPanel).ID = _fantom.ID;
                     ((DcLineSegmentPanel)EditPanel).X1 = _firstPoint.X;
                     ((DcLineSegmentPanel)EditPanel).Y1 = _firstPoint.Y;
                     canvas.AddToVisualCollection(_fantom);

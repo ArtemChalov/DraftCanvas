@@ -25,10 +25,11 @@ namespace DraftCanvas.EditPanels
     {
         private double _X1Value;
         private double _Y1Value;
-        private double _X2Value;
-        private double _Y2Value;
-        private double _Length;
-        private double _Angle;
+        private double? _X2Value = null;
+        private double? _Y2Value = null;
+        private double? _Length = null;
+        private double? _Angle = null;
+        private int? _id = null;
 
         /// <summary>
         /// 
@@ -37,6 +38,15 @@ namespace DraftCanvas.EditPanels
         {
             InitializeComponent();
             this.DataContext = this;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public int? ID
+        {
+            get { return _id; }
+            set { _id = value; OnPropertyChanged(); }
         }
 
         /// <summary>
@@ -60,7 +70,7 @@ namespace DraftCanvas.EditPanels
         /// <summary>
         /// 
         /// </summary>
-        public double X2
+        public double? X2
         {
             get { return _X2Value; }
             set { _X2Value = value; OnPropertyChanged(); }
@@ -69,7 +79,7 @@ namespace DraftCanvas.EditPanels
         /// <summary>
         /// 
         /// </summary>
-        public double Y2
+        public double? Y2
         {
             get { return _Y2Value; }
             set { _Y2Value = value; OnPropertyChanged(); }
@@ -78,7 +88,7 @@ namespace DraftCanvas.EditPanels
         /// <summary>
         /// 
         /// </summary>
-        public double Length
+        public double? Length
         {
             get { return _Length; }
             set { _Length = value; OnPropertyChanged(); }
@@ -87,7 +97,7 @@ namespace DraftCanvas.EditPanels
         /// <summary>
         /// 
         /// </summary>
-        public double Angle
+        public double? Angle
         {
             get { return _Angle; }
             set { _Angle = value; OnPropertyChanged(); }

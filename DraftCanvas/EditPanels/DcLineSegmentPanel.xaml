@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:System="clr-namespace:System;assembly=mscorlib"
              xmlns:local="clr-namespace:DraftCanvas.EditPanels"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
@@ -23,9 +24,9 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <!--Row 0-->
-        <TextBlock Grid.ColumnSpan="2" Text="Отрезок"/>
+        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Text="Отрезок"/>
         <!--Row 1-->
-        <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Text="Отрезок"/>
+        <TextBlock Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding ID, StringFormat=ID {0}, TargetNullValue={x:Static System:String.Empty}}"/>
         <!--Row 2-->
         <TextBlock Grid.Row="2" Grid.Column="0" MinWidth="30" Text="X1"/>
         <TextBox Grid.Row="2" Grid.Column="1" MinWidth="50" Text="{Binding X1}"/>
@@ -34,16 +35,16 @@
         <TextBox Grid.Row="3" Grid.Column="1" MinWidth="50" Text="{Binding Y1}"/>
         <!--Row 4-->
         <TextBlock Grid.Row="4" Grid.Column="0" MinWidth="30" Text="X2"/>
-        <TextBox Grid.Row="4" Grid.Column="1" MinWidth="50" Text="{Binding X2}"/>
+        <TextBox Grid.Row="4" Grid.Column="1" MinWidth="50" Text="{Binding X2, StringFormat=N3, TargetNullValue={x:Static System:String.Empty}}"/>
         <!--Row 5-->
         <TextBlock Grid.Row="5" Grid.Column="0" MinWidth="30" Text="Y2"/>
-        <TextBox Grid.Row="5" Grid.Column="1" MinWidth="50" Text="{Binding Y2}"/>
+        <TextBox Grid.Row="5" Grid.Column="1" MinWidth="50" Text="{Binding Y2, StringFormat=N3, TargetNullValue={x:Static System:String.Empty}}"/>
         <!--Row 6-->
         <TextBlock Grid.Row="6" Grid.Column="0" MinWidth="30" Text="Length"/>
-        <TextBox Grid.Row="6" Grid.Column="1" MinWidth="50" Text="{Binding Length}"/>
+        <TextBox Grid.Row="6" Grid.Column="1" MinWidth="50" Text="{Binding Length, StringFormat=N6, TargetNullValue={x:Static System:String.Empty}}" />
         <!--Row 7-->
         <TextBlock Grid.Row="7" Grid.Column="0" MinWidth="30" Text="Angle"/>
-        <TextBox Grid.Row="7" Grid.Column="1" MinWidth="50" Text="{Binding Angle}"/>
+        <TextBox Grid.Row="7" Grid.Column="1" MinWidth="50" Text="{Binding Angle, StringFormat=N6, TargetNullValue={x:Static System:String.Empty}}"/>
         <!--Row 8-->
         <Button Margin="0 10 0 5" Grid.Row="8" Grid.Column="1" MinWidth="50" Click="Button_Click">
             OK

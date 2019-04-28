@@ -76,12 +76,12 @@
     <Compile Include="CanvasCounter.cs" />
     <Compile Include="CanvasParam.cs" />
     <Compile Include="Enums\DraftCanvasEnums.cs" />
-    <Compile Include="ExtendedClasses\DcPrimitiveList.cs" />
     <Compile Include="Interfacies\ILeftMouse.cs" />
     <Compile Include="Interfacies\IPrimitive.cs" />
     <Compile Include="Interfacies\IPrimitiveCreator.cs" />
     <Compile Include="Primitives\DcRectangle.cs" />
     <Compile Include="LeftMouseActions\LeftMouseClick.cs" />
+    <Compile Include="Primitives\RectangleSelector.cs" />
     <Compile Include="ValueTypes\DcPoint.cs" />
     <Compile Include="ExtendedClasses\DrawingVisualEx.cs" />
     <Compile Include="Primitives\DcLineSegment.cs" />

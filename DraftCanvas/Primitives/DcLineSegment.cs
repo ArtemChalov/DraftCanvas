@@ -303,6 +303,8 @@ namespace DraftCanvas.Primitives
             if (Owner.PointCollection[_p2Hash].DependedHash != 0)
                 res = PM.ResolveConstraint(Owner, newX, newY, _p2Hash);
 
+            _length = PrimMath.GetDistance(_x1, _y1, newX, newY);
+            _angle = PrimMath.GetLineSegmentAngle(_x1, _y1, newX, newY);
             _x2 = newX;
             _y2 = newY;
 
